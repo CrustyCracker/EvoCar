@@ -10,15 +10,18 @@ Mateusz Łukasz Krakowski
 rafal.biedrzycki@pw.edu.pl
 
 ## Przydatne linki
+### Sprawka
+- Sprawozdania https://www.overleaf.com/9151369263rntrszjsxfsx
+### Projekt
 - Strona projektu: http://staff.elka.pw.edu.pl/~rbiedrzy/ZPR/index.html
 - Styl kodowania: http://staff.elka.pw.edu.pl/~rbiedrzy/ZPR/StylKodowania.html
 - Porady: http://staff.elka.pw.edu.pl/~rbiedrzy/ZPR/porady.html
-
+### Biblioteki
+- box2d https://box2d.org/documentation/
 ## Użyte paczki
 Aby zainstalować paczki użyj komendy `sudo apt-get install <package_name>`
 Potrzebne będą:
-- Box2d - `libbox2d-dev`
+- Box2d - `libbox2d-dev` 
 
-
-## Algorytm
-Użyty zostanie algorytm 
+## Funkcjonalności
+Głównym celem naszego projektu jest stworzenie programu w którym będzie można obserwować ewolucje sztucznych samochodzików starających się pokonać jak najdłuższy dystans w określonym przez użytkownika czasie.
