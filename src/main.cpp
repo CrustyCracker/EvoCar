@@ -84,7 +84,8 @@ Polygon createPolygon(float x, float y, std::vector<b2Vec2> vertices, float dens
     return Polygon{vertices, color, boxBody};
 }
 
-Circle createCircle(float x, float y, float radius, float density, float friction, sf::Color color) {
+Circle createCircle(float x, float y, float radius, float density, float friction,
+                    sf::Color color) {
     // Body definition
     b2BodyDef boxBodyDef;
     boxBodyDef.position.Set(x / PPM, y / PPM);
@@ -125,7 +126,8 @@ Box createGround(float x, float y, float width, float height, sf::Color color) {
     return Box{width, height, color, groundBody};
 }
 
-void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon> &polygons, std::vector<Circle> &circles) {
+void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon> &polygons,
+            std::vector<Circle> &circles) {
     w.clear();
     for (const auto &box : boxes) {
         sf::RectangleShape rect;
@@ -165,7 +167,8 @@ void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon> &
 
         convex.setPointCount(polygon.vertices.size());
         for (int i = 0; i < polygon.vertices.size(); i++) {
-            convex.setPoint(i, sf::Vector2f(polygon.vertices[i].x * PPM, polygon.vertices[i].y * PPM));
+            convex.setPoint(i,
+                            sf::Vector2f(polygon.vertices[i].x * PPM, polygon.vertices[i].y * PPM));
         }
 
         // For the rect to be rotated in the correct direction, we have to multiply by -1
@@ -202,11 +205,12 @@ void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon> &
         // Draw a line from the circle's center to its edge
         // (account for rotation if the body has non-zero torque)
         sf::Vertex line[] = {
-                sf::Vertex(sf::Vector2f(circle.body->GetPosition().x * PPM,
-                                        WINDOW_HEIGHT - (circle.body->GetPosition().y * PPM))),
-                sf::Vertex(sf::Vector2f(circle.body->GetPosition().x * PPM + circle.radius * cos(circle.body->GetAngle()),
-                                        WINDOW_HEIGHT - (circle.body->GetPosition().y * PPM + circle.radius * sin(circle.body->GetAngle()))))
-        };
+            sf::Vertex(sf::Vector2f(circle.body->GetPosition().x * PPM,
+                                    WINDOW_HEIGHT - (circle.body->GetPosition().y * PPM))),
+            sf::Vertex(sf::Vector2f(
+                circle.body->GetPosition().x * PPM + circle.radius * cos(circle.body->GetAngle()),
+                WINDOW_HEIGHT - (circle.body->GetPosition().y * PPM +
+                                 circle.radius * sin(circle.body->GetAngle()))))};
         w.draw(line, 2, sf::Lines);
     }
     for (const auto &polygon : polygons) {
@@ -224,8 +228,9 @@ void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon> &
             sf::CircleShape circ;
             circ.setRadius(2);
             circ.setOrigin(2, 2);
-            circ.setPosition(polygon.body->GetWorldPoint(polygon.vertices[i]).x * PPM,
-                             WINDOW_HEIGHT - (polygon.body->GetWorldPoint(polygon.vertices[i]).y * PPM));
+            circ.setPosition(
+                polygon.body->GetWorldPoint(polygon.vertices[i]).x * PPM,
+                WINDOW_HEIGHT - (polygon.body->GetWorldPoint(polygon.vertices[i]).y * PPM));
             circ.setFillColor(sf::Color::White);
             w.draw(circ);
         }
@@ -257,7 +262,8 @@ int main() {
     // for (int i = 0; i < 307; i++) {
     //     // Starting positions are randomly generated: x between 50 and 550, y between 70 and 550
     //     auto &&box =
-    //         createBox(50 + (std::rand() % (550 - 50 + 1)), 70 + (std::rand() % (550 - 70 + 1)), 24,
+    //         createBox(50 + (std::rand() % (550 - 50 + 1)), 70 + (std::rand() % (550 - 70 + 1)),
+    //         24,
     //                   24, 1.f, 0.7f, sf::Color(255, 255, 255));
     //     boxes.push_back(box);
     // }
