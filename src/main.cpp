@@ -337,9 +337,17 @@ int main() {
         // Render everything
         render(w, boxes, polygons, circles);
 
-        // Rotate the circles
-        for (const auto &circle : circles) {
-            circle.body->ApplyTorque(1000, false);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+            // Rotate the circles left
+            for (const auto &circle : circles) {
+                circle.body->ApplyTorque(1000, false);
+            }
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+            // Rotate the circles right
+            for (const auto &circle : circles) {
+                circle.body->ApplyTorque(-1000, false);
+            }
         }
 
         // Process events
