@@ -240,8 +240,11 @@ void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon> &
 }
 
 int main() {
+    sf::ContextSettings settings;
+    settings.antialiasingLevel = 8;
+
     // Setup SFML window
-    sf::RenderWindow w(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "SFML + Box2D");
+    sf::RenderWindow w(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "SFML + Box2D", sf::Style::Default, settings);
     w.setFramerateLimit(60);
 
     // Initialize ImGui-SFML
@@ -318,7 +321,13 @@ int main() {
 
         ImGui::SFML::Update(w, deltaClock.restart());
 
-        ImGui::Begin("Car Settings");
+        ImGui::SetNextWindowSize(ImVec2(420, 140), ImGuiCond_FirstUseEver);
+        ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
+        ImGui::Begin("Car Demo");
+        ImGui::Text("Left/Right arrow keys to rotate the wheels.");
+        ImGui::Text("");
+
+        ImGui::BeginChild("Car Settings");
         ImGui::ColorEdit3("\"Body\" Color", carColor);
         polygons[0].color =
             sf::Color((int)(carColor[0] * 255), (int)(carColor[1] * 255), (int)(carColor[2] * 255));
@@ -328,9 +337,8 @@ int main() {
 
         ImGui::SliderFloat("Wheel 2 Radius [px]", &circles[1].radius, 0.0f, 100.0f);
         circles[1].body->GetFixtureList()->GetShape()->m_radius = circles[1].radius / PPM;
-        ImGui::End();
-        ImGui::Begin("Instructions");
-        ImGui::Text("Left/Right arrow keys to rotate the wheels.");
+        ImGui::EndChild();
+
         ImGui::End();
 
         ImGui::SFML::Render(w);
@@ -349,6 +357,9 @@ int main() {
                 circle.body->ApplyTorque(-1000, false);
             }
         }
+
+        // Display FPS in window title
+        w.setTitle("SFML + Box2D, FPS: " + std::to_string((int)ImGui::GetIO().Framerate));
 
         // Process events
         sf::Event event;
