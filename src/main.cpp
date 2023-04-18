@@ -319,12 +319,27 @@ int main() {
         // Render everything
         render(w, boxes, polygons, circles);
 
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
+            // Attach camera to the polygon
+            sf::View cameraView = sf::View(sf::Vector2f(polygon.body->GetPosition().x * PPM,
+                                                        WINDOW_HEIGHT - (polygon.body->GetPosition().y * PPM)),
+                                        sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
+            cameraView.setRotation((-1) * polygon.body->GetAngle() * 180 / b2_pi);
+            w.setView(cameraView);
+        } else {
+            // Reset camera
+            sf::View cameraView = sf::View(sf::Vector2f(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2),
+                                        sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
+            w.setView(cameraView);
+        }
+
         ImGui::SFML::Update(w, deltaClock.restart());
 
-        ImGui::SetNextWindowSize(ImVec2(420, 140), ImGuiCond_FirstUseEver);
+        ImGui::SetNextWindowSize(ImVec2(420, 160), ImGuiCond_FirstUseEver);
         ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
         ImGui::Begin("Car Demo");
         ImGui::Text("Left/Right arrow keys to rotate the wheels.");
+        ImGui::Text("Hold C to attach the camera to the car.");
         ImGui::Text("");
 
         ImGui::BeginChild("Car Settings");
