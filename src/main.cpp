@@ -244,7 +244,8 @@ int main() {
     settings.antialiasingLevel = 8;
 
     // Setup SFML window
-    sf::RenderWindow w(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "SFML + Box2D", sf::Style::Default, settings);
+    sf::RenderWindow w(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "SFML + Box2D",
+                       sf::Style::Default, settings);
     w.setFramerateLimit(60);
 
     // Initialize ImGui-SFML
@@ -319,20 +320,6 @@ int main() {
         // Render everything
         render(w, boxes, polygons, circles);
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
-            // Attach camera to the polygon
-            sf::View cameraView = sf::View(sf::Vector2f(polygon.body->GetPosition().x * PPM,
-                                                        WINDOW_HEIGHT - (polygon.body->GetPosition().y * PPM)),
-                                        sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
-            cameraView.setRotation((-1) * polygon.body->GetAngle() * 180 / b2_pi);
-            w.setView(cameraView);
-        } else {
-            // Reset camera
-            sf::View cameraView = sf::View(sf::Vector2f(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2),
-                                        sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
-            w.setView(cameraView);
-        }
-
         ImGui::SFML::Update(w, deltaClock.restart());
 
         ImGui::SetNextWindowSize(ImVec2(420, 160), ImGuiCond_FirstUseEver);
@@ -359,6 +346,21 @@ int main() {
         ImGui::SFML::Render(w);
 
         w.display();
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
+            // Attach camera to the polygon
+            sf::View cameraView =
+                sf::View(sf::Vector2f(polygon.body->GetPosition().x * PPM,
+                                      WINDOW_HEIGHT - (polygon.body->GetPosition().y * PPM)),
+                         sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
+            cameraView.setRotation((-1) * polygon.body->GetAngle() * 180 / b2_pi);
+            w.setView(cameraView);
+        } else {
+            // Reset camera
+            sf::View cameraView = sf::View(sf::Vector2f(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2),
+                                           sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
+            w.setView(cameraView);
+        }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
             // Rotate the circles left
