@@ -6,118 +6,11 @@
 #include "imgui-SFML.h"
 #include "imgui.h"
 
+#include "box.h"
+#include "polygon.h"
+#include "circle.h"
+
 b2World world(b2Vec2(0, Config::GRAVITIATIONAL_ACCELERATION));
-// A structure with all we need to render a box
-struct Box {
-    float width;
-    float height;
-    sf::Color color;
-    b2Body *body;
-};
-
-struct Polygon {
-    std::vector<b2Vec2> vertices;
-    sf::Color color;
-    b2Body *body;
-};
-
-struct Circle {
-    float radius;
-    sf::Color color;
-    b2Body *body;
-};
-
-Box createBox(float x, float y, float width, float height, float density, float friction,
-              sf::Color color) {
-    // Body definition
-    b2BodyDef boxBodyDef;
-    boxBodyDef.position.Set(x / Config::PPM, y / Config::PPM);
-    boxBodyDef.type = b2_dynamicBody;
-
-    // Shape definition
-    b2PolygonShape boxShape;
-    boxShape.SetAsBox(width / 2 / Config::PPM, height / 2 / Config::PPM);
-
-    // Fixture definition
-    b2FixtureDef fixtureDef;
-    fixtureDef.density = density;
-    fixtureDef.friction = friction;
-    fixtureDef.shape = &boxShape;
-
-    // Now we have a body for our Box object
-    b2Body *boxBody = world.CreateBody(&boxBodyDef);
-    // Lastly, assign the fixture
-    boxBody->CreateFixture(&fixtureDef);
-
-    return Box{width, height, color, boxBody};
-}
-
-Polygon createPolygon(float x, float y, std::vector<b2Vec2> vertices, float density, float friction,
-                      sf::Color color) {
-    // Body definition
-    b2BodyDef boxBodyDef;
-    boxBodyDef.position.Set(x / Config::PPM, y / Config::PPM);
-    boxBodyDef.type = b2_dynamicBody;
-
-    // Shape definition
-    b2PolygonShape boxShape;
-    boxShape.Set(vertices.data(), vertices.size());
-
-    // Fixture definition
-    b2FixtureDef fixtureDef;
-    fixtureDef.density = density;
-    fixtureDef.friction = friction;
-    fixtureDef.shape = &boxShape;
-
-    // Now we have a body for our Box object
-    b2Body *boxBody = world.CreateBody(&boxBodyDef);
-    // Lastly, assign the fixture
-    boxBody->CreateFixture(&fixtureDef);
-
-    return Polygon{vertices, color, boxBody};
-}
-
-Circle createCircle(float x, float y, float radius, float density, float friction,
-                    sf::Color color) {
-    // Body definition
-    b2BodyDef boxBodyDef;
-    boxBodyDef.position.Set(x / Config::PPM, y / Config::PPM);
-    boxBodyDef.type = b2_dynamicBody;
-
-    // Shape definition
-    b2CircleShape circleShape;
-    circleShape.m_radius = radius / Config::PPM;
-
-    // Fixture definition
-    b2FixtureDef fixtureDef;
-    fixtureDef.density = density;
-    fixtureDef.friction = friction;
-    fixtureDef.shape = &circleShape;
-
-    // Now we have a body for our Box object
-    b2Body *boxBody = world.CreateBody(&boxBodyDef);
-    // Lastly, assign the fixture
-    boxBody->CreateFixture(&fixtureDef);
-
-    return Circle{radius, color, boxBody};
-}
-
-Box createGround(float x, float y, float width, float height, sf::Color color) {
-    // Static body definition
-    b2BodyDef groundBodyDef;
-    groundBodyDef.position.Set(x / Config::PPM, y / Config::PPM);
-
-    // Shape definition
-    b2PolygonShape groundBox;
-    groundBox.SetAsBox(width / 2 / Config::PPM, height / 2 / Config::PPM);
-
-    // Now we have a body for our Box object
-    b2Body *groundBody = world.CreateBody(&groundBodyDef);
-    // For a static body, we don't need a custom fixture definition, this will do:
-    groundBody->CreateFixture(&groundBox, 0.0f);
-
-    return Box{width, height, color, groundBody};
-}
 
 void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon> &polygons,
             std::vector<Circle> &circles) {
@@ -258,10 +151,10 @@ int main() {
     std::vector<Circle> circles;
 
     // Generate ground
-    boxes.push_back(createGround(350, 50, 500, 100, sf::Color(50, 50, 50)));
+    boxes.push_back(createGround(&world, 350, 50, 500, 100, sf::Color(50, 50, 50)));
 
     // Add a wall (uses "ground" object, for now)
-    boxes.push_back(createGround(50, 350, 100, 700, sf::Color(50, 50, 50)));
+    boxes.push_back(createGround(&world, 50, 350, 100, 700, sf::Color(50, 50, 50)));
 
     // Create a polygon (octagon)
     std::vector<b2Vec2> vertices;
@@ -275,16 +168,17 @@ int main() {
     vertices.push_back(b2Vec2(0, 1));
     float carColor[3] = {(float)200 / 255, (float)50 / 255, (float)50 / 255};
     auto &&polygon = createPolygon(
+        &world,
         350, 300, vertices, 100.f, 0.7f,
         sf::Color((int)(carColor[0] * 255), (int)(carColor[1] * 255), (int)(carColor[2] * 255)));
     polygons.push_back(polygon);
 
     // Create a circle
-    auto &&circle1 = createCircle(350, 300, 20, 100.f, 0.7f, sf::Color(50, 200, 50));
+    auto &&circle1 = createCircle(&world, 350, 300, 20, 100.f, 0.7f, sf::Color(50, 200, 50));
     circles.push_back(circle1);
 
     // Create another circle
-    auto &&circle2 = createCircle(350, 300, 20, 100.f, 0.7f, sf::Color(50, 200, 50));
+    auto &&circle2 = createCircle(&world, 350, 300, 20, 100.f, 0.7f, sf::Color(50, 200, 50));
     circles.push_back(circle2);
 
     b2DistanceJointDef jointDef2;
