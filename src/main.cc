@@ -126,8 +126,8 @@ void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon> &
         sf::RectangleShape rect;
 
         // For the correct Y coordinate of our drawable rect, we must substract from
-        // Config::WINDOW_HEIGHT because SFML uses OpenGL coordinate system where X is right, Y is
-        // down while Box2D uses traditional X is right, Y is up
+        // Config::WINDOW_HEIGHT because SFML uses OpenGL coordinate system where X is
+        // right, Y is down while Box2D uses traditional X is right, Y is up
         rect.setPosition(box.body->GetPosition().x * Config::PPM,
                          Config::WINDOW_HEIGHT - (box.body->GetPosition().y * Config::PPM));
 
@@ -148,8 +148,8 @@ void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon> &
         sf::ConvexShape convex;
 
         // For the correct Y coordinate of our drawable rect, we must substract from
-        // Config::WINDOW_HEIGHT because SFML uses OpenGL coordinate system where X is right, Y is
-        // down while Box2D uses traditional X is right, Y is up
+        // Config::WINDOW_HEIGHT because SFML uses OpenGL coordinate system where X is
+        // right, Y is down while Box2D uses traditional X is right, Y is up
         convex.setPosition(polygon.body->GetPosition().x * Config::PPM,
                            Config::WINDOW_HEIGHT - (polygon.body->GetPosition().y * Config::PPM));
 
@@ -177,8 +177,8 @@ void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon> &
         sf::CircleShape circ;
 
         // For the correct Y coordinate of our drawable rect, we must substract from
-        // Config::WINDOW_HEIGHT because SFML uses OpenGL coordinate system where X is right, Y is
-        // down while Box2D uses traditional X is right, Y is up
+        // Config::WINDOW_HEIGHT because SFML uses OpenGL coordinate system where X is
+        // right, Y is down while Box2D uses traditional X is right, Y is up
         circ.setPosition(circle.body->GetPosition().x * Config::PPM,
                          Config::WINDOW_HEIGHT - (circle.body->GetPosition().y * Config::PPM));
 
@@ -198,12 +198,14 @@ void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon> &
         // Draw a line from the circle's center to its edge
         // (account for rotation if the body has non-zero torque)
         sf::Vertex line[] = {
-            sf::Vertex(sf::Vector2f(circle.body->GetPosition().x * PPM,
-                                    WINDOW_HEIGHT - (circle.body->GetPosition().y * PPM))),
+            sf::Vertex(
+                sf::Vector2f(circle.body->GetPosition().x * Config::PPM,
+                             Config::WINDOW_HEIGHT - (circle.body->GetPosition().y * Config::PPM))),
             sf::Vertex(sf::Vector2f(
-                circle.body->GetPosition().x * PPM + circle.radius * cos(circle.body->GetAngle()),
-                WINDOW_HEIGHT - (circle.body->GetPosition().y * PPM +
-                                 circle.radius * sin(circle.body->GetAngle()))))};
+                circle.body->GetPosition().x * Config::PPM +
+                    circle.radius * cos(circle.body->GetAngle()),
+                Config::WINDOW_HEIGHT - (circle.body->GetPosition().y * Config::PPM +
+                                         circle.radius * sin(circle.body->GetAngle()))))};
         w.draw(line, 2, sf::Lines);
     }
     for (const auto &polygon : polygons) {
@@ -222,8 +224,9 @@ void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon> &
             circ.setRadius(2);
             circ.setOrigin(2, 2);
             circ.setPosition(
-                polygon.body->GetWorldPoint(polygon.vertices[i]).x * PPM,
-                WINDOW_HEIGHT - (polygon.body->GetWorldPoint(polygon.vertices[i]).y * PPM));
+                polygon.body->GetWorldPoint(polygon.vertices[i]).x * Config::PPM,
+                Config::WINDOW_HEIGHT -
+                    (polygon.body->GetWorldPoint(polygon.vertices[i]).y * Config::PPM));
             circ.setFillColor(sf::Color::White);
             w.draw(circ);
         }
@@ -235,7 +238,7 @@ int main() {
     settings.antialiasingLevel = 8;
 
     // Setup SFML window
-    sf::RenderWindow w(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "SFML + Box2D",
+    sf::RenderWindow w(sf::VideoMode(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT), "SFML + Box2D",
                        sf::Style::Default, settings);
     w.setFramerateLimit(60);
 
@@ -326,10 +329,10 @@ int main() {
             sf::Color((int)(carColor[0] * 255), (int)(carColor[1] * 255), (int)(carColor[2] * 255));
 
         ImGui::SliderFloat("Wheel 1 Radius [px]", &circles[0].radius, 0.0f, 100.0f);
-        circles[0].body->GetFixtureList()->GetShape()->m_radius = circles[0].radius / PPM;
+        circles[0].body->GetFixtureList()->GetShape()->m_radius = circles[0].radius / Config::PPM;
 
         ImGui::SliderFloat("Wheel 2 Radius [px]", &circles[1].radius, 0.0f, 100.0f);
-        circles[1].body->GetFixtureList()->GetShape()->m_radius = circles[1].radius / PPM;
+        circles[1].body->GetFixtureList()->GetShape()->m_radius = circles[1].radius / Config::PPM;
         ImGui::EndChild();
 
         ImGui::End();
@@ -340,16 +343,17 @@ int main() {
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
             // Attach camera to the polygon
-            sf::View cameraView =
-                sf::View(sf::Vector2f(polygon.body->GetPosition().x * PPM,
-                                      WINDOW_HEIGHT - (polygon.body->GetPosition().y * PPM)),
-                         sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
+            sf::View cameraView = sf::View(
+                sf::Vector2f(polygon.body->GetPosition().x * Config::PPM,
+                             Config::WINDOW_HEIGHT - (polygon.body->GetPosition().y * Config::PPM)),
+                sf::Vector2f(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT));
             cameraView.setRotation((-1) * polygon.body->GetAngle() * 180 / b2_pi);
             w.setView(cameraView);
         } else {
             // Reset camera
-            sf::View cameraView = sf::View(sf::Vector2f(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2),
-                                           sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
+            sf::View cameraView =
+                sf::View(sf::Vector2f(Config::WINDOW_WIDTH / 2, Config::WINDOW_HEIGHT / 2),
+                         sf::Vector2f(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT));
             w.setView(cameraView);
         }
 
