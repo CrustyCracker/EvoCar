@@ -16,6 +16,7 @@ class Config {
     // SFML uses degrees for angles while Box2D uses radians
 
     static constexpr float DEG_PER_RAD = 57.2957795F;
+    static constexpr double GRAVITIATIONAL_ACCELERATION = -9.81;
 };
 
 #endif  // CONFIG_H

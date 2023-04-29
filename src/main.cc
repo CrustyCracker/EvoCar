@@ -6,7 +6,7 @@
 #include "../include/imgui/imgui-SFML.h"
 #include "../include/imgui/imgui.h"
 
-b2World world(b2Vec2(0, -9.81));
+b2World world(b2Vec2(0, GRAVITIATIONAL_ACCELERATION));
 // A structure with all we need to render a box
 struct Box {
     float width;
