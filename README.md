@@ -40,15 +40,27 @@ Potrzebne będą:
 Głównym celem naszego projektu jest stworzenie programu w którym będzie można obserwować ewolucje sztucznych samochodzików starających się pokonać jak najdłuższy dystans w określonym przez użytkownika czasie.
 
 ## notatki do cmake
-
+NAJWANIEJSZE
 configurate and generate build files
 `cmake ../zpr_23l_projekt/`
 
 build
-`cmake --build . --target`
+`cmake --build . --target EvoRacer`
 
 
-JAKIES BLEDNY CMAKE 
+### Dodawanie executabla (naszego maina)
+```add_executable(Nazwa)``` przykad EvoRacer
+
+### linkowanie liba do exe
+```target_link_libraries(EvoRacer PRIVATE sfml-graphics ImGui-SFML::ImGui-SFML imgui box2d)```
+
+### Dodawanie liba do cmake
+```add_library(nazwa_wlasna pliki_zrodlowe)```
+
+### Wciaganie libow
+target_link_libraries()
+
+###  BLEDNY CMAKE 
 
 CMake Error at cmake/Macros.cmake:296 (message):
   Missing item in X11_X11_LIB;X11_Xrandr_LIB
