@@ -1,10 +1,10 @@
 #include <iostream>
 
 #include "../config/config.h"
-#include "../include/SFML/Graphics.hpp"
-#include "../include/box2d/box2d.h"
-#include "../include/imgui/imgui-SFML.h"
-#include "../include/imgui/imgui.h"
+#include "SFML/Graphics.hpp"
+#include "box2d/box2d.h"
+#include "imgui-SFML.h"
+#include "imgui.h"
 
 b2World world(b2Vec2(0, Config::GRAVITIATIONAL_ACCELERATION));
 // A structure with all we need to render a box
@@ -243,9 +243,7 @@ int main() {
     w.setFramerateLimit(60);
 
     // Initialize ImGui-SFML
-    if (!ImGui::SFML::Init(w)) {
-        return -1;
-    }
+    ImGui::SFML::Init(w);
 
     // Change imgui.ini location
     ImGui::GetIO().IniFilename = "build/imgui.ini";
