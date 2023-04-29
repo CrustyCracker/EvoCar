@@ -3,6 +3,8 @@
 #include "../config/config.h"
 #include "../include/SFML/Graphics.hpp"
 #include "../include/box2d/box2d.h"
+#include "../include/imgui/imgui-SFML.h"
+#include "../include/imgui/imgui.h"
 
 b2World world(b2Vec2(0, -9.81));
 // A structure with all we need to render a box
@@ -196,14 +198,12 @@ void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon> &
         // Draw a line from the circle's center to its edge
         // (account for rotation if the body has non-zero torque)
         sf::Vertex line[] = {
-            sf::Vertex(
-                sf::Vector2f(circle.body->GetPosition().x * Config::PPM,
-                             Config::WINDOW_HEIGHT - (circle.body->GetPosition().y * Config::PPM))),
+            sf::Vertex(sf::Vector2f(circle.body->GetPosition().x * PPM,
+                                    WINDOW_HEIGHT - (circle.body->GetPosition().y * PPM))),
             sf::Vertex(sf::Vector2f(
-                circle.body->GetPosition().x * Config::PPM +
-                    circle.radius * cos(circle.body->GetAngle()),
-                Config::WINDOW_HEIGHT - (circle.body->GetPosition().y * Config::PPM +
-                                         circle.radius * sin(circle.body->GetAngle()))))};
+                circle.body->GetPosition().x * PPM + circle.radius * cos(circle.body->GetAngle()),
+                WINDOW_HEIGHT - (circle.body->GetPosition().y * PPM +
+                                 circle.radius * sin(circle.body->GetAngle()))))};
         w.draw(line, 2, sf::Lines);
     }
     for (const auto &polygon : polygons) {
@@ -222,20 +222,30 @@ void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon> &
             circ.setRadius(2);
             circ.setOrigin(2, 2);
             circ.setPosition(
-                polygon.body->GetWorldPoint(polygon.vertices[i]).x * Config::PPM,
-                Config::WINDOW_HEIGHT -
-                    (polygon.body->GetWorldPoint(polygon.vertices[i]).y * Config::PPM));
+                polygon.body->GetWorldPoint(polygon.vertices[i]).x * PPM,
+                WINDOW_HEIGHT - (polygon.body->GetWorldPoint(polygon.vertices[i]).y * PPM));
             circ.setFillColor(sf::Color::White);
             w.draw(circ);
         }
     }
-    w.display();
 }
 
 int main() {
+    sf::ContextSettings settings;
+    settings.antialiasingLevel = 8;
+
     // Setup SFML window
-    sf::RenderWindow w(sf::VideoMode(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT), "SFML + Box2D");
+    sf::RenderWindow w(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "SFML + Box2D",
+                       sf::Style::Default, settings);
     w.setFramerateLimit(60);
+
+    // Initialize ImGui-SFML
+    if (!ImGui::SFML::Init(w)) {
+        return -1;
+    }
+
+    // Change imgui.ini location
+    ImGui::GetIO().IniFilename = "build/imgui.ini";
 
     // Container to hold all the boxes we create
     std::vector<Box> boxes;
@@ -252,20 +262,6 @@ int main() {
     // Add a wall (uses "ground" object, for now)
     boxes.push_back(createGround(50, 350, 100, 700, sf::Color(50, 50, 50)));
 
-    // Generate a lot of boxes
-    // for (int i = 0; i < 307; i++) {
-    //     // Starting positions are randomly generated: x between 50 and 550, y between 70 and 550
-    //     auto &&box =
-    //         createBox(50 + (std::rand() % (550 - 50 + 1)), 70 + (std::rand() % (550 - 70 + 1)),
-    //         24,
-    //                   24, 1.f, 0.7f, sf::Color(255, 255, 255));
-    //     boxes.push_back(box);
-    // }
-
-    // Create a big blue box
-    // auto &&box = createBox(700, 200, 64, 64, 10.f, 0.7f, sf::Color(100, 100, 100));
-    // boxes.push_back(box);
-
     // Create a polygon (octagon)
     std::vector<b2Vec2> vertices;
     vertices.push_back(b2Vec2(0, 0));
@@ -276,10 +272,11 @@ int main() {
     vertices.push_back(b2Vec2(4, 2));
     vertices.push_back(b2Vec2(1, 2));
     vertices.push_back(b2Vec2(0, 1));
-    auto &&polygon = createPolygon(350, 300, vertices, 100.f, 0.7f, sf::Color(200, 50, 50));
+    float carColor[3] = {(float)200 / 255, (float)50 / 255, (float)50 / 255};
+    auto &&polygon = createPolygon(
+        350, 300, vertices, 100.f, 0.7f,
+        sf::Color((int)(carColor[0] * 255), (int)(carColor[1] * 255), (int)(carColor[2] * 255)));
     polygons.push_back(polygon);
-    // Yeet it leftwards to collide with the smaller boxes
-    // box.body->ApplyForceToCenter(b2Vec2(-100000, 10), false);
 
     // Create a circle
     auto &&circle1 = createCircle(350, 300, 20, 100.f, 0.7f, sf::Color(50, 200, 50));
@@ -288,24 +285,6 @@ int main() {
     // Create another circle
     auto &&circle2 = createCircle(350, 300, 20, 100.f, 0.7f, sf::Color(50, 200, 50));
     circles.push_back(circle2);
-
-    // Attach the two circles to the polygon
-    // (They're wheels and the polygon is a car's frame)
-
-    // b2RevoluteJointDef jointDef;
-    // jointDef.bodyA = polygon.body;
-    // jointDef.bodyB = circle1.body;
-    // jointDef.localAnchorA = b2Vec2(1.0, -1.0);
-    // jointDef.localAnchorB = b2Vec2(0.0, 0.0);
-    // jointDef.collideConnected = false;
-    // world.CreateJoint(&jointDef);
-
-    // jointDef.bodyA = polygon.body;
-    // jointDef.bodyB = circle2.body;
-    // jointDef.localAnchorA = b2Vec2(4.0, -1.0);
-    // jointDef.localAnchorB = b2Vec2(0.0, 0.0);
-    // jointDef.collideConnected = false;
-    // world.CreateJoint(&jointDef);
 
     b2DistanceJointDef jointDef2;
     jointDef2.bodyA = polygon.body;
@@ -324,6 +303,7 @@ int main() {
     jointDef2.collideConnected = false;
     world.CreateJoint(&jointDef2);
 
+    sf::Clock deltaClock;
     /** GAME LOOP **/
     while (w.isOpen()) {
         // Update the world, standard arguments
@@ -331,19 +311,74 @@ int main() {
         // Render everything
         render(w, boxes, polygons, circles);
 
-        // Rotate the circles
-        for (const auto &circle : circles) {
-            circle.body->ApplyTorque(1000, false);
+        ImGui::SFML::Update(w, deltaClock.restart());
+
+        ImGui::SetNextWindowSize(ImVec2(420, 160), ImGuiCond_FirstUseEver);
+        ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
+        ImGui::Begin("Car Demo");
+        ImGui::Text("Left/Right arrow keys to rotate the wheels.");
+        ImGui::Text("Hold C to attach the camera to the car.");
+        ImGui::Text("");
+
+        ImGui::BeginChild("Car Settings");
+        ImGui::ColorEdit3("\"Body\" Color", carColor);
+        polygons[0].color =
+            sf::Color((int)(carColor[0] * 255), (int)(carColor[1] * 255), (int)(carColor[2] * 255));
+
+        ImGui::SliderFloat("Wheel 1 Radius [px]", &circles[0].radius, 0.0f, 100.0f);
+        circles[0].body->GetFixtureList()->GetShape()->m_radius = circles[0].radius / PPM;
+
+        ImGui::SliderFloat("Wheel 2 Radius [px]", &circles[1].radius, 0.0f, 100.0f);
+        circles[1].body->GetFixtureList()->GetShape()->m_radius = circles[1].radius / PPM;
+        ImGui::EndChild();
+
+        ImGui::End();
+
+        ImGui::SFML::Render(w);
+
+        w.display();
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
+            // Attach camera to the polygon
+            sf::View cameraView =
+                sf::View(sf::Vector2f(polygon.body->GetPosition().x * PPM,
+                                      WINDOW_HEIGHT - (polygon.body->GetPosition().y * PPM)),
+                         sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
+            cameraView.setRotation((-1) * polygon.body->GetAngle() * 180 / b2_pi);
+            w.setView(cameraView);
+        } else {
+            // Reset camera
+            sf::View cameraView = sf::View(sf::Vector2f(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2),
+                                           sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
+            w.setView(cameraView);
         }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+            // Rotate the circles left
+            for (const auto &circle : circles) {
+                circle.body->ApplyTorque(1000, false);
+            }
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+            // Rotate the circles right
+            for (const auto &circle : circles) {
+                circle.body->ApplyTorque(-1000, false);
+            }
+        }
+
+        // Display FPS in window title
+        w.setTitle("SFML + Box2D, FPS: " + std::to_string((int)ImGui::GetIO().Framerate));
 
         // Process events
         sf::Event event;
         while (w.pollEvent(event)) {
+            ImGui::SFML::ProcessEvent(event);
             // Close window : exit
             if (event.type == sf::Event::Closed) {
                 w.close();
             }
         }
     }
+    ImGui::SFML::Shutdown();
     return 0;
 }
