@@ -44,7 +44,7 @@ configurate and generate build files
 `cmake ../zpr_23l_projekt/`
 
 build
-`cmake --build . --target`
+`cmake --build . --target EvoRacer`
 
 
 ## JAKIES BLEDNY CMAKE 
