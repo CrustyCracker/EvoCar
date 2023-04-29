@@ -1,19 +1,10 @@
 #include <iostream>
 
+#include "../config/config.h"
 #include "../include/SFML/Graphics.hpp"
 #include "../include/box2d/box2d.h"
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
-
-// Pixels per meter. Box2D uses metric units, so we need to define a conversion
-#define PPM 30.0F
-// SFML uses degrees for angles while Box2D uses radians
-#define DEG_PER_RAD 57.2957795F
-
-// Box2D world for physics simulation, gravity = 9.81 m/s^2
 b2World world(b2Vec2(0, -9.81));
-
 // A structure with all we need to render a box
 struct Box {
     float width;
@@ -38,12 +29,12 @@ Box createBox(float x, float y, float width, float height, float density, float 
               sf::Color color) {
     // Body definition
     b2BodyDef boxBodyDef;
-    boxBodyDef.position.Set(x / PPM, y / PPM);
+    boxBodyDef.position.Set(x / Config::PPM, y / Config::PPM);
     boxBodyDef.type = b2_dynamicBody;
 
     // Shape definition
     b2PolygonShape boxShape;
-    boxShape.SetAsBox(width / 2 / PPM, height / 2 / PPM);
+    boxShape.SetAsBox(width / 2 / Config::PPM, height / 2 / Config::PPM);
 
     // Fixture definition
     b2FixtureDef fixtureDef;
@@ -63,7 +54,7 @@ Polygon createPolygon(float x, float y, std::vector<b2Vec2> vertices, float dens
                       sf::Color color) {
     // Body definition
     b2BodyDef boxBodyDef;
-    boxBodyDef.position.Set(x / PPM, y / PPM);
+    boxBodyDef.position.Set(x / Config::PPM, y / Config::PPM);
     boxBodyDef.type = b2_dynamicBody;
 
     // Shape definition
@@ -84,15 +75,16 @@ Polygon createPolygon(float x, float y, std::vector<b2Vec2> vertices, float dens
     return Polygon{vertices, color, boxBody};
 }
 
-Circle createCircle(float x, float y, float radius, float density, float friction, sf::Color color) {
+Circle createCircle(float x, float y, float radius, float density, float friction,
+                    sf::Color color) {
     // Body definition
     b2BodyDef boxBodyDef;
-    boxBodyDef.position.Set(x / PPM, y / PPM);
+    boxBodyDef.position.Set(x / Config::PPM, y / Config::PPM);
     boxBodyDef.type = b2_dynamicBody;
 
     // Shape definition
     b2CircleShape circleShape;
-    circleShape.m_radius = radius / PPM;
+    circleShape.m_radius = radius / Config::PPM;
 
     // Fixture definition
     b2FixtureDef fixtureDef;
@@ -111,11 +103,11 @@ Circle createCircle(float x, float y, float radius, float density, float frictio
 Box createGround(float x, float y, float width, float height, sf::Color color) {
     // Static body definition
     b2BodyDef groundBodyDef;
-    groundBodyDef.position.Set(x / PPM, y / PPM);
+    groundBodyDef.position.Set(x / Config::PPM, y / Config::PPM);
 
     // Shape definition
     b2PolygonShape groundBox;
-    groundBox.SetAsBox(width / 2 / PPM, height / 2 / PPM);
+    groundBox.SetAsBox(width / 2 / Config::PPM, height / 2 / Config::PPM);
 
     // Now we have a body for our Box object
     b2Body *groundBody = world.CreateBody(&groundBodyDef);
@@ -125,16 +117,17 @@ Box createGround(float x, float y, float width, float height, sf::Color color) {
     return Box{width, height, color, groundBody};
 }
 
-void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon> &polygons, std::vector<Circle> &circles) {
+void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon> &polygons,
+            std::vector<Circle> &circles) {
     w.clear();
     for (const auto &box : boxes) {
         sf::RectangleShape rect;
 
-        // For the correct Y coordinate of our drawable rect, we must substract from WINDOW_HEIGHT
-        // because SFML uses OpenGL coordinate system where X is right, Y is down
-        // while Box2D uses traditional X is right, Y is up
-        rect.setPosition(box.body->GetPosition().x * PPM,
-                         WINDOW_HEIGHT - (box.body->GetPosition().y * PPM));
+        // For the correct Y coordinate of our drawable rect, we must substract from
+        // Config::WINDOW_HEIGHT because SFML uses OpenGL coordinate system where X is right, Y is
+        // down while Box2D uses traditional X is right, Y is up
+        rect.setPosition(box.body->GetPosition().x * Config::PPM,
+                         Config::WINDOW_HEIGHT - (box.body->GetPosition().y * Config::PPM));
 
         // We also need to set our drawable's origin to its center
         // because in SFML, "position" refers to the upper left corner
@@ -144,7 +137,7 @@ void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon> &
         rect.setSize(sf::Vector2f(box.width, box.height));
 
         // For the rect to be rotated in the correct direction, we have to multiply by -1
-        rect.setRotation(-1 * box.body->GetAngle() * DEG_PER_RAD);
+        rect.setRotation(-1 * box.body->GetAngle() * Config::DEG_PER_RAD);
 
         rect.setFillColor(box.color);
         w.draw(rect);
@@ -152,11 +145,11 @@ void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon> &
     for (const auto &polygon : polygons) {
         sf::ConvexShape convex;
 
-        // For the correct Y coordinate of our drawable rect, we must substract from WINDOW_HEIGHT
-        // because SFML uses OpenGL coordinate system where X is right, Y is down
-        // while Box2D uses traditional X is right, Y is up
-        convex.setPosition(polygon.body->GetPosition().x * PPM,
-                           WINDOW_HEIGHT - (polygon.body->GetPosition().y * PPM));
+        // For the correct Y coordinate of our drawable rect, we must substract from
+        // Config::WINDOW_HEIGHT because SFML uses OpenGL coordinate system where X is right, Y is
+        // down while Box2D uses traditional X is right, Y is up
+        convex.setPosition(polygon.body->GetPosition().x * Config::PPM,
+                           Config::WINDOW_HEIGHT - (polygon.body->GetPosition().y * Config::PPM));
 
         // We also need to set our drawable's origin to its center
         // because in SFML, "position" refers to the upper left corner
@@ -165,11 +158,12 @@ void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon> &
 
         convex.setPointCount(polygon.vertices.size());
         for (int i = 0; i < polygon.vertices.size(); i++) {
-            convex.setPoint(i, sf::Vector2f(polygon.vertices[i].x * PPM, polygon.vertices[i].y * PPM));
+            convex.setPoint(i, sf::Vector2f(polygon.vertices[i].x * Config::PPM,
+                                            polygon.vertices[i].y * Config::PPM));
         }
 
         // For the rect to be rotated in the correct direction, we have to multiply by -1
-        convex.setRotation(-1 * polygon.body->GetAngle() * DEG_PER_RAD);
+        convex.setRotation(-1 * polygon.body->GetAngle() * Config::DEG_PER_RAD);
 
         // Flip the polygon along the X axis
         convex.scale(1, -1);
@@ -180,11 +174,11 @@ void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon> &
     for (const auto &circle : circles) {
         sf::CircleShape circ;
 
-        // For the correct Y coordinate of our drawable rect, we must substract from WINDOW_HEIGHT
-        // because SFML uses OpenGL coordinate system where X is right, Y is down
-        // while Box2D uses traditional X is right, Y is up
-        circ.setPosition(circle.body->GetPosition().x * PPM,
-                         WINDOW_HEIGHT - (circle.body->GetPosition().y * PPM));
+        // For the correct Y coordinate of our drawable rect, we must substract from
+        // Config::WINDOW_HEIGHT because SFML uses OpenGL coordinate system where X is right, Y is
+        // down while Box2D uses traditional X is right, Y is up
+        circ.setPosition(circle.body->GetPosition().x * Config::PPM,
+                         Config::WINDOW_HEIGHT - (circle.body->GetPosition().y * Config::PPM));
 
         // We also need to set our drawable's origin to its center
         // because in SFML, "position" refers to the upper left corner
@@ -194,7 +188,7 @@ void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon> &
         circ.setRadius(circle.radius);
 
         // For the rect to be rotated in the correct direction, we have to multiply by -1
-        circ.setRotation(-1 * circle.body->GetAngle() * DEG_PER_RAD);
+        circ.setRotation(-1 * circle.body->GetAngle() * Config::DEG_PER_RAD);
 
         circ.setFillColor(circle.color);
         w.draw(circ);
@@ -202,11 +196,14 @@ void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon> &
         // Draw a line from the circle's center to its edge
         // (account for rotation if the body has non-zero torque)
         sf::Vertex line[] = {
-                sf::Vertex(sf::Vector2f(circle.body->GetPosition().x * PPM,
-                                        WINDOW_HEIGHT - (circle.body->GetPosition().y * PPM))),
-                sf::Vertex(sf::Vector2f(circle.body->GetPosition().x * PPM + circle.radius * cos(circle.body->GetAngle()),
-                                        WINDOW_HEIGHT - (circle.body->GetPosition().y * PPM + circle.radius * sin(circle.body->GetAngle()))))
-        };
+            sf::Vertex(
+                sf::Vector2f(circle.body->GetPosition().x * Config::PPM,
+                             Config::WINDOW_HEIGHT - (circle.body->GetPosition().y * Config::PPM))),
+            sf::Vertex(sf::Vector2f(
+                circle.body->GetPosition().x * Config::PPM +
+                    circle.radius * cos(circle.body->GetAngle()),
+                Config::WINDOW_HEIGHT - (circle.body->GetPosition().y * Config::PPM +
+                                         circle.radius * sin(circle.body->GetAngle()))))};
         w.draw(line, 2, sf::Lines);
     }
     for (const auto &polygon : polygons) {
@@ -214,8 +211,8 @@ void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon> &
         sf::CircleShape circ;
         circ.setRadius(5);
         circ.setOrigin(5, 5);
-        circ.setPosition(polygon.body->GetPosition().x * PPM,
-                         WINDOW_HEIGHT - (polygon.body->GetPosition().y * PPM));
+        circ.setPosition(polygon.body->GetPosition().x * Config::PPM,
+                         Config::WINDOW_HEIGHT - (polygon.body->GetPosition().y * Config::PPM));
         circ.setFillColor(sf::Color::Blue);
         w.draw(circ);
 
@@ -224,8 +221,10 @@ void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon> &
             sf::CircleShape circ;
             circ.setRadius(2);
             circ.setOrigin(2, 2);
-            circ.setPosition(polygon.body->GetWorldPoint(polygon.vertices[i]).x * PPM,
-                             WINDOW_HEIGHT - (polygon.body->GetWorldPoint(polygon.vertices[i]).y * PPM));
+            circ.setPosition(
+                polygon.body->GetWorldPoint(polygon.vertices[i]).x * Config::PPM,
+                Config::WINDOW_HEIGHT -
+                    (polygon.body->GetWorldPoint(polygon.vertices[i]).y * Config::PPM));
             circ.setFillColor(sf::Color::White);
             w.draw(circ);
         }
@@ -235,7 +234,7 @@ void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon> &
 
 int main() {
     // Setup SFML window
-    sf::RenderWindow w(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "SFML + Box2D");
+    sf::RenderWindow w(sf::VideoMode(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT), "SFML + Box2D");
     w.setFramerateLimit(60);
 
     // Container to hold all the boxes we create
@@ -257,7 +256,8 @@ int main() {
     // for (int i = 0; i < 307; i++) {
     //     // Starting positions are randomly generated: x between 50 and 550, y between 70 and 550
     //     auto &&box =
-    //         createBox(50 + (std::rand() % (550 - 50 + 1)), 70 + (std::rand() % (550 - 70 + 1)), 24,
+    //         createBox(50 + (std::rand() % (550 - 50 + 1)), 70 + (std::rand() % (550 - 70 + 1)),
+    //         24,
     //                   24, 1.f, 0.7f, sf::Color(255, 255, 255));
     //     boxes.push_back(box);
     // }
