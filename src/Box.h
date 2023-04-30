@@ -5,7 +5,10 @@
 #include "SFML/Graphics.hpp"
 #include "box2d/box2d.h"
 
-// A structure with all we need to render a box
+/*
+Author:
+Description:
+*/
 struct Box {
     float width;
     float height;

@@ -1,5 +1,8 @@
 #include "Polygon.h"
-
+/*
+Author:
+Description:
+*/
 Polygon createPolygon(b2World* world, float x, float y, std::vector<b2Vec2> vertices, float density,
                       float friction, sf::Color color) {
     // Body definition

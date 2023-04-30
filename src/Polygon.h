@@ -4,7 +4,10 @@
 #include "../config/Config.h"
 #include "SFML/Graphics.hpp"
 #include "box2d/box2d.h"
-
+/*
+Author:
+Description:
+*/
 struct Polygon {
     std::vector<b2Vec2> vertices;
     sf::Color color;

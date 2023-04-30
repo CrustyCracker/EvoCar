@@ -1,5 +1,8 @@
 #include "Car.h"
-
+/*
+Author:
+Description:
+*/
 Polygon createCar(b2World* world, std::vector<Polygon>* polygons, std::vector<Circle>* circles,
                   float carColor[3]) {
     // Create a polygon (octagon)

@@ -1,5 +1,8 @@
 #include "Render.h"
-
+/*
+Author:
+Description:
+*/
 void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon> &polygons,
             std::vector<Circle> &circles) {
     w.clear();
