@@ -6,16 +6,15 @@
 #include "imgui.h"
 
 #include "../config/Config.h"
-#include "Box.h"
 #include "Car.h"
-#include "Circle.h"
-#include "Polygon.h"
+#include "Shape.h"
 #include "Render.h"
 
 /*
 Author:
 Description:
 */
+
 b2World world(b2Vec2(0, Config::GRAVITIATIONAL_ACCELERATION));
 
 int main() {
