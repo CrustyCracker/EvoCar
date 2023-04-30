@@ -177,3 +177,25 @@ TEST(CreatePolygonTest, TooMuchVerticesTest) {
     ASSERT_THROW(createPolygon(&world, x, y, vertices, density, friction, color);
                  , std::invalid_argument);
 }
+
+TEST(CreatePolygonTest, InvalidDensityTest) {
+    b2World world(b2Vec2(0.0f, 9.81f));
+    float x = 0.0f, y = 0.0f, density = 0.0f, friction = 0.5f;
+    std::vector<b2Vec2> vertices = {b2Vec2(-1.0f, -1.0f), b2Vec2(1.0f, -1.0f), b2Vec2(0.0f, 1.0f),
+                                    b2Vec2(-1.0f, -1.0f), b2Vec2(1.0f, -1.0f), b2Vec2(0.0f, 1.0f),
+                                    b2Vec2(-1.0f, -1.0f), b2Vec2(1.0f, -1.0f)};
+    sf::Color color = sf::Color::Red;
+    ASSERT_THROW(createPolygon(&world, x, y, vertices, density, friction, color);
+                 , std::invalid_argument);
+}
+
+TEST(CreatePolygonTest, InvalidFrictionTest) {
+    b2World world(b2Vec2(0.0f, 9.81f));
+    float x = 0.0f, y = 0.0f, density = 1.0f, friction = -0.5f;
+    std::vector<b2Vec2> vertices = {b2Vec2(-1.0f, -1.0f), b2Vec2(1.0f, -1.0f), b2Vec2(0.0f, 1.0f),
+                                    b2Vec2(-1.0f, -1.0f), b2Vec2(1.0f, -1.0f), b2Vec2(0.0f, 1.0f),
+                                    b2Vec2(-1.0f, -1.0f), b2Vec2(1.0f, -1.0f)};
+    sf::Color color = sf::Color::Red;
+    ASSERT_THROW(createPolygon(&world, x, y, vertices, density, friction, color);
+                 , std::invalid_argument);
+}
