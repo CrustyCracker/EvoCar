@@ -1,6 +1,7 @@
 #include "circle.h"
 
-Circle createCircle(b2World* world, float x, float y, float radius, float density, float friction, sf::Color color) {
+Circle createCircle(b2World* world, float x, float y, float radius, float density, float friction,
+                    sf::Color color) {
     // Body definition
     b2BodyDef boxBodyDef;
     boxBodyDef.position.Set(x / Config::PPM, y / Config::PPM);
@@ -17,7 +18,7 @@ Circle createCircle(b2World* world, float x, float y, float radius, float densit
     fixtureDef.shape = &circleShape;
 
     // Now we have a body for our Box object
-    b2Body *boxBody = world->CreateBody(&boxBodyDef);
+    b2Body* boxBody = world->CreateBody(&boxBodyDef);
     // Lastly, assign the fixture
     boxBody->CreateFixture(&fixtureDef);
 

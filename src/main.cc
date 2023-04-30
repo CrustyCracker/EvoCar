@@ -2,13 +2,12 @@
 
 #include "../config/config.h"
 #include "SFML/Graphics.hpp"
+#include "box.h"
 #include "box2d/box2d.h"
+#include "circle.h"
 #include "imgui-SFML.h"
 #include "imgui.h"
-
-#include "box.h"
 #include "polygon.h"
-#include "circle.h"
 
 b2World world(b2Vec2(0, Config::GRAVITIATIONAL_ACCELERATION));
 
@@ -168,8 +167,7 @@ int main() {
     vertices.push_back(b2Vec2(0, 1));
     float carColor[3] = {(float)200 / 255, (float)50 / 255, (float)50 / 255};
     auto &&polygon = createPolygon(
-        &world,
-        350, 300, vertices, 100.f, 0.7f,
+        &world, 350, 300, vertices, 100.f, 0.7f,
         sf::Color((int)(carColor[0] * 255), (int)(carColor[1] * 255), (int)(carColor[2] * 255)));
     polygons.push_back(polygon);
 

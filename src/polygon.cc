@@ -1,6 +1,7 @@
 #include "polygon.h"
 
-Polygon createPolygon(b2World* world, float x, float y, std::vector<b2Vec2> vertices, float density, float friction, sf::Color color) {
+Polygon createPolygon(b2World* world, float x, float y, std::vector<b2Vec2> vertices, float density,
+                      float friction, sf::Color color) {
     // Body definition
     b2BodyDef boxBodyDef;
     boxBodyDef.position.Set(x / Config::PPM, y / Config::PPM);
@@ -17,7 +18,7 @@ Polygon createPolygon(b2World* world, float x, float y, std::vector<b2Vec2> vert
     fixtureDef.shape = &boxShape;
 
     // Now we have a body for our Box object
-    b2Body *boxBody = world->CreateBody(&boxBodyDef);
+    b2Body* boxBody = world->CreateBody(&boxBodyDef);
     // Lastly, assign the fixture
     boxBody->CreateFixture(&fixtureDef);
 
