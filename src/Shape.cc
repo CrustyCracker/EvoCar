@@ -7,6 +7,16 @@ Description:    This file contains functions for creating Box2D objects.
 
 Box createBox(b2World* world, float x, float y, float width, float height, float density,
               float friction, sf::Color color) {
+    // Argument validation
+    if (width <= 0) {
+        throw std::invalid_argument("Invalid width parameter");
+    } else if (height <= 0) {
+        throw std::invalid_argument("Invalid height parameter");
+    } else if (density <= 0) {
+        throw std::invalid_argument("Invalid density parameter");
+    } else if (friction <= 0) {
+        throw std::invalid_argument("Invalid friction parameter");
+    }
     // Body definition
     b2BodyDef boxBodyDef;
     boxBodyDef.position.Set(x / Config::PPM, y / Config::PPM);
@@ -31,6 +41,13 @@ Box createBox(b2World* world, float x, float y, float width, float height, float
 }
 
 Box createGround(b2World* world, float x, float y, float width, float height, sf::Color color) {
+    // Argument validation
+    if (width <= 0) {
+        throw std::invalid_argument("Invalid width parameter");
+    } else if (height <= 0) {
+        throw std::invalid_argument("Invalid height parameter");
+    }
+
     b2BodyDef groundBodyDef;
     groundBodyDef.position.Set(x / Config::PPM, y / Config::PPM);
 
@@ -46,6 +63,15 @@ Box createGround(b2World* world, float x, float y, float width, float height, sf
 
 Circle createCircle(b2World* world, float x, float y, float radius, float density, float friction,
                     sf::Color color) {
+    // Argument validation
+    if (radius <= 0) {
+        throw std::invalid_argument("Invalid width parameter");
+    } else if (density <= 0) {
+        throw std::invalid_argument("Invalid density parameter");
+    } else if (friction <= 0) {
+        throw std::invalid_argument("Invalid friction parameter");
+    }
+
     b2BodyDef boxBodyDef;
     boxBodyDef.position.Set(x / Config::PPM, y / Config::PPM);
     boxBodyDef.type = b2_dynamicBody;
@@ -67,6 +93,14 @@ Circle createCircle(b2World* world, float x, float y, float radius, float densit
 
 Polygon createPolygon(b2World* world, float x, float y, std::vector<b2Vec2> vertices, float density,
                       float friction, sf::Color color) {
+    // Argument validation
+    if (vertices.size() < 3 || vertices.size() > 8) {
+        throw std::invalid_argument("Invalid vertices size");
+    } else if (density <= 0) {
+        throw std::invalid_argument("Invalid density parameter");
+    } else if (friction <= 0) {
+        throw std::invalid_argument("Invalid friction parameter");
+    }
     b2BodyDef boxBodyDef;
     boxBodyDef.position.Set(x / Config::PPM, y / Config::PPM);
     boxBodyDef.type = b2_dynamicBody;
