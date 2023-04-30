@@ -7,10 +7,6 @@ Oprogramowanie przeprowadzające ewolucję sztucznych pojazdów w 2D. Chodzi o w
 Jakub Mateusz Marcowski
 Mateusz Łukasz Krakowski
 
-## Prowadzący projektu
-
-rafal.biedrzycki@pw.edu.pl
-
 ## Przydatne linki
 
 ### Sprawka
