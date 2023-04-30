@@ -1,4 +1,4 @@
-#include "box.h"
+#include "Box.h"
 
 Box createBox(b2World* world, float x, float y, float width, float height, float density,
               float friction, sf::Color color) {

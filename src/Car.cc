@@ -1,4 +1,4 @@
-#include "car.h"
+#include "Car.h"
 
 Polygon createCar(b2World* world, std::vector<Polygon>* polygons, std::vector<Circle>* circles,
                   float carColor[3]) {

@@ -1,4 +1,4 @@
-#include "circle.h"
+#include "Circle.h"
 
 Circle createCircle(b2World* world, float x, float y, float radius, float density, float friction,
                     sf::Color color) {

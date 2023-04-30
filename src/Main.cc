@@ -1,15 +1,15 @@
 #include <iostream>
 
-#include "../config/config.h"
+#include "../config/Config.h"
+#include "Box.h"
+#include "Car.h"
+#include "Circle.h"
+#include "Polygon.h"
+#include "Render.h"
 #include "SFML/Graphics.hpp"
-#include "box.h"
 #include "box2d/box2d.h"
-#include "car.h"
-#include "circle.h"
 #include "imgui-SFML.h"
 #include "imgui.h"
-#include "polygon.h"
-#include "render.h"
 
 b2World world(b2Vec2(0, Config::GRAVITIATIONAL_ACCELERATION));
 

@@ -1,7 +1,7 @@
 set(CXX_CLANG_TIDY)
 add_library(EvoRacerLib
-box.cc box.h
-car.cc car.h
-circle.cc circle.h
-polygon.cc polygon.h
-render.cc render.h)
+Box.cc Box.h
+Car.cc Car.h
+Circle.cc Circle.h
+Polygon.cc Polygon.h
+Render.cc Render.h)

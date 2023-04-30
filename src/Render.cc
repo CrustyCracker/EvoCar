@@ -1,4 +1,4 @@
-#include "render.h"
+#include "Render.h"
 
 void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon> &polygons,
             std::vector<Circle> &circles) {

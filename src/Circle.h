@@ -1,7 +1,7 @@
 #ifndef CIRCLE_H
 #define CIRCLE_H
 
-#include "../config/config.h"
+#include "../config/Config.h"
 #include "SFML/Graphics.hpp"
 #include "box2d/box2d.h"
 
