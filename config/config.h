@@ -1,9 +1,9 @@
 #ifndef CONFIG_H
 #define CONFIG_H
+
 /*
 Author: Mateusz Krakowski
 Description: This file contains all the constant values used in the program.
-
 */
 
 class Config {
