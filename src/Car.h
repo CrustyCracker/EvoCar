@@ -1,9 +1,8 @@
 #ifndef CAR_H
 #define CAR_H
-
+#include "box2d/box2d.h"
 #include "Circle.h"
 #include "Polygon.h"
-#include "box2d/box2d.h"
 /*
 Author:
 Description:
