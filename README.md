@@ -33,20 +33,22 @@ Aby zainstalować paczki użyj komendy `sudo apt-get install <package_name>`
 Potrzebne będą:
 
 - Box2d - `libbox2d-dev` (2.4.1-2ubuntu1)
-- SFML - `libsfml-dev`  (2.5.1+dfsg-2)
-- imgui - `libimgui-dev` (1.86+ds-1build1)
+- Gtest - `libgtest-dev` (1.8.0-6)
+
 ## Funkcjonalności
 
 Głównym celem naszego projektu jest stworzenie programu w którym będzie można obserwować ewolucje sztucznych samochodzików starających się pokonać jak najdłuższy dystans w określonym przez użytkownika czasie.
 
-## notatki do cmake
-NAJWANIEJSZE
-configurate and generate build files
-`cmake ../zpr_23l_projekt/`
+## Notatki do cmake
 
-build
-`cmake --build . --target EvoRacer`
+- create build directory
+  `mkdir build`
 
+- go to build directory
+  `cd build`
+
+- configurate and generate build files
+  `cmake ..`
 
 ### Dodawanie executabla (naszego maina)
 ```add_executable(Nazwa)``` przykad EvoRacer
@@ -61,26 +63,36 @@ build
 target_link_libraries()
 
 ###  BLEDNY CMAKE 
+- build
+  `cmake --build . --target EvoRacer` lub `make EvoRacer`
 
-CMake Error at cmake/Macros.cmake:296 (message):
-  Missing item in X11_X11_LIB;X11_Xrandr_LIB
-Call Stack (most recent call first):
-  src/SFML/Window/CMakeLists.txt:239 (sfml_find_package)
+## JAKIEŚ BŁĘDY CMAKE
 
+- ```txt
+  CMake Error at cmake/Macros.cmake:296 (message):
+    Missing item in X11_X11_LIB;X11_Xrandr_LIB
+  Call Stack (most recent call first):
+    src/SFML/Window/CMakeLists.txt:239 (sfml_find_package)
+  ```
 
-fix
-```sudo apt-get update
-sudo apt-get install libx11-dev libxrandr-dev
-```
+  fix:
 
-CMake Error at _deps/sfml-src/cmake/Macros.cmake:296 (message):
-  Missing item in FREETYPE_LIBRARY
-Call Stack (most recent call first):
-  _deps/sfml-src/src/SFML/Graphics/CMakeLists.txt:137 (sfml_find_package)
+  `sudo apt-get update`
 
-sudo apt-get install libfreetype-dev
+  `sudo apt-get install libx11-dev libxrandr-dev`
 
+---
 
+- ```txt
+  CMake Error at _deps/sfml-src/cmake/Macros.cmake:296 (message):
+    Missing item in FREETYPE_LIBRARY
+  Call Stack (most recent call first):
+    _deps/sfml-src/src/SFML/Graphics/CMakeLists.txt:137 (sfml_find_package)
+  ```
 
-DO BOX2d I TAK NIE DZIALA XDASX
-sudo apt-get install xorg-dev
+  `sudo apt-get install libfreetype-dev`
+
+---
+
+- DO BOX2d I TAK NIE DZIALA XDASX
+  `sudo apt-get install xorg-dev`

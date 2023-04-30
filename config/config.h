@@ -1,15 +1,15 @@
 #ifndef CONFIG_H
 #define CONFIG_H
+
 /*
 Author: Mateusz Krakowski
 Description: This file contains all the constant values used in the program.
-
 */
 
 class Config {
    public:
     static constexpr int WINDOW_WIDTH = 1600;
-    static constexpr int WINDOW_HEIGHT = 1200;
+    static constexpr int WINDOW_HEIGHT = 900;
 
     // Pixels per meter. Box2D uses metric units, so we need to define a conversion
     static constexpr float PPM = 30.0F;
