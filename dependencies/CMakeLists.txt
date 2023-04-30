@@ -15,7 +15,12 @@ FetchContent_Declare(
   GIT_REPOSITORY https://github.com/ocornut/imgui
   GIT_TAG 35b1148efb839381b84de9290d9caf0b66ad7d03
 )
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+)
 
 FetchContent_MakeAvailable(imgui)
+FetchContent_MakeAvailable(googletest)
 add_subdirectory(imgui-sfml)
 add_subdirectory(sfml)
