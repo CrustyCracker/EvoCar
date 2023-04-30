@@ -48,7 +48,7 @@ int main() {
     boxes.push_back(createGround(&world, 50, 350, 100, 700, sf::Color(50, 50, 50)));
 
     float carColor[3] = {(float)200 / 255, (float)50 / 255, (float)50 / 255};
-    Polygon polygon = createCar(&world, &polygons, &circles, carColor);
+    Car car = createCar(&world, &polygons, &circles, carColor);
 
     sf::Clock deltaClock;
     /** GAME LOOP **/
@@ -69,14 +69,16 @@ int main() {
 
         ImGui::BeginChild("Car Settings");
         ImGui::ColorEdit3("\"Body\" Color", carColor);
-        polygons[0].color =
+        car.body->color =
             sf::Color((int)(carColor[0] * 255), (int)(carColor[1] * 255), (int)(carColor[2] * 255));
 
-        ImGui::SliderFloat("Wheel 1 Radius [px]", &circles[0].radius, 0.0f, 100.0f);
-        circles[0].body->GetFixtureList()->GetShape()->m_radius = circles[0].radius / Config::PPM;
+        ImGui::SliderFloat("Wheel 1 Radius [px]", &car.frontWheel->radius, 0.0f, 100.0f);
+        car.frontWheel->body->GetFixtureList()->GetShape()->m_radius =
+            car.frontWheel->radius / Config::PPM;
 
-        ImGui::SliderFloat("Wheel 2 Radius [px]", &circles[1].radius, 0.0f, 100.0f);
-        circles[1].body->GetFixtureList()->GetShape()->m_radius = circles[1].radius / Config::PPM;
+        ImGui::SliderFloat("Wheel 2 Radius [px]", &car.backWheel->radius, 0.0f, 100.0f);
+        car.backWheel->body->GetFixtureList()->GetShape()->m_radius =
+            car.backWheel->radius / Config::PPM;
         ImGui::EndChild();
 
         ImGui::End();
@@ -86,12 +88,13 @@ int main() {
         w.display();
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
-            // Attach camera to the polygon
-            sf::View cameraView = sf::View(
-                sf::Vector2f(polygon.body->GetPosition().x * Config::PPM,
-                             Config::WINDOW_HEIGHT - (polygon.body->GetPosition().y * Config::PPM)),
-                sf::Vector2f(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT));
-            cameraView.setRotation((-1) * polygon.body->GetAngle() * 180 / b2_pi);
+            // Attach camera to the car's body
+            sf::View cameraView =
+                sf::View(sf::Vector2f(car.body->body->GetPosition().x * Config::PPM,
+                                      Config::WINDOW_HEIGHT -
+                                          (car.body->body->GetPosition().y * Config::PPM)),
+                         sf::Vector2f(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT));
+            cameraView.setRotation((-1) * car.body->body->GetAngle() * 180 / b2_pi);
             w.setView(cameraView);
         } else {
             // Reset camera
@@ -103,15 +106,18 @@ int main() {
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
             // Rotate the circles left
-            for (const auto &circle : circles) {
-                circle.body->ApplyTorque(1000, false);
-            }
+            car.frontWheel->body->ApplyTorque(1000, false);
+            car.backWheel->body->ApplyTorque(1000, false);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
             // Rotate the circles right
-            for (const auto &circle : circles) {
-                circle.body->ApplyTorque(-1000, false);
-            }
+            car.frontWheel->body->ApplyTorque(-1000, false);
+            car.backWheel->body->ApplyTorque(-1000, false);
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
+            // Close the window
+            w.close();
         }
 
         // Display FPS in window title

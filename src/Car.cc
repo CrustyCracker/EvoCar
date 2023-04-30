@@ -1,12 +1,13 @@
 #include "Car.h"
 
 /*
-Author:
-Description:
+Author:         Jakub Marcowski
+Description:    Creates a car with a polygon (car's body)
+    and two circles (front and back wheels).
 */
 
-Polygon createCar(b2World* world, std::vector<Polygon>* polygons, std::vector<Circle>* circles,
-                  float carColor[3]) {
+Car createCar(b2World* world, std::vector<Polygon>* polygons, std::vector<Circle>* circles,
+              float carColor[3]) {
     // Create a polygon (octagon)
     std::vector<b2Vec2> vertices;
     vertices.push_back(b2Vec2(0, 0));
@@ -47,5 +48,8 @@ Polygon createCar(b2World* world, std::vector<Polygon>* polygons, std::vector<Ci
     jointDef2.collideConnected = false;
     world->CreateJoint(&jointDef2);
 
-    return polygon;
+    return Car{
+        &(*polygons)[polygons->size() - 1], &(*circles)[circles->size() - 2],
+        &(*circles)[circles->size() - 1],
+        sf::Color((int)(carColor[0] * 255), (int)(carColor[1] * 255), (int)(carColor[2] * 255))};
 }
