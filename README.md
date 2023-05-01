@@ -8,6 +8,15 @@ Jakub Mateusz Marcowski
 
 Mateusz Łukasz Krakowski
 
+
+## TLDR
+`sh install_packages.sh`
+
+`sh fresh_build.sh`
+
+`./build/EvoRacer`
+
+`./build/test/Test`
 ## Użyte paczki
 
 Aby zainstalować paczki użyj komendy `sudo apt-get install <package_name>`
@@ -23,6 +32,8 @@ najlepiej użyć skryptu `sh install_packages.sh` (z tego katalogu)
 - sfml - `libsfml-dev` 
 - udev - `libudev-dev`
 - freetype - `libfreetype-dev`
+- xrandr `libxrandr-dev`
+- x11 `libx11-dev`
 ## Jak 
 - Upwenij się że pobrałeś wszystkie paczki
 - `sh fresh_build.sh` (z tego katalogu)
