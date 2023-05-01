@@ -5,22 +5,48 @@ Oprogramowanie przeprowadzające ewolucję sztucznych pojazdów w 2D. Chodzi o w
 ## Autorzy
 
 Jakub Mateusz Marcowski
+
 Mateusz Łukasz Krakowski
 
+
+## TLDR
+`sh install_packages.sh`
+
+`sh fresh_build.sh`
+
+`./build/EvoRacer`
+
+`./build/test/Test`
+
+test coverage: `sh test_coverage.sh` (plik index.html w CodeCoverageReport)
 ## Użyte paczki
+najlepiej użyć skryptu `sh install_packages.sh` (z tego katalogu)
 
 Aby zainstalować paczki użyj komendy `sudo apt-get install <package_name>`
 Potrzebne będą:
 
+
+
 - Box2d - `libbox2d-dev` (2.4.1-2ubuntu1)
 - Gtest - `libgtest-dev` (1.8.0-6)
+- cmake - `cmake` (3.22.1-1ubuntu1)
+- build-essential - `build-essential` (12.8ubuntu1)ls
+- ImGui - `libimgui-dev` 
+- sfml - `libsfml-dev` 
+- udev - `libudev-dev`
+- freetype - `libfreetype-dev`
+- xrandr `libxrandr-dev`
+- x11 `libx11-dev`
 
-## Jak 
-- Pobieramy paczki
+## Jak zbudować projekt
+wykonaj skrypt `sh fresh_build.sh` (z tego katalogu)
+## Jak stowrzyć raport z pokrycia testami
+- Upwenij się że pobrałeś wszystkie paczki
 - `sh fresh_build.sh` (z tego katalogu)
 -  Plik wykonawczy: `/build/EvoRacer`
 -  Testy: `/build/test/Test`
 ## Test Coverage
+Ostatni test coverage znajdue się w katalogu CodeCoverageReport, plik index.html
 Aby stowrzyć raport z pokrycia testami należy:
 
 - zaisntalować lcov `sudo apt-get install lcov`
