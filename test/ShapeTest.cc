@@ -44,7 +44,7 @@ TEST(CreateBoxTest, InvalidHeightTest) {
 TEST(CreateBoxTest, InvalidDensityTest) {
     // Test with invalid input (negative width and height)
     b2World world(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
-    float x = 0.0f, y = 0.0f, width = 10.0f, height = 1.0f, density = -1.0f, friction = 0.5f;
+    float x = 1.0f, y = 1.0f, width = 10.0f, height = 1.0f, density = -1.0f, friction = 0.5f;
     sf::Color color = sf::Color::Red;
 
     ASSERT_THROW(createBox(&world, x, y, width, height, density, friction, color),
@@ -54,7 +54,7 @@ TEST(CreateBoxTest, InvalidDensityTest) {
 TEST(CreateBoxTest, InvalidFrictionTest) {
     // Test with invalid input (negative width and height)
     b2World world(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
-    float x = 0.0f, y = 0.0f, width = 10.0f, height = 1.0f, density = -1.0f, friction = 0.5f;
+    float x = 1.0f, y = 1.0f, width = 10.0f, height = 5.0f, density = 2.0f, friction = 0.0f;
     sf::Color color = sf::Color::Red;
 
     ASSERT_THROW(createBox(&world, x, y, width, height, density, friction, color),
