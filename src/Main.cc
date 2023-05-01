@@ -50,14 +50,7 @@ int main() {
     boxes.push_back(&wall);
 
     float carColor[3] = {(float)200 / 255, (float)50 / 255, (float)50 / 255};
-    CarAlt car = CarAlt(&world, 350, 300, carColor);
-
-    // VVV see https://stackoverflow.com/a/46330927/14664861 VVV
-
-    // auto carBody = car.getBody();
-    // auto carFrontWheel = car.getFrontWheel();
-    // auto carBackWheel = car.getBackWheel();
-
+    Car car = Car(&world, 350, 300, carColor);
     polygons.push_back(car.getBody());
     circles.push_back(car.getFrontWheel());
     circles.push_back(car.getBackWheel());

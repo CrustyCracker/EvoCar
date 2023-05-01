@@ -9,16 +9,7 @@ Description:    Creates a car with a polygon (car's body)
 #include "box2d/box2d.h"
 #include "Shape.h"
 
-struct Car {
-    Polygon body;
-    Circle frontWheel;
-    Circle backWheel;
-    sf::Color bodyColor;
-};
-
-Car createCar(b2World* world, float x, float y, float carColor[3]);
-
-class CarAlt {
+class Car {
    private:
     b2World* world;
     Polygon body;
@@ -27,7 +18,7 @@ class CarAlt {
     sf::Color bodyColor;
 
    public:
-    CarAlt(b2World* world, float x, float y, float carColor[3]);
+    Car(b2World* world, float x, float y, float carColor[3]);
 
     Polygon* getBody();
     Circle* getFrontWheel();
