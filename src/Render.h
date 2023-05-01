@@ -1,7 +1,6 @@
 /*
 Author:         Jakub Marcowski
-Description:    This file contains the render function, which is responsible
-    for rendering all the shapes in the world.
+Description:    Header file for render function
 */
 
 #ifndef RENDER_H

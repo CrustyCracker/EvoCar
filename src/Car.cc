@@ -1,7 +1,7 @@
 #include "Car.h"
 
 /*
-Author:         Jakub Marcowskidensity
+Author:         Jakub Marcowski, Mateusz Krakowski
 Description:    Creates a car with a polygon (car's body)
     and two circles (front and back wheels).
 */

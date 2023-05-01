@@ -11,8 +11,8 @@
 #include "Render.h"
 
 /*
-Author:
-Description:
+Author:        Jakub Marcowski, Mateusz Krakowski
+Description:   Main file for the project, contains the main loop.
 */
 
 b2World world(b2Vec2(0, Config::GRAVITIATIONAL_ACCELERATION));

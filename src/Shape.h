@@ -1,6 +1,6 @@
 /*
 Author:         Jakub Marcowski
-Description:    This file contains functions for creating Box2D objects.
+Description:    Header file for functions for creating Box2D objects.
 */
 
 #ifndef SHAPE_H
