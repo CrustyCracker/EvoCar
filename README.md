@@ -5,6 +5,7 @@ Oprogramowanie przeprowadzające ewolucję sztucznych pojazdów w 2D. Chodzi o w
 ## Autorzy
 
 Jakub Mateusz Marcowski
+
 Mateusz Łukasz Krakowski
 
 ## Użyte paczki
@@ -23,11 +24,12 @@ najlepiej użyć skryptu `sh install_packages.sh` (z tego katalogu)
 - udev - `libudev-dev`
 - freetype - `libfreetype-dev`
 ## Jak 
-- Pobieramy paczki
+- Upwenij się że pobrałeś wszystkie paczki
 - `sh fresh_build.sh` (z tego katalogu)
 -  Plik wykonawczy: `/build/EvoRacer`
 -  Testy: `/build/test/Test`
 ## Test Coverage
+Ostatni test coverage znajdue się w katalogu CodeCoverageReport, plik index.html
 Aby stowrzyć raport z pokrycia testami należy:
 
 - zaisntalować lcov `sudo apt-get install lcov`
