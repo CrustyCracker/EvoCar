@@ -8,7 +8,7 @@ Description:    Header file for render function
 
 #include "Shape.h"
 
-void render(sf::RenderWindow &w, std::vector<Box *> &boxes, std::vector<Polygon *> &polygons,
+void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon *> &polygons,
             std::vector<Circle *> &circles);
 
 #endif

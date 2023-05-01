@@ -33,21 +33,21 @@ int main() {
     ImGui::GetIO().IniFilename = "build/imgui.ini";
 
     // Container to hold all the boxes we create
-    std::vector<Box*> boxes;
+    std::vector<Box> boxes;
 
     // Container to hold all the polygons we create
-    std::vector<Polygon*> polygons;
+    std::vector<Polygon *> polygons;
 
     // Container to hold all the circles we create
-    std::vector<Circle*> circles;
-
-    // Generate ground
-    Box ground = createGround(&world, 350, 50, 500, 100, sf::Color(50, 50, 50));
-    boxes.push_back(&ground);
+    std::vector<Circle *> circles;
 
     // Add a wall (uses "ground" object, for now)
     Box wall = createGround(&world, 50, 350, 100, 700, sf::Color(50, 50, 50));
-    boxes.push_back(&wall);
+    boxes.push_back(wall);
+
+    // Generate ground
+    Box ground = createGround(&world, 350, 50, 500, 100, sf::Color(50, 50, 50));
+    boxes.push_back(ground);
 
     sf::Color bodyColor = sf::Color(50, 200, 50);
     sf::Color wheelColor = sf::Color(225, 50, 50);
@@ -66,6 +66,11 @@ int main() {
     circles.push_back(car.getFrontWheel());
     circles.push_back(car.getBackWheel());
 
+    Car car2 = Car(&world, 150, 300, vertices, 100.0f, 0.3f, 25.0f, bodyColor, wheelColor);
+    polygons.push_back(car2.getBody());
+    circles.push_back(car2.getFrontWheel());
+    circles.push_back(car2.getBackWheel());
+
     sf::Clock deltaClock;
     /** PROGRAM LOOP **/
     while (w.isOpen()) {
@@ -76,7 +81,7 @@ int main() {
 
         ImGui::SFML::Update(w, deltaClock.restart());
 
-        ImGui::SetNextWindowSize(ImVec2(420, 160), ImGuiCond_FirstUseEver);
+        ImGui::SetNextWindowSize(ImVec2(420, 130), ImGuiCond_FirstUseEver);
         ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
         ImGui::Begin("Car Demo");
         ImGui::Text("Left/Right arrow keys to rotate the wheels.");
@@ -95,6 +100,31 @@ int main() {
         ImGui::EndChild();
 
         ImGui::End();
+
+        ImGui::SetNextWindowPos(ImVec2(440, 10), ImGuiCond_FirstUseEver);
+        ImGui::Begin("Car's Position");
+        ImGui::Text("Car's position: (%.1f, %.1f)",
+                    car.getBody()->body->GetPosition().x * Config::PPM,
+                    car.getBody()->body->GetPosition().y * Config::PPM);
+        ImGui::Text("Car's angle: %.1f", car.getBody()->body->GetAngle() * 180 / b2_pi);
+        ImGui::End();
+
+        Box lastGround = boxes.back();
+        ImGui::SetNextWindowPos(ImVec2(440, 80), ImGuiCond_FirstUseEver);
+        ImGui::Begin("Last Ground's Right Edge's Position");
+        ImGui::Text("Last ground's right edge's position: %.1f",
+                    lastGround.body->GetPosition().x * Config::PPM + lastGround.width / 2);
+        ImGui::End();
+
+        const float generateDistance = 200;
+        // if car is far enough to the right, generate a new ground
+        if (lastGround.body->GetPosition().x * Config::PPM + lastGround.width / 2 <
+            car.getBody()->body->GetPosition().x * Config::PPM + generateDistance) {
+            Box ground = createGround(
+                &world, lastGround.body->GetPosition().x * Config::PPM + lastGround.width, 50, 500,
+                100, sf::Color(50, 50, 50));
+            boxes.push_back(ground);
+        }
 
         ImGui::SFML::Render(w);
 
