@@ -50,10 +50,17 @@ int main() {
     boxes.push_back(&wall);
 
     float carColor[3] = {(float)200 / 255, (float)50 / 255, (float)50 / 255};
-    Car car = createCar(&world, 350, 300, carColor);
-    polygons.push_back(&car.body);
-    circles.push_back(&car.frontWheel);
-    circles.push_back(&car.backWheel);
+    CarAlt car = CarAlt(&world, 350, 300, carColor);
+
+    // VVV see https://stackoverflow.com/a/46330927/14664861 VVV
+
+    // auto carBody = car.getBody();
+    // auto carFrontWheel = car.getFrontWheel();
+    // auto carBackWheel = car.getBackWheel();
+
+    polygons.push_back(car.getBody());
+    circles.push_back(car.getFrontWheel());
+    circles.push_back(car.getBackWheel());
 
     sf::Clock deltaClock;
     /** GAME LOOP **/
@@ -74,16 +81,16 @@ int main() {
 
         ImGui::BeginChild("Car Settings");
         ImGui::ColorEdit3("\"Body\" Color", carColor);
-        car.body.color =
+        car.getBody()->color =
             sf::Color((int)(carColor[0] * 255), (int)(carColor[1] * 255), (int)(carColor[2] * 255));
 
-        ImGui::SliderFloat("Wheel 1 Radius [px]", &car.frontWheel.radius, 0.0f, 100.0f);
-        car.frontWheel.body->GetFixtureList()->GetShape()->m_radius =
-            car.frontWheel.radius / Config::PPM;
+        ImGui::SliderFloat("Wheel 1 Radius [px]", &car.getFrontWheel()->radius, 0.0f, 100.0f);
+        car.getFrontWheel()->body->GetFixtureList()->GetShape()->m_radius =
+            car.getFrontWheel()->radius / Config::PPM;
 
-        ImGui::SliderFloat("Wheel 2 Radius [px]", &car.backWheel.radius, 0.0f, 100.0f);
-        car.backWheel.body->GetFixtureList()->GetShape()->m_radius =
-            car.backWheel.radius / Config::PPM;
+        ImGui::SliderFloat("Wheel 2 Radius [px]", &car.getBackWheel()->radius, 0.0f, 100.0f);
+        car.getBackWheel()->body->GetFixtureList()->GetShape()->m_radius =
+            car.getBackWheel()->radius / Config::PPM;
         ImGui::EndChild();
 
         ImGui::End();
@@ -95,11 +102,11 @@ int main() {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
             // Attach camera to the car's body
             sf::View cameraView =
-                sf::View(sf::Vector2f(car.body.body->GetPosition().x * Config::PPM,
+                sf::View(sf::Vector2f(car.getBody()->body->GetPosition().x * Config::PPM,
                                       Config::WINDOW_HEIGHT -
-                                          (car.body.body->GetPosition().y * Config::PPM)),
+                                          (car.getBody()->body->GetPosition().y * Config::PPM)),
                          sf::Vector2f(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT));
-            cameraView.setRotation((-1) * car.body.body->GetAngle() * 180 / b2_pi);
+            cameraView.setRotation((-1) * car.getBody()->body->GetAngle() * 180 / b2_pi);
             w.setView(cameraView);
         } else {
             // Reset camera
@@ -111,13 +118,13 @@ int main() {
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
             // Rotate the circles left
-            car.frontWheel.body->ApplyTorque(1000, false);
-            car.backWheel.body->ApplyTorque(1000, false);
+            car.getFrontWheel()->body->ApplyTorque(1000, false);
+            car.getBackWheel()->body->ApplyTorque(1000, false);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
             // Rotate the circles right
-            car.frontWheel.body->ApplyTorque(-1000, false);
-            car.backWheel.body->ApplyTorque(-1000, false);
+            car.getFrontWheel()->body->ApplyTorque(-1000, false);
+            car.getBackWheel()->body->ApplyTorque(-1000, false);
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {

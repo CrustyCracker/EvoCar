@@ -18,4 +18,21 @@ struct Car {
 
 Car createCar(b2World* world, float x, float y, float carColor[3]);
 
+class CarAlt {
+   private:
+    b2World* world;
+    Polygon body;
+    Circle frontWheel;
+    Circle backWheel;
+    sf::Color bodyColor;
+
+   public:
+    CarAlt(b2World* world, float x, float y, float carColor[3]);
+
+    Polygon* getBody();
+    Circle* getFrontWheel();
+    Circle* getBackWheel();
+    sf::Color* getBodyColor();
+};
+
 #endif
