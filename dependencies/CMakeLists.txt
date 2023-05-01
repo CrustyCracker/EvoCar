@@ -8,13 +8,6 @@ FetchContent_Declare(
   FIND_PACKAGE_ARGS NAMES SFML
 )
 FetchContent_Declare(
-  box2d
-  GIT_REPOSITORY  https://github.com/erincatto/box2d
-  GIT_TAG         9ebbbcd960ad424e03e5de6e66a40764c16f51bc  # v2.4.1
-  GIT_SHALLOW     TRUE
-  FIND_PACKAGE_ARGS NAMES Box2D
-)
-FetchContent_Declare(
   imgui-sfml
   GIT_REPOSITORY  https://github.com/SFML/imgui-sfml
   GIT_TAG         v2.5
@@ -36,7 +29,6 @@ FetchContent_Declare(
   FIND_PACKAGE_ARGS NAMES GTest
 )
 
-add_subdirectory(box2d)
 FetchContent_MakeAvailable(imgui)
 FetchContent_MakeAvailable(googletest)
 add_subdirectory(imgui-sfml)

@@ -55,8 +55,8 @@ Aby stowrzyć raport z pokrycia testami należy:
 - configurate and generate build files
   `cmake ..`
 
-### Dodawanie executabla (naszego maina)
-```add_executable(Nazwa)``` przykad EvoRacer
+### Dodawanie executabla 
+```add_executable(Nazwa)```
 
 ### linkowanie liba do exe
 ```target_link_libraries(EvoRacer PRIVATE sfml-graphics ImGui-SFML::ImGui-SFML imgui box2d)```
