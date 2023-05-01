@@ -35,6 +35,10 @@ Potrzebne będą:
 
 Głównym celem naszego projektu jest stworzenie programu w którym będzie można obserwować ewolucje sztucznych samochodzików starających się pokonać jak najdłuższy dystans w określonym przez użytkownika czasie.
 
+
+## TestCoverage
+- komenda `sudo apt-get install lcov`
+- `sh test_coverage.sh`
 ## Notatki do cmake
 
 - create build directory
@@ -62,7 +66,7 @@ target_link_libraries()
 - build
   `cmake --build . --target EvoRacer` lub `make EvoRacer`
 
-## JAKIEŚ BŁĘDY CMAKE
+### JAKIEŚ BŁĘDY CMAKE
 
 - ```txt
   CMake Error at cmake/Macros.cmake:296 (message):
