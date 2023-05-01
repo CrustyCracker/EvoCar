@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.22)
 
 find_library(box2d REQIRED)
 
@@ -16,6 +16,3 @@ add_subdirectory(dependencies)
 add_subdirectory(test)
 add_executable(EvoRacer src/Main.cc)
 target_link_libraries(EvoRacer PRIVATE sfml-graphics ImGui-SFML::ImGui-SFML imgui box2d EvoRacerLib)
-
-
-
