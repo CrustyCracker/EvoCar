@@ -17,12 +17,15 @@ Mateusz Łukasz Krakowski
 `./build/EvoRacer`
 
 `./build/test/Test`
+
+test coverage: `sh test_coverage.sh` (plik index.html w CodeCoverageReport)
 ## Użyte paczki
+najlepiej użyć skryptu `sh install_packages.sh` (z tego katalogu)
 
 Aby zainstalować paczki użyj komendy `sudo apt-get install <package_name>`
 Potrzebne będą:
 
-najlepiej użyć skryptu `sh install_packages.sh` (z tego katalogu)
+
 
 - Box2d - `libbox2d-dev` (2.4.1-2ubuntu1)
 - Gtest - `libgtest-dev` (1.8.0-6)
@@ -34,7 +37,10 @@ najlepiej użyć skryptu `sh install_packages.sh` (z tego katalogu)
 - freetype - `libfreetype-dev`
 - xrandr `libxrandr-dev`
 - x11 `libx11-dev`
-## Jak 
+
+## Jak zbudować projekt
+wykonaj skrypt `sh fresh_build.sh` (z tego katalogu)
+## Jak stowrzyć raport z pokrycia testami
 - Upwenij się że pobrałeś wszystkie paczki
 - `sh fresh_build.sh` (z tego katalogu)
 -  Plik wykonawczy: `/build/EvoRacer`
