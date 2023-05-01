@@ -15,5 +15,3 @@ add_executable(EvoRacer src/Main.cc)
 target_link_libraries(EvoRacer PRIVATE sfml-graphics ImGui-SFML::ImGui-SFML imgui box2d EvoRacerLib)
 
 enable_testing()
-
- 
