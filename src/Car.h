@@ -8,6 +8,7 @@ Description:    Creates a car with a polygon (car's body)
 #define CAR_H
 #include "box2d/box2d.h"
 #include "Shape.h"
+#include "../config/Config.h"
 
 class Car {
    private:
@@ -18,7 +19,8 @@ class Car {
     sf::Color bodyColor;
 
    public:
-    Car(b2World* world, float x, float y, float carColor[3]);
+    Car(b2World* world, float x, float y, std::vector<b2Vec2> vertices, float density,
+        float friction, float wheelRadious, sf::Color bodyColor, sf::Color wheelColor);
 
     Polygon* getBody();
     Circle* getFrontWheel();

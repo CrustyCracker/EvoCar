@@ -49,14 +49,25 @@ int main() {
     Box wall = createGround(&world, 50, 350, 100, 700, sf::Color(50, 50, 50));
     boxes.push_back(&wall);
 
-    float carColor[3] = {(float)200 / 255, (float)50 / 255, (float)50 / 255};
-    Car car = Car(&world, 350, 300, carColor);
+    sf::Color bodyColor = sf::Color(50, 200, 50);
+    sf::Color wheelColor = sf::Color(50, 50, 50);
+    std::vector<b2Vec2> vertices;
+    vertices.push_back(b2Vec2(0.0f, 0.0f));
+    vertices.push_back(b2Vec2(1.0f, -1.0f));
+    vertices.push_back(b2Vec2(4.0f, -1.0f));
+    vertices.push_back(b2Vec2(5.0f, 0.0f));
+    vertices.push_back(b2Vec2(5.0f, 1.0f));
+    vertices.push_back(b2Vec2(4.0f, 2.0f));
+    vertices.push_back(b2Vec2(1.0f, 2.0f));
+    vertices.push_back(b2Vec2(0.0f, 1.0f));
+
+    Car car = Car(&world, 350, 300, vertices, 100.0f, 0.3f, 25.0f, bodyColor, wheelColor);
     polygons.push_back(car.getBody());
     circles.push_back(car.getFrontWheel());
     circles.push_back(car.getBackWheel());
 
     sf::Clock deltaClock;
-    /** GAME LOOP **/
+    /** PROGRAM LOOP **/
     while (w.isOpen()) {
         // Update the world, standard arguments
         world.Step(1 / 60.f, 6, 3);
@@ -73,9 +84,6 @@ int main() {
         ImGui::Text("");
 
         ImGui::BeginChild("Car Settings");
-        ImGui::ColorEdit3("\"Body\" Color", carColor);
-        car.getBody()->color =
-            sf::Color((int)(carColor[0] * 255), (int)(carColor[1] * 255), (int)(carColor[2] * 255));
 
         ImGui::SliderFloat("Wheel 1 Radius [px]", &car.getFrontWheel()->radius, 0.0f, 100.0f);
         car.getFrontWheel()->body->GetFixtureList()->GetShape()->m_radius =
