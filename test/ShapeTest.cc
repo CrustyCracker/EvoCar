@@ -6,7 +6,7 @@ Description: This file contains tests for functions from src/Shape.h.
 */
 
 TEST(CreateBoxTest, BasicTest) {
-    b2World world(b2Vec2(0.0f, 0.0f));
+    b2World world(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
     float x = 0.0f, y = 0.0f, width = 10.0f, height = 20.0f, density = 1.0f, friction = 0.5f;
     sf::Color color = sf::Color::Red;
 
@@ -23,7 +23,7 @@ TEST(CreateBoxTest, BasicTest) {
 
 TEST(CreateBoxTest, InvalidWidthTest) {
     // Test with invalid input (negative width and height)
-    b2World world(b2Vec2(0.0f, 0.0f));
+    b2World world(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
     float x = 0.0f, y = 0.0f, width = -10.0f, height = 10.0f, density = 1.0f, friction = 0.5f;
     sf::Color color = sf::Color::Red;
 
@@ -33,7 +33,7 @@ TEST(CreateBoxTest, InvalidWidthTest) {
 
 TEST(CreateBoxTest, InvalidHeightTest) {
     // Test with invalid input (negative width and height)
-    b2World world(b2Vec2(0.0f, 0.0f));
+    b2World world(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
     float x = 0.0f, y = 0.0f, width = 10.0f, height = 0.0f, density = 1.0f, friction = 0.5f;
     sf::Color color = sf::Color::Red;
 
@@ -43,8 +43,8 @@ TEST(CreateBoxTest, InvalidHeightTest) {
 
 TEST(CreateBoxTest, InvalidDensityTest) {
     // Test with invalid input (negative width and height)
-    b2World world(b2Vec2(0.0f, 0.0f));
-    float x = 0.0f, y = 0.0f, width = 10.0f, height = 1.0f, density = -1.0f, friction = 0.5f;
+    b2World world(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
+    float x = 1.0f, y = 1.0f, width = 10.0f, height = 1.0f, density = -1.0f, friction = 0.5f;
     sf::Color color = sf::Color::Red;
 
     ASSERT_THROW(createBox(&world, x, y, width, height, density, friction, color),
@@ -53,8 +53,8 @@ TEST(CreateBoxTest, InvalidDensityTest) {
 
 TEST(CreateBoxTest, InvalidFrictionTest) {
     // Test with invalid input (negative width and height)
-    b2World world(b2Vec2(0.0f, 0.0f));
-    float x = 0.0f, y = 0.0f, width = 10.0f, height = 1.0f, density = -1.0f, friction = 0.5f;
+    b2World world(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
+    float x = 1.0f, y = 1.0f, width = 10.0f, height = 5.0f, density = 2.0f, friction = 0.0f;
     sf::Color color = sf::Color::Red;
 
     ASSERT_THROW(createBox(&world, x, y, width, height, density, friction, color),
@@ -62,7 +62,7 @@ TEST(CreateBoxTest, InvalidFrictionTest) {
 }
 
 TEST(CreateGroundTest, BasicTest) {
-    b2World world{b2Vec2{0.0f, 0.0f}};
+    b2World world(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
     float x = 42.0f, y = 42.0f, width = 50.0f, height = 10.0f;
     sf::Color color = sf::Color::Blue;
 
@@ -77,7 +77,7 @@ TEST(CreateGroundTest, BasicTest) {
 }
 
 TEST(CreateGroundTest, InvalidWidthTest) {
-    b2World world{b2Vec2{0.0f, 0.0f}};
+    b2World world(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
     float x = 42.0f, y = 42.0f, width = 0.0f, height = 10.0f;
     sf::Color color = sf::Color::Blue;
 
@@ -85,7 +85,7 @@ TEST(CreateGroundTest, InvalidWidthTest) {
 }
 
 TEST(CreateGroundTest, InvalidHeightTest) {
-    b2World world{b2Vec2{0.0f, 0.0f}};
+    b2World world(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
     float x = 42.0f, y = 42.0f, width = 50.0f, height = -10.0f;
     sf::Color color = sf::Color::Blue;
 
@@ -93,7 +93,7 @@ TEST(CreateGroundTest, InvalidHeightTest) {
 }
 
 TEST(CreateCircleTest, BasicTest) {
-    b2Vec2 gravity(0.0f, 9.81f);
+    b2Vec2 gravity(0.0f, Config::GRAVITIATIONAL_ACCELERATION);
     b2World world(gravity);
     float x = 10.0f, y = 20.0f, radius = 2.0f, density = 1.0f, friction = 0.5f;
     sf::Color color(255, 255, 0);
@@ -109,7 +109,7 @@ TEST(CreateCircleTest, BasicTest) {
 }
 
 TEST(CreateCircleTest, InvalidRadiusTest) {
-    b2Vec2 gravity(0.0f, 9.81f);
+    b2Vec2 gravity(0.0f, Config::GRAVITIATIONAL_ACCELERATION);
     b2World world(gravity);
     float x = 10.0f, y = 20.0f, radius = 0.0f, density = 1.0f, friction = 0.5f;
     sf::Color color(255, 255, 0);
@@ -119,7 +119,7 @@ TEST(CreateCircleTest, InvalidRadiusTest) {
 }
 
 TEST(CreateCircleTest, InvalidDensityTest) {
-    b2Vec2 gravity(0.0f, 9.81f);
+    b2Vec2 gravity(0.0f, Config::GRAVITIATIONAL_ACCELERATION);
     b2World world(gravity);
     float x = 10.0f, y = 20.0f, radius = 2.0f, density = -1.0f, friction = 0.5f;
     sf::Color color(255, 255, 0);
@@ -129,7 +129,7 @@ TEST(CreateCircleTest, InvalidDensityTest) {
 }
 
 TEST(CreateCircleTest, InvalidFrictionTest) {
-    b2Vec2 gravity(0.0f, 9.81f);
+    b2Vec2 gravity(0.0f, Config::GRAVITIATIONAL_ACCELERATION);
     b2World world(gravity);
     float x = 10.0f, y = 20.0f, radius = 2.0f, density = 1.0f, friction = -0.5f;
     sf::Color color(255, 255, 0);
@@ -139,7 +139,7 @@ TEST(CreateCircleTest, InvalidFrictionTest) {
 }
 
 TEST(CreatePolygonTest, BasicTest) {
-    b2World world(b2Vec2(0.0f, 9.81f));
+    b2World world(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
     float x = 0.0f, y = 0.0f, density = 1.0f, friction = 0.5f;
     std::vector<b2Vec2> vertices = {b2Vec2(-1.0f, -1.0f), b2Vec2(1.0f, -1.0f), b2Vec2(0.0f, 1.0f)};
     sf::Color color = sf::Color::Red;
@@ -159,7 +159,7 @@ TEST(CreatePolygonTest, BasicTest) {
 }
 
 TEST(CreatePolygonTest, EmptyVerticesTest) {
-    b2World world(b2Vec2(0.0f, 9.81f));
+    b2World world(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
     float x = 0.0f, y = 0.0f, density = 1.0f, friction = 0.5f;
     std::vector<b2Vec2> vertices = {};
     sf::Color color = sf::Color::Red;
@@ -168,7 +168,7 @@ TEST(CreatePolygonTest, EmptyVerticesTest) {
 }
 
 TEST(CreatePolygonTest, TooMuchVerticesTest) {
-    b2World world(b2Vec2(0.0f, 9.81f));
+    b2World world(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
     float x = 0.0f, y = 0.0f, density = 1.0f, friction = 0.5f;
     std::vector<b2Vec2> vertices = {b2Vec2(-1.0f, -1.0f), b2Vec2(1.0f, -1.0f), b2Vec2(0.0f, 1.0f),
                                     b2Vec2(-1.0f, -1.0f), b2Vec2(1.0f, -1.0f), b2Vec2(0.0f, 1.0f),
@@ -179,7 +179,7 @@ TEST(CreatePolygonTest, TooMuchVerticesTest) {
 }
 
 TEST(CreatePolygonTest, InvalidDensityTest) {
-    b2World world(b2Vec2(0.0f, 9.81f));
+    b2World world(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
     float x = 0.0f, y = 0.0f, density = 0.0f, friction = 0.5f;
     std::vector<b2Vec2> vertices = {b2Vec2(-1.0f, -1.0f), b2Vec2(1.0f, -1.0f), b2Vec2(0.0f, 1.0f),
                                     b2Vec2(-1.0f, -1.0f), b2Vec2(1.0f, -1.0f), b2Vec2(0.0f, 1.0f),
@@ -190,7 +190,7 @@ TEST(CreatePolygonTest, InvalidDensityTest) {
 }
 
 TEST(CreatePolygonTest, InvalidFrictionTest) {
-    b2World world(b2Vec2(0.0f, 9.81f));
+    b2World world(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
     float x = 0.0f, y = 0.0f, density = 1.0f, friction = -0.5f;
     std::vector<b2Vec2> vertices = {b2Vec2(-1.0f, -1.0f), b2Vec2(1.0f, -1.0f), b2Vec2(0.0f, 1.0f),
                                     b2Vec2(-1.0f, -1.0f), b2Vec2(1.0f, -1.0f), b2Vec2(0.0f, 1.0f),

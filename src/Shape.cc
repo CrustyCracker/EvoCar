@@ -10,11 +10,11 @@ Box createBox(b2World* world, float x, float y, float width, float height, float
     // Argument validation
     if (width <= 0) {
         throw std::invalid_argument("Invalid width parameter");
-    } else if (height <= 0) {
+    } else if (height <= 0.0f) {
         throw std::invalid_argument("Invalid height parameter");
-    } else if (density <= 0) {
+    } else if (density <= 0.0f) {
         throw std::invalid_argument("Invalid density parameter");
-    } else if (friction <= 0) {
+    } else if (friction <= 0.0f) {
         throw std::invalid_argument("Invalid friction parameter");
     }
     // Body definition
@@ -42,9 +42,9 @@ Box createBox(b2World* world, float x, float y, float width, float height, float
 
 Box createGround(b2World* world, float x, float y, float width, float height, sf::Color color) {
     // Argument validation
-    if (width <= 0) {
+    if (width <= 0.0f) {
         throw std::invalid_argument("Invalid width parameter");
-    } else if (height <= 0) {
+    } else if (height <= 0.0f) {
         throw std::invalid_argument("Invalid height parameter");
     }
 
@@ -64,11 +64,11 @@ Box createGround(b2World* world, float x, float y, float width, float height, sf
 Circle createCircle(b2World* world, float x, float y, float radius, float density, float friction,
                     sf::Color color) {
     // Argument validation
-    if (radius <= 0) {
+    if (radius <= 0.0f) {
         throw std::invalid_argument("Invalid width parameter");
-    } else if (density <= 0) {
+    } else if (density <= 0.0f) {
         throw std::invalid_argument("Invalid density parameter");
-    } else if (friction <= 0) {
+    } else if (friction <= 0.0f) {
         throw std::invalid_argument("Invalid friction parameter");
     }
 
@@ -96,9 +96,9 @@ Polygon createPolygon(b2World* world, float x, float y, std::vector<b2Vec2> vert
     // Argument validation
     if (vertices.size() < 3 || vertices.size() > 8) {
         throw std::invalid_argument("Invalid vertices size");
-    } else if (density <= 0) {
+    } else if (density <= 0.0f) {
         throw std::invalid_argument("Invalid density parameter");
-    } else if (friction <= 0) {
+    } else if (friction <= 0.0f) {
         throw std::invalid_argument("Invalid friction parameter");
     }
     b2BodyDef boxBodyDef;
