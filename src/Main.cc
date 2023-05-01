@@ -50,8 +50,7 @@ int main() {
     boxes.push_back(&wall);
 
     float carColor[3] = {(float)200 / 255, (float)50 / 255, (float)50 / 255};
-    // Car car = createCar(&world, &polygons, &circles, carColor);
-    CarAlt car = createCarAlt(&world, 350, 300, carColor);
+    Car car = createCar(&world, 350, 300, carColor);
     polygons.push_back(&car.body);
     circles.push_back(&car.frontWheel);
     circles.push_back(&car.backWheel);
@@ -62,7 +61,7 @@ int main() {
         // Update the world, standard arguments
         world.Step(1 / 60.f, 6, 3);
         // Render everything
-        renderAlt(w, boxes, polygons, circles);
+        render(w, boxes, polygons, circles);
 
         ImGui::SFML::Update(w, deltaClock.restart());
 
