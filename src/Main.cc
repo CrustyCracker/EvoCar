@@ -50,7 +50,7 @@ int main() {
     boxes.push_back(&wall);
 
     sf::Color bodyColor = sf::Color(50, 200, 50);
-    sf::Color wheelColor = sf::Color(50, 50, 50);
+    sf::Color wheelColor = sf::Color(225, 50, 50);
     std::vector<b2Vec2> vertices;
     vertices.push_back(b2Vec2(0.0f, 0.0f));
     vertices.push_back(b2Vec2(1.0f, -1.0f));
