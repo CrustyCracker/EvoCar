@@ -12,9 +12,16 @@ Mateusz Łukasz Krakowski
 Aby zainstalować paczki użyj komendy `sudo apt-get install <package_name>`
 Potrzebne będą:
 
+najlepiej użyć skryptu `sh install_packages.sh` (z tego katalogu)
+
 - Box2d - `libbox2d-dev` (2.4.1-2ubuntu1)
 - Gtest - `libgtest-dev` (1.8.0-6)
-
+- cmake - `cmake` (3.22.1-1ubuntu1)
+- build-essential - `build-essential` (12.8ubuntu1)ls
+- ImGui - `libimgui-dev` 
+- sfml - `libsfml-dev` 
+- udev - `libudev-dev`
+- freetype - `libfreetype-dev`
 ## Jak 
 - Pobieramy paczki
 - `sh fresh_build.sh` (z tego katalogu)
