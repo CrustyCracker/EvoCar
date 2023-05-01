@@ -12,4 +12,7 @@ Description:    This file contains the render function, which is responsible
 void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Polygon> &polygons,
             std::vector<Circle> &circles);
 
+void renderAlt(sf::RenderWindow &w, std::vector<Box*> &boxes, std::vector<Polygon*> &polygons,
+            std::vector<Circle*> &circles);
+
 #endif

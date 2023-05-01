@@ -16,7 +16,16 @@ struct Car {
     sf::Color bodyColor;
 };
 
+struct CarAlt {
+    Polygon body;
+    Circle frontWheel;
+    Circle backWheel;
+    sf::Color bodyColor;
+};
+
 Car createCar(b2World* world, std::vector<Polygon>* polygons, std::vector<Circle>* circles,
               float carColor[3]);
+
+CarAlt createCarAlt(b2World* world, float x, float y, float carColor[3]);
 
 #endif
