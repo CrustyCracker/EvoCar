@@ -42,3 +42,9 @@ Circle* Car::getFrontWheel() { return &frontWheel; }
 Circle* Car::getBackWheel() { return &backWheel; }
 
 sf::Color* Car::getBodyColor() { return &bodyColor; }
+
+void Car::setCollisionFilter(b2Filter filter) {
+    body.body->GetFixtureList()->SetFilterData(filter);
+    frontWheel.body->GetFixtureList()->SetFilterData(filter);
+    backWheel.body->GetFixtureList()->SetFilterData(filter);
+}
