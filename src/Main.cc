@@ -32,14 +32,9 @@ int main() {
     // Change imgui.ini location
     ImGui::GetIO().IniFilename = "build/imgui.ini";
 
-    // Container to hold all the boxes we create
+    // Containers to hold objects we create
     std::vector<Box> boxes;
-
-    // Container to hold all the polygons we create
-    std::vector<Polygon *> polygons;
-
-    // Container to hold all the circles we create
-    std::vector<Circle *> circles;
+    std::vector<Car *> cars;
 
     // Add a wall (uses "ground" object, for now)
     Box wall = createGround(&world, 50, 350, 100, 700, sf::Color(50, 50, 50));
@@ -62,14 +57,27 @@ int main() {
     vertices.push_back(b2Vec2(0.0f, 1.0f));
 
     Car car = Car(&world, 350, 300, vertices, 100.0f, 0.3f, 25.0f, bodyColor, wheelColor);
-    polygons.push_back(car.getBody());
-    circles.push_back(car.getFrontWheel());
-    circles.push_back(car.getBackWheel());
 
-    Car car2 = Car(&world, 150, 300, vertices, 100.0f, 0.3f, 25.0f, bodyColor, wheelColor);
-    polygons.push_back(car2.getBody());
-    circles.push_back(car2.getFrontWheel());
-    circles.push_back(car2.getBackWheel());
+    sf::Color bodyColor2 = sf::Color(25, 100, 25);
+    sf::Color wheelColor2 = sf::Color(113, 25, 25);
+    Car car2 = Car(&world, 150, 300, vertices, 100.0f, 0.3f, 25.0f, bodyColor2, wheelColor2);
+
+    sf::Color bodyColor3 = sf::Color(13, 50, 13);
+    sf::Color wheelColor3 = sf::Color(57, 13, 13);
+    Car car3 = Car(&world, 250, 500, vertices, 100.0f, 0.3f, 25.0f, bodyColor3, wheelColor3);
+
+    cars.push_back(&car3);
+    cars.push_back(&car2);
+    cars.push_back(&car);
+
+    // Make cars pass through eachother
+    // by setting collision filtering
+    b2Filter filter;
+    filter.categoryBits = 2;
+    filter.maskBits = 1;
+    for (Car *car : cars) {
+        car->setCollisionFilter(filter);
+    }
 
     sf::Clock deltaClock;
     /** PROGRAM LOOP **/
@@ -77,7 +85,7 @@ int main() {
         // Update the world, standard arguments
         world.Step(1 / 60.f, 6, 3);
         // Render everything
-        render(w, boxes, polygons, circles);
+        render(w, boxes, cars);
 
         ImGui::SFML::Update(w, deltaClock.restart());
 

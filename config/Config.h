@@ -2,7 +2,7 @@
 #define CONFIG_H
 
 /*
-Author: Mateusz Krakowski
+Author: Mateusz Krakowski, Jakub Marcowski
 Description: This file contains all the constant values used in the program.
 */
 
@@ -19,6 +19,12 @@ class Config {
     static constexpr double GRAVITIATIONAL_ACCELERATION = -9.81f;
     static constexpr int COLOR_CONST = 255;
     static constexpr float MAX_JOINT_LENGTH = 0.01f;
+
+    // Number of vertices in a car's body polygon
+    static constexpr int CAR_VERTICES = 8;
+
+    // Draw debug geometry
+    static constexpr bool DEBUG = true;
 };
 
 #endif  // CONFIG_H

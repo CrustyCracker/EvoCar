@@ -29,6 +29,7 @@ class Car {
     Circle* getFrontWheel();
     Circle* getBackWheel();
     sf::Color* getBodyColor();
+    void setCollisionFilter(b2Filter filter);
 };
 
 #endif
