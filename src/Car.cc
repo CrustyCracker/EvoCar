@@ -6,7 +6,7 @@ Description:    Creates a car with a polygon (car's body)
     and two circles (front and back wheels).
 */
 
-Car::Car(b2World* world, float x, float y, std::vector<b2Vec2> vertices, float density,
+Car::Car(b2WorldPtr world, float x, float y, std::vector<b2Vec2> vertices, float density,
          float friction, float wheelRadious, sf::Color bodyColor, sf::Color wheelColor) {
     // Create a polygon (octagon)
     body = createPolygon(world, x, y, vertices, density, friction, bodyColor);

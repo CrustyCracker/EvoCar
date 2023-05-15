@@ -5,7 +5,7 @@ Author:         Jakub Marcowski
 Description:    This file contains functions for creating Box2D objects.
 */
 
-Box createBox(b2World* world, float x, float y, float width, float height, float density,
+Box createBox(b2WorldPtr world, float x, float y, float width, float height, float density,
               float friction, sf::Color color) {
     // Argument validation
     if (width <= 0) {
@@ -40,7 +40,7 @@ Box createBox(b2World* world, float x, float y, float width, float height, float
     return Box{width, height, color, boxBody};
 }
 
-Box createGround(b2World* world, float x, float y, float width, float height, sf::Color color) {
+Box createGround(b2WorldPtr world, float x, float y, float width, float height, sf::Color color) {
     // Argument validation
     if (width <= 0.0f) {
         throw std::invalid_argument("Invalid width parameter");
@@ -61,7 +61,7 @@ Box createGround(b2World* world, float x, float y, float width, float height, sf
     return Box{width, height, color, groundBody};
 }
 
-Circle createCircle(b2World* world, float x, float y, float radius, float density, float friction,
+Circle createCircle(b2WorldPtr world, float x, float y, float radius, float density, float friction,
                     sf::Color color) {
     // Argument validation
     if (radius <= 0.0f) {
@@ -91,7 +91,7 @@ Circle createCircle(b2World* world, float x, float y, float radius, float densit
     return Circle{radius, color, boxBody};
 }
 
-Polygon createPolygon(b2World* world, float x, float y, std::vector<b2Vec2> vertices, float density,
+Polygon createPolygon(b2WorldPtr world, float x, float y, std::vector<b2Vec2> vertices, float density,
                       float friction, sf::Color color) {
     // Argument validation
     if (vertices.size() < 3 || vertices.size() > Config::CAR_VERTICES) {

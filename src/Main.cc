@@ -14,8 +14,10 @@
 Author:        Jakub Marcowski, Mateusz Krakowski
 Description:   Main file for the project, contains the main loop.
 */
+typedef std::shared_ptr<b2World> b2WorldPtr(&world);
 
-b2World world(b2Vec2(0, Config::GRAVITIATIONAL_ACCELERATION));
+// initialize the world as a shared pointer
+b2WorldPtr world(new b2World(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION)));
 
 int main() {
     sf::ContextSettings settings;
