@@ -14,10 +14,10 @@
 Author:        Jakub Marcowski, Mateusz Krakowski
 Description:   Main file for the project, contains the main loop.
 */
-typedef std::shared_ptr<b2World> b2WorldPtr(&world);
+typedef std::shared_ptr<b2World> b2WorldPtr;
 
 // initialize the world as a shared pointer
-b2WorldPtr world(new b2World(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION)));
+b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
 
 int main() {
     sf::ContextSettings settings;
@@ -39,11 +39,11 @@ int main() {
     std::vector<Car *> cars;
 
     // Add a wall (uses "ground" object, for now)
-    Box wall = createGround(&world, 50, 350, 100, 700, sf::Color(50, 50, 50));
+    Box wall = createGround(world, 50, 350, 100, 700, sf::Color(50, 50, 50));
     boxes.push_back(wall);
 
     // Generate ground
-    Box ground = createGround(&world, 350, 50, 500, 100, sf::Color(50, 50, 50));
+    Box ground = createGround(world, 350, 50, 500, 100, sf::Color(50, 50, 50));
     boxes.push_back(ground);
 
     sf::Color bodyColor = sf::Color(50, 200, 50);
@@ -58,15 +58,15 @@ int main() {
     vertices.push_back(b2Vec2(1.0f, 2.0f));
     vertices.push_back(b2Vec2(0.0f, 1.0f));
 
-    Car car = Car(&world, 350, 300, vertices, 100.0f, 0.3f, 25.0f, bodyColor, wheelColor);
+    Car car = Car(world, 350, 300, vertices, 100.0f, 0.3f, 25.0f, bodyColor, wheelColor);
 
     sf::Color bodyColor2 = sf::Color(25, 100, 25);
     sf::Color wheelColor2 = sf::Color(113, 25, 25);
-    Car car2 = Car(&world, 150, 300, vertices, 100.0f, 0.3f, 25.0f, bodyColor2, wheelColor2);
+    Car car2 = Car(world, 150, 300, vertices, 100.0f, 0.3f, 25.0f, bodyColor2, wheelColor2);
 
     sf::Color bodyColor3 = sf::Color(13, 50, 13);
     sf::Color wheelColor3 = sf::Color(57, 13, 13);
-    Car car3 = Car(&world, 250, 500, vertices, 100.0f, 0.3f, 25.0f, bodyColor3, wheelColor3);
+    Car car3 = Car(world, 250, 500, vertices, 100.0f, 0.3f, 25.0f, bodyColor3, wheelColor3);
 
     cars.push_back(&car3);
     cars.push_back(&car2);
@@ -85,7 +85,7 @@ int main() {
     /** PROGRAM LOOP **/
     while (w.isOpen()) {
         // Update the world, standard arguments
-        world.Step(1 / 60.f, 6, 3);
+        world->Step(1 / 60.f, 6, 3);
         // Render everything
         render(w, boxes, cars);
 
@@ -131,7 +131,7 @@ int main() {
         if (lastGround.body->GetPosition().x * Config::PPM + lastGround.width / 2 <
             car.getBody()->body->GetPosition().x * Config::PPM + generateDistance) {
             Box ground = createGround(
-                &world, lastGround.body->GetPosition().x * Config::PPM + lastGround.width, 50, 500,
+                world, lastGround.body->GetPosition().x * Config::PPM + lastGround.width, 50, 500,
                 100, sf::Color(50, 50, 50));
             boxes.push_back(ground);
         }

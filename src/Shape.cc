@@ -1,7 +1,7 @@
 #include "Shape.h"
 
 /*
-Author:         Jakub Marcowski
+Author:         Jakub Marcowski, Mateusz Krakowski
 Description:    This file contains functions for creating Box2D objects.
 */
 
@@ -91,8 +91,8 @@ Circle createCircle(b2WorldPtr world, float x, float y, float radius, float dens
     return Circle{radius, color, boxBody};
 }
 
-Polygon createPolygon(b2WorldPtr world, float x, float y, std::vector<b2Vec2> vertices, float density,
-                      float friction, sf::Color color) {
+Polygon createPolygon(b2WorldPtr world, float x, float y, std::vector<b2Vec2> vertices,
+                      float density, float friction, sf::Color color) {
     // Argument validation
     if (vertices.size() < 3 || vertices.size() > Config::CAR_VERTICES) {
         throw std::invalid_argument("Invalid vertices size");
@@ -117,5 +117,6 @@ Polygon createPolygon(b2WorldPtr world, float x, float y, std::vector<b2Vec2> ve
 
     boxBody->CreateFixture(&fixtureDef);
 
+    // create a Polygon object with a shared pointer to the b2Body
     return Polygon{vertices, color, boxBody};
 }
