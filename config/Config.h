@@ -25,6 +25,25 @@ class Config {
 
     // Draw debug geometry
     static constexpr bool DEBUG = true;
+
+
+    // Evolutionary algorithm parameters
+    static constexpr int POPULATION_SIZE = 10;
+    // const float mutationRateBodyLengths = 0.1;
+    // const float mutationRateBodyDensity = 0.05;
+    // const float mutationRateWheelRadius = 0.2;
+    // const float mutationRateWheelDensity = 0.1;
+    static constexpr float MIN_BODY_LENGTH = 1.0f;
+    static constexpr float MAX_BODY_LENGTH = 10.0f;
+    
+    static constexpr float MIN_BODY_DENSITY = 0.1f;
+    static constexpr float MAX_BODY_DENSITY = 10.0f;
+
+    static constexpr float MIN_WHEEL_RADIUS = 0.1f;
+    static constexpr float MAX_WHEEL_RADIUS = 1.0f;
+
+    static constexpr float MIN_WHEEL_DENSITY = 0.1f;
+    static constexpr float MAX_WHEEL_DENSITY = 10.0f;
 };
 
 #endif  // CONFIG_H
