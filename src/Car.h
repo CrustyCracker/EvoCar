@@ -13,16 +13,18 @@ Description:    Creates a car with a polygon (car's body)
 Author:         Jakub Marcowski, Mateusz Krakowski
 Description:    Header file for Car class.
 */
+
+typedef std::shared_ptr<b2World> b2WorldPtr;
 class Car {
    private:
-    b2World* world;
+    b2WorldPtr world;
     Polygon body;
     Circle frontWheel;
     Circle backWheel;
     sf::Color bodyColor;
 
    public:
-    Car(b2World* world, float x, float y, std::vector<b2Vec2> vertices, float density,
+    Car(b2WorldPtr world, float x, float y, std::vector<b2Vec2> vertices, float density,
         float friction, float wheelRadious, sf::Color bodyColor, sf::Color wheelColor);
 
     Polygon* getBody();

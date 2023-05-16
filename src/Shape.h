@@ -9,6 +9,7 @@ Description:    Header file for functions for creating Box2D objects.
 #include "../config/Config.h"
 #include "SFML/Graphics.hpp"
 #include "box2d/box2d.h"
+#include <memory>
 
 struct Box {
     float width;
@@ -29,18 +30,20 @@ struct Polygon {
     b2Body* body;
 };
 
-Box createBox(b2World* world, float x, float y, float width, float height, float density,
+typedef std::shared_ptr<b2World> b2WorldPtr;
+
+Box createBox(b2WorldPtr world, float x, float y, float width, float height, float density,
               float friction, sf::Color color);
 
 /*
 This function is used to create a static rectangular body, which will be used as a ground.
 */
-Box createGround(b2World* world, float x, float y, float width, float height, sf::Color color);
+Box createGround(b2WorldPtr world, float x, float y, float width, float height, sf::Color color);
 
-Circle createCircle(b2World* world, float x, float y, float radius, float density, float friction,
+Circle createCircle(b2WorldPtr world, float x, float y, float radius, float density, float friction,
                     sf::Color color);
 
-Polygon createPolygon(b2World* world, float x, float y, std::vector<b2Vec2> vertices, float density,
-                      float friction, sf::Color color);
+Polygon createPolygon(b2WorldPtr world, float x, float y, std::vector<b2Vec2> vertices,
+                      float density, float friction, sf::Color color);
 
 #endif
