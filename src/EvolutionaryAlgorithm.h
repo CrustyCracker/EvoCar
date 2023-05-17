@@ -7,9 +7,9 @@ Description:    Header file for EvolutionaryAlgorithm class needed for evolution
 #define GENOME_H
 #include <vector>
 #include <random>
-#include "../config/Config.h"
+#include "../config/EvolutionaryAlgorithmConfig.h"
 
-struct Individual
+struct Chromosome
 {
     std::vector<float> bodyLengths;
     float bodyDensity;
@@ -24,13 +24,16 @@ class EvolutionaryAlgorithm
 private:
     int generation_;
     int populationSize_;
-    std::vector<Individual> genes_{populationSize_};
+    std::vector<Chromosome> population_{populationSize_};
 public:
     EvolutionaryAlgorithm(int populationSize);
-    std::vector<Individual> getGenes() { return genes_; }
+    std::vector<Chromosome> getGenes() { return population_; }
     void mutate();
     void crossover();
-    void setFitness(int index, float fitness) { genes_[index].fitness = fitness; }
+    void setFitness(int index, float fitness) { population_[index].fitness = fitness; }
+
+    int getGeneration() { return generation_; }
+    int getPopulationSize() { return populationSize_; }
 
 };
 
