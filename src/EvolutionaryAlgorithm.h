@@ -9,8 +9,7 @@ Description:    Header file for EvolutionaryAlgorithm class needed for evolution
 #include <random>
 #include "../config/EvolutionaryAlgorithmConfig.h"
 
-struct Chromosome
-{
+struct Chromosome {
     std::vector<float> bodyLengths;
     float bodyDensity;
     std::pair<float, float> wheelRadius;
@@ -18,14 +17,13 @@ struct Chromosome
     float fitness;
 };
 
-
-class EvolutionaryAlgorithm
-{
-private:
-    int generation_;
-    int populationSize_;
+class EvolutionaryAlgorithm {
+   private:
+    unsigned long int generation_;
+    unsigned long int populationSize_;
     std::vector<Chromosome> population_{populationSize_};
-public:
+
+   public:
     EvolutionaryAlgorithm(int populationSize);
     std::vector<Chromosome> getGenes() { return population_; }
     void mutate();
@@ -34,7 +32,6 @@ public:
 
     int getGeneration() { return generation_; }
     int getPopulationSize() { return populationSize_; }
-
 };
 
 #endif
