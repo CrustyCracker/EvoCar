@@ -85,11 +85,16 @@ int main() {
         car->setCollisionFilter(filter);
     }
 
+    bool paused = false;
+    bool pause_check = true;
+
     sf::Clock deltaClock;
     /** PROGRAM LOOP **/
     while (w.isOpen()) {
         // Update the world, standard arguments
-        world->Step(1 / 60.f, 6, 3);
+        if (!paused) {
+            world->Step(1 / 60.f, 6, 3);
+        }
         // Render everything
         render(w, boxes, cars);
 
@@ -161,20 +166,31 @@ int main() {
             w.setView(cameraView);
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-            // Rotate the circles left
-            car.getFrontWheel()->body->ApplyTorque(1000, false);
-            car.getBackWheel()->body->ApplyTorque(1000, false);
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-            // Rotate the circles right
-            car.getFrontWheel()->body->ApplyTorque(-1000, false);
-            car.getBackWheel()->body->ApplyTorque(-1000, false);
+        if (!paused) {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+                // Rotate the circles left
+                car.getFrontWheel()->body->ApplyTorque(1000, false);
+                car.getBackWheel()->body->ApplyTorque(1000, false);
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+                // Rotate the circles right
+                car.getFrontWheel()->body->ApplyTorque(-1000, false);
+                car.getBackWheel()->body->ApplyTorque(-1000, false);
+            }
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
             // Close the window
             w.close();
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::P) ||
+            sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+            // Pause the simulation
+            if (pause_check) {
+                paused = !paused;
+                pause_check = false;
+            }
         }
 
         // Display FPS in window title
@@ -187,6 +203,12 @@ int main() {
             // Close window : exit
             if (event.type == sf::Event::Closed) {
                 w.close();
+            }
+            // Allow user to toggle pause again
+            if (event.type == sf::Event::KeyReleased) {
+                if (event.key.code == sf::Keyboard::P || event.key.code == sf::Keyboard::Space) {
+                    pause_check = true;
+                }
             }
         }
     }
