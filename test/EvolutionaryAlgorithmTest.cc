@@ -2,14 +2,12 @@
 #include "../src/EvolutionaryAlgorithm.h"
 /*
 Author: Mateusz Krakowski
-Description: This file contains tests for functions from src/Shape.h.
+Description: This file contains tests for functions from src/EvolutionaryAlgorithm.h.
 */
-typedef std::shared_ptr<b2WorldPtr> b2WorldPtrPtr;
 TEST(CreateBoxTest, BasicTest) {
     EvolutionaryAlgorithm evo(10);
     // mutate the genes 50 times just to test it
-    for (int i = 0; i < 50; ++i)
-    {
+    for (int i = 0; i < 50; ++i) {
         evo.mutate();
     }
     std::vector<Chromosome> genes = evo.getGenes();

@@ -4,7 +4,6 @@
 Author: Mateusz Krakowski
 Description: This file contains tests for functions from src/Shape.h.
 */
-typedef std::shared_ptr<b2WorldPtr> b2WorldPtrPtr;
 TEST(CreateBoxTest, BasicTest) {
     b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
     float x = 0.0f, y = 0.0f, width = 10.0f, height = 20.0f, density = 1.0f, friction = 0.5f;
