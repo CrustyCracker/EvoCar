@@ -31,6 +31,8 @@ class EvolutionaryAlgorithmConfig {
     static constexpr float MAX_WHEEL_DENSITY = 10.0f;
     static constexpr float MUTATION_RATE_WHEEL_DENSITY = 0.1f;
     static constexpr float MUTATION_FACTOR_WHEEL_DENSITY = 0.1f;
+
+    static constexpr float TOURNAMENT_SIZE = 3; // Has to be equal or grater than POPULATION_SIZE
 };
 
 #endif  // EVOLUTIONARY_ALGORITHM_CONFIG_H

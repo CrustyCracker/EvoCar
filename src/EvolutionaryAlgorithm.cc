@@ -54,7 +54,8 @@ void EvolutionaryAlgorithm::mutate() {
                 std::max(chrom.wheelRadius.first, EvolutionaryAlgorithmConfig::MIN_WHEEL_RADIUS);
             chrom.wheelRadius.first =
                 std::min(chrom.wheelRadius.first, EvolutionaryAlgorithmConfig::MAX_WHEEL_RADIUS);
-
+        }
+        if (dist(gen) < EvolutionaryAlgorithmConfig::MUTATION_RATE_WHEEL_RADIUS) {
             chrom.wheelRadius.second +=
                 dist(gen) * EvolutionaryAlgorithmConfig::MUTATION_FACTOR_WHEEL_RADIUS;
             chrom.wheelRadius.second =
@@ -71,7 +72,8 @@ void EvolutionaryAlgorithm::mutate() {
                 std::max(chrom.wheelDensity.first, EvolutionaryAlgorithmConfig::MIN_WHEEL_DENSITY);
             chrom.wheelDensity.first =
                 std::min(chrom.wheelDensity.first, EvolutionaryAlgorithmConfig::MAX_WHEEL_DENSITY);
-
+        }
+        if (dist(gen) < EvolutionaryAlgorithmConfig::MUTATION_RATE_WHEEL_DENSITY) {
             chrom.wheelDensity.second +=
                 dist(gen) * EvolutionaryAlgorithmConfig::MUTATION_FACTOR_WHEEL_DENSITY;
             chrom.wheelDensity.second =
@@ -81,42 +83,80 @@ void EvolutionaryAlgorithm::mutate() {
         }
     }
 }
-
-void EvolutionaryAlgorithm::crossover() {
+Chromosome EvolutionaryAlgorithm::tournament() {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<int> dist(0, populationSize_ - 1);
+    std::uniform_int_distribution<> uniform_dist(0, populationSize_ - 1);
 
-    std::vector<Chromosome> offspring(populationSize_);
+    std::vector<Chromosome> candidates;
 
-    for (int i = 0; i < populationSize_; i++) {
-        int parentIndex1 = dist(gen);
-        int parentIndex2 = dist(gen);
-
-        // Perform crossover between parent genes
-        Chromosome& parent1 = population_[parentIndex1];
-        Chromosome& parent2 = population_[parentIndex2];
-        Chromosome& child = offspring[i];
-
-        // Perform crossover for bodyLengths
-        int crossoverPoint = dist(gen);
-        child.bodyLengths.insert(child.bodyLengths.end(), parent1.bodyLengths.begin(),
-                                 parent1.bodyLengths.begin() + crossoverPoint);
-        child.bodyLengths.insert(child.bodyLengths.end(),
-                                 parent2.bodyLengths.begin() + crossoverPoint,
-                                 parent2.bodyLengths.end());
-
-        // Perform crossover for other attributes
-        child.bodyDensity = (parent1.bodyDensity + parent2.bodyDensity) / 2.0;
-        child.wheelRadius =
-            std::make_pair((parent1.wheelRadius.first + parent2.wheelRadius.first) / 2.0,
-                           (parent1.wheelRadius.second + parent2.wheelRadius.second) / 2.0);
-        child.wheelDensity =
-            std::make_pair((parent1.wheelDensity.first + parent2.wheelDensity.first) / 2.0,
-                           (parent1.wheelDensity.second + parent2.wheelDensity.second) / 2.0);
+    for(int i = 0; i < EvolutionaryAlgorithmConfig::TOURNAMENT_SIZE; ++i)
+    {
+        candidates.push_back(population_[uniform_dist(gen)]);
     }
 
-    // Replace the old generation with the offspring
-    population_ = offspring;
-    generation_++;
+    Chromosome tournament_winner = candidates[0];
+
+    for(int i = 1; i < EvolutionaryAlgorithmConfig::TOURNAMENT_SIZE; ++i){
+        if(candidates[i].fitness > tournament_winner.fitness){
+            tournament_winner = candidates[i];
+        }
+    }
+
+    return tournament_winner
+
+}
+void EvolutionaryAlgorithm::tournamentSelection() {
+    // TODO: Inplement tournament selection
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> uniform_dist(0, populationSize_ - 1);
+
+    std::vector<Chromosome> tournament_winners;
+
+    for (int i = 0; i < populationSize_; ++i) {
+        tournament_winners.push_back(tournament());
+    }
+
+    population_ = tournament_winners;
+}
+
+
+// void EvolutionaryAlgorithm::crossover() {
+//     std::random_device rd;
+//     std::mt19937 gen(rd());
+//     std::uniform_int_distribution<int> dist(0, populationSize_ - 1);
+
+//     std::vector<Chromosome> offspring(populationSize_);
+
+//     for (int i = 0; i < populationSize_; i++) {
+//         int parentIndex1 = dist(gen);
+//         int parentIndex2 = dist(gen);
+
+//         // Perform crossover between parent genes
+//         Chromosome& parent1 = population_[parentIndex1];
+//         Chromosome& parent2 = population_[parentIndex2];
+//         Chromosome& child = offspring[i];
+
+//         // Perform crossover for bodyLengths
+//         int crossoverPoint = dist(gen);
+//         child.bodyLengths.insert(child.bodyLengths.end(), parent1.bodyLengths.begin(),
+//                                  parent1.bodyLengths.begin() + crossoverPoint);
+//         child.bodyLengths.insert(child.bodyLengths.end(),
+//                                  parent2.bodyLengths.begin() + crossoverPoint,
+//                                  parent2.bodyLengths.end());
+
+//         // Perform crossover for other attributes
+//         child.bodyDensity = (parent1.bodyDensity + parent2.bodyDensity) / 2.0;
+//         child.wheelRadius =
+//             std::make_pair((parent1.wheelRadius.first + parent2.wheelRadius.first) / 2.0,
+//                            (parent1.wheelRadius.second + parent2.wheelRadius.second) / 2.0);
+//         child.wheelDensity =
+//             std::make_pair((parent1.wheelDensity.first + parent2.wheelDensity.first) / 2.0,
+//                            (parent1.wheelDensity.second + parent2.wheelDensity.second) / 2.0);
+//     }
+
+//     // Replace the old generation with the offspring
+//     population_ = offspring;
+//     generation_++;
 }

@@ -22,12 +22,14 @@ class EvolutionaryAlgorithm {
     unsigned long int generation_;
     unsigned long int populationSize_;
     std::vector<Chromosome> population_;
+    Chromosome tournament();
 
    public:
     EvolutionaryAlgorithm(int populationSize);
     std::vector<Chromosome> getGenes() { return population_; }
     void mutate();
-    void crossover();
+    void tournamentSelection();
+    // void crossover();
     void setFitness(int index, float fitness) { population_[index].fitness = fitness; }
 
     int getGeneration() { return generation_; }
