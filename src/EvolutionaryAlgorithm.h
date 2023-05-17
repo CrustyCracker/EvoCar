@@ -1,6 +1,6 @@
 /*
 Author:         Mateusz Krakowski
-Description:    Header file for EvolutionaryAlgorithm class needed for evolutionary algorithm.
+Description:    Header file for EvolutionaryAlgorithm class.
 */
 
 #ifndef GENOME_H

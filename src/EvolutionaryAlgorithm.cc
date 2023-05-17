@@ -2,7 +2,7 @@
 
 /*
 Author:         Mateusz Krakowski
-Description:    Creates a genome with a population of genes. Needed in evolutionary algorithm.
+Description:    Implementation file for EvolutionaryAlgorithm class, Algorithm used for evolving the genome.
 */
 
 EvolutionaryAlgorithm::EvolutionaryAlgorithm(int populationSize) {
