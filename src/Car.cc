@@ -48,3 +48,13 @@ void Car::setCollisionFilter(b2Filter filter) {
     frontWheel.body->GetFixtureList()->SetFilterData(filter);
     backWheel.body->GetFixtureList()->SetFilterData(filter);
 }
+
+std::vector<b2Vec2> createVertices(std::vector<float> lengths) {
+    std::vector<b2Vec2> vertices;
+    float angle = (200.0f / 180.0f) * Config::PI;  // so that the wheels are set properly
+    for (int i = 0; i < lengths.size(); i++) {
+        vertices.push_back(b2Vec2(lengths[i] * cos(angle), lengths[i] * sin(angle)));
+        angle += 2 * Config::PI / lengths.size();
+    }
+    return vertices;
+}

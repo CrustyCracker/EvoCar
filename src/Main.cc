@@ -46,8 +46,6 @@ int main() {
     Box ground = createGround(world, 350, 50, 500, 100, sf::Color(50, 50, 50));
     boxes.push_back(ground);
 
-    sf::Color bodyColor = sf::Color(50, 200, 50);
-    sf::Color wheelColor = sf::Color(225, 50, 50);
     std::vector<b2Vec2> vertices;
     vertices.push_back(b2Vec2(-2.5f, -0.5f));
     vertices.push_back(b2Vec2(-1.5f, -1.5f));
@@ -58,15 +56,19 @@ int main() {
     vertices.push_back(b2Vec2(-1.5f, 1.5f));
     vertices.push_back(b2Vec2(-2.5f, 0.5f));
 
-    Car car = Car(world, 315, 400, vertices, 100.0f, 0.3f, 25.0f, bodyColor, wheelColor);
+    auto vertices2 = createVertices({2, 3, 3, 2, 2, 1, 1, 2});
+
+    sf::Color bodyColor = sf::Color(50, 200, 50);
+    sf::Color wheelColor = sf::Color(225, 50, 50);
+    Car car = Car(world, 255, 400, vertices, 100.0f, 0.3f, 25.0f, bodyColor, wheelColor);
 
     sf::Color bodyColor2 = sf::Color(25, 100, 25);
     sf::Color wheelColor2 = sf::Color(113, 25, 25);
-    Car car2 = Car(world, 195, 200, vertices, 100.0f, 0.3f, 25.0f, bodyColor2, wheelColor2);
+    Car car2 = Car(world, 225, 300, vertices2, 100.0f, 0.3f, 25.0f, bodyColor2, wheelColor2);
 
     sf::Color bodyColor3 = sf::Color(13, 50, 13);
     sf::Color wheelColor3 = sf::Color(57, 13, 13);
-    Car car3 = Car(world, 255, 300, vertices, 100.0f, 0.3f, 25.0f, bodyColor3, wheelColor3);
+    Car car3 = Car(world, 195, 200, vertices, 100.0f, 0.3f, 25.0f, bodyColor3, wheelColor3);
 
     cars.push_back(&car3);
     cars.push_back(&car2);
