@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 3.22)
 find_library(box2d REQIRED)
 
 project(EvoRacer
-LANGUAGES CXX
-VERSION 0.1.0
+    LANGUAGES CXX
+    VERSION 0.1.0
 )
 enable_testing()
 set(CMAKE_CXX_COMPILER ${CPP_COMPILER})
