@@ -105,7 +105,7 @@ int main() {
         ImGui::Begin("Car Demo");
         ImGui::Text("Left/Right arrow keys to rotate the wheels.");
         ImGui::Text("Hold C to attach the camera to the car.");
-        ImGui::Text("");
+        ImGui::Text("\n");
 
         ImGui::BeginChild("Car Settings");
 
