@@ -56,7 +56,9 @@ int main() {
     vertices.push_back(b2Vec2(-1.5f, 1.5f));
     vertices.push_back(b2Vec2(-2.5f, 0.5f));
 
-    auto vertices2 = createVertices({2, 3, 3, 2, 2, 1, 1, 2});
+    auto vertices_gen = createVertices(
+        {2.54951f, 2.12132f, 2.12132f, 2.54951f, 2.54951f, 2.12132f, 2.12132f, 2.54951f},
+        {33.7f, 90.0f, 33.7f, 22.6f, 33.7f, 90.0f, 33.7f, 22.6f});
 
     sf::Color bodyColor = sf::Color(50, 200, 50);
     sf::Color wheelColor = sf::Color(225, 50, 50);
@@ -64,7 +66,7 @@ int main() {
 
     sf::Color bodyColor2 = sf::Color(25, 100, 25);
     sf::Color wheelColor2 = sf::Color(113, 25, 25);
-    Car car2 = Car(world, 225, 300, vertices2, 100.0f, 0.3f, 25.0f, bodyColor2, wheelColor2);
+    Car car2 = Car(world, 225, 300, vertices_gen, 100.0f, 0.3f, 25.0f, bodyColor2, wheelColor2);
 
     sf::Color bodyColor3 = sf::Color(13, 50, 13);
     sf::Color wheelColor3 = sf::Color(57, 13, 13);

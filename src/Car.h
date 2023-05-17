@@ -34,6 +34,6 @@ class Car {
     void setCollisionFilter(b2Filter filter);
 };
 
-std::vector<b2Vec2> createVertices(std::vector<float> lengths);
+std::vector<b2Vec2> createVertices(std::vector<float> lengths, std::vector<float> angles);
 
 #endif
