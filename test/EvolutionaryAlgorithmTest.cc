@@ -4,7 +4,7 @@
 Author: Mateusz Krakowski
 Description: This file contains tests for functions from src/EvolutionaryAlgorithm.h.
 */
-TEST(CreateBoxTest, BasicTest) {
+TEST(EvolutionaryAlgorithmTest, ScopeTest) {
     EvolutionaryAlgorithm evo(10);
     // mutate the genes 50 times just to test it
     for (int i = 0; i < 50; ++i) {

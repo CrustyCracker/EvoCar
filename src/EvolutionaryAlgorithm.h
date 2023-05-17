@@ -21,7 +21,7 @@ class EvolutionaryAlgorithm {
    private:
     unsigned long int generation_;
     unsigned long int populationSize_;
-    std::vector<Chromosome> population_{populationSize_};
+    std::vector<Chromosome> population_;
 
    public:
     EvolutionaryAlgorithm(int populationSize);
