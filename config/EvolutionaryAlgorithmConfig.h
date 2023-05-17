@@ -32,7 +32,7 @@ class EvolutionaryAlgorithmConfig {
     static constexpr float MUTATION_RATE_WHEEL_DENSITY = 0.1f;
     static constexpr float MUTATION_FACTOR_WHEEL_DENSITY = 0.1f;
 
-    static constexpr float TOURNAMENT_SIZE = 3; // Has to be equal or grater than POPULATION_SIZE
+    static constexpr float TOURNAMENT_SIZE = 3; // Has to be equal or greater than POPULATION_SIZE
 };
 
 #endif  // EVOLUTIONARY_ALGORITHM_CONFIG_H

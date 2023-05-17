@@ -3,7 +3,7 @@
 /*
 Author:         Mateusz Krakowski
 Description:    Implementation file for EvolutionaryAlgorithm class, Algorithm used for evolving the
-genome.
+                genome.
 */
 
 EvolutionaryAlgorithm::EvolutionaryAlgorithm(int populationSize) {
@@ -103,15 +103,10 @@ Chromosome EvolutionaryAlgorithm::tournament() {
         }
     }
 
-    return tournament_winner
+    return tournament_winner;
 
 }
 void EvolutionaryAlgorithm::tournamentSelection() {
-    // TODO: Inplement tournament selection
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> uniform_dist(0, populationSize_ - 1);
-
     std::vector<Chromosome> tournament_winners;
 
     for (int i = 0; i < populationSize_; ++i) {
@@ -159,4 +154,4 @@ void EvolutionaryAlgorithm::tournamentSelection() {
 //     // Replace the old generation with the offspring
 //     population_ = offspring;
 //     generation_++;
-}
+//}
