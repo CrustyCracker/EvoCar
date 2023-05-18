@@ -16,7 +16,6 @@ class Config {
 
     // SFML uses degrees for angles while Box2D uses radians
     static constexpr float DEG_PER_RAD = 57.2957795F;
-    static constexpr double GRAVITIATIONAL_ACCELERATION = -9.81f;
     static constexpr int COLOR_CONST = 255;
     static constexpr float MAX_JOINT_LENGTH = 0.01f;
 
@@ -25,6 +24,10 @@ class Config {
 
     // Draw debug geometry
     static constexpr bool DEBUG = true;
+
+    // Psychics
+    static constexpr double GRAVITIATIONAL_ACCELERATION = -9.81f;
+    static constexpr float FRICTION = 0.3f;
 };
 
 #endif  // CONFIG_H

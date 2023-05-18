@@ -6,16 +6,15 @@ Description:    Creates a car with a polygon (car's body)
     and two circles (front and back wheels).
 */
 
-Car::Car(b2WorldPtr world, float x, float y, std::vector<b2Vec2> vertices, float density,
-         float friction, float wheelRadious, sf::Color bodyColor, sf::Color wheelColor) {
+Car::Car(b2WorldPtr world, float x, float y, std::vector<b2Vec2> vertices, float density, float wheelRadious, sf::Color bodyColor, sf::Color wheelColor) {
     // Create a polygon (octagon)
-    body = createPolygon(world, x, y, vertices, density, friction, bodyColor);
+    body = createPolygon(world, x, y, vertices, density, Config::FRICTION, bodyColor);
 
     // Create a circle
-    frontWheel = createCircle(world, x, y, wheelRadious, density, friction, wheelColor);
+    frontWheel = createCircle(world, x, y, wheelRadious, density, Config::FRICTION, wheelColor);
 
     // Create another circle
-    backWheel = createCircle(world, x, y, wheelRadious, density, friction, wheelColor);
+    backWheel = createCircle(world, x, y, wheelRadious, density, Config::FRICTION, wheelColor);
 
     b2DistanceJointDef jointDef2;
     jointDef2.bodyA = body.body;
