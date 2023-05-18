@@ -26,12 +26,12 @@ class EvolutionaryAlgorithm {
 
    public:
     EvolutionaryAlgorithm(int populationSize);
-    std::vector<Chromosome> getGenes() { return population_; }
+    std::vector<Chromosome> getPopulation() { return population_; }
     void mutate();
     void tournamentSelection();
+    void nextGeneration();
     // void crossover();
     void setFitness(int index, float fitness) { population_[index].fitness = fitness; }
-
     int getGeneration() { return generation_; }
     int getPopulationSize() { return populationSize_; }
 };

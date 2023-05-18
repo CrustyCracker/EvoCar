@@ -10,7 +10,7 @@ TEST(EvolutionaryAlgorithmTest, MutationTest) {
     for (int i = 0; i < 50; ++i) {
         evo.mutate();
     }
-    std::vector<Chromosome> genes = evo.getGenes();
+    std::vector<Chromosome> genes = evo.getPopulation();
 
     // assert that all body lengths are within the range
     for (auto& chrom : genes) {
@@ -23,11 +23,21 @@ TEST(EvolutionaryAlgorithmTest, MutationTest) {
 
 TEST(EvolutionaryAlgorithmTest, TournamentSelectionTest) {
     EvolutionaryAlgorithm evo(10);
-    // mutate the genes 50 times just to test it
-    // assert no error when running tournament selection
     evo.tournamentSelection();
-    std::vector<Chromosome> genes = evo.getGenes();
+    std::vector<Chromosome> genes = evo.getPopulation();
 
-    // assert that all body lengths are within the range
     ASSERT_TRUE(genes.size() == 10);
+}
+
+TEST(EvolutionaryAlgorithmTest, NextGenerationTest) {
+    EvolutionaryAlgorithm evo(10);
+    evo.nextStep();
+    for(int i = 0; i < 10; ++i) {
+        evo.nextGeneration();
+    }
+
+    std::vector<Chromosome> genes = evo.getPopulation();
+
+    ASSERT_TRUE(genes.size() == 10);
+    ASSERT_TRUE(evo.getGeneration() == 10);
 }

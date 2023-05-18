@@ -3,7 +3,7 @@
 /*
 Author:         Mateusz Krakowski
 Description:    Implementation file for EvolutionaryAlgorithm class, Algorithm used for evolving the
-                genome.
+                cars.
 */
 
 EvolutionaryAlgorithm::EvolutionaryAlgorithm(int populationSize) {
@@ -11,12 +11,17 @@ EvolutionaryAlgorithm::EvolutionaryAlgorithm(int populationSize) {
     generation_ = 0;
     for (int i = 0; i < populationSize_; ++i) {
         Chromosome chrom;
-        chrom.bodyLengths = {0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f};
-        chrom.bodyDensity = 1.0f;
-        chrom.wheelRadius = {0.2f, 0.2f};
-        chrom.wheelDensity = {1.0f, 1.0f};
+        chrom.bodyLengths = {2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f};
+        chrom.bodyDensity = 100.0f;
+        chrom.wheelRadius = {25.0f, 25.0f};
+        chrom.wheelDensity = {100.0f, 100.0f};
         chrom.fitness = 0.0f;
         population_.push_back(chrom);
+    }
+
+    //MKTODO: For now, spice it up by mutating cuple of times :)
+    for (int i = 0; i < 10; ++i) {
+        mutate();
     }
 }
 
@@ -114,6 +119,12 @@ void EvolutionaryAlgorithm::tournamentSelection() {
     }
 
     population_ = tournament_winners;
+}
+
+void EvolutionaryAlgorithm::nextGeneration() {
+    tournamentSelection();
+    mutate();
+    generation_++;
 }
 
 
