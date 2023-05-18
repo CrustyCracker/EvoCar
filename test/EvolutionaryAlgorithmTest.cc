@@ -6,14 +6,14 @@ Description: This file contains tests for functions from src/EvolutionaryAlgorit
 */
 TEST(EvolutionaryAlgorithmTest, MutationTest) {
     EvolutionaryAlgorithm evo(10);
-    // mutate the genes 50 times just to test it
+    // mutate the population 50 times just to test it
     for (int i = 0; i < 50; ++i) {
         evo.mutate();
     }
-    std::vector<Chromosome> genes = evo.getPopulation();
+    std::vector<Chromosome> population = evo.getPopulation();
 
     // assert that all body lengths are within the range
-    for (auto& chrom : genes) {
+    for (auto& chrom : population) {
         for (auto& length : chrom.bodyLengths) {
             ASSERT_GE(length, EvolutionaryAlgorithmConfig::MIN_BODY_LENGTH);
             ASSERT_LE(length, EvolutionaryAlgorithmConfig::MAX_BODY_LENGTH);
@@ -24,20 +24,22 @@ TEST(EvolutionaryAlgorithmTest, MutationTest) {
 TEST(EvolutionaryAlgorithmTest, TournamentSelectionTest) {
     EvolutionaryAlgorithm evo(10);
     evo.tournamentSelection();
-    std::vector<Chromosome> genes = evo.getPopulation();
+    std::vector<Chromosome> population = evo.getPopulation();
 
-    ASSERT_TRUE(genes.size() == 10);
+    ASSERT_TRUE(population.size() == 10);
 }
 
 TEST(EvolutionaryAlgorithmTest, NextGenerationTest) {
     EvolutionaryAlgorithm evo(10);
+    std::vector<Chromosome> oldPopulation = evo.getPopulation();
     evo.nextStep();
-    for(int i = 0; i < 10; ++i) {
+    for(int i = 0; i < 50; ++i) {
         evo.nextGeneration();
     }
 
-    std::vector<Chromosome> genes = evo.getPopulation();
+    std::vector<Chromosome> population = evo.getPopulation();
 
-    ASSERT_TRUE(genes.size() == 10);
-    ASSERT_TRUE(evo.getGeneration() == 10);
+    ASSERT_TRUE(population.size() == 10);
+    ASSERT_TRUE(evo.getGeneration() == 50);
+    ASSERT_FALSE(population == oldPopulation); // Very unlikely to be equal, depends on config
 }
