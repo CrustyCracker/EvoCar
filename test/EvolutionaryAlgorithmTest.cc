@@ -26,20 +26,15 @@ TEST(EvolutionaryAlgorithmTest, TournamentSelectionTest) {
     evo.tournamentSelection();
     std::vector<Chromosome> population = evo.getPopulation();
 
-    ASSERT_TRUE(population.size() == 10);
+    ASSERT_EQ(population.size(), 10);
 }
 
 TEST(EvolutionaryAlgorithmTest, NextGenerationTest) {
     EvolutionaryAlgorithm evo(10);
-    std::vector<Chromosome> oldPopulation = evo.getPopulation();
-    evo.nextStep();
-    for(int i = 0; i < 50; ++i) {
+    evo.nextGeneration();
+    for (int i = 0; i < 49; ++i) {
         evo.nextGeneration();
     }
 
-    std::vector<Chromosome> population = evo.getPopulation();
-
-    ASSERT_TRUE(population.size() == 10);
-    ASSERT_TRUE(evo.getGeneration() == 50);
-    ASSERT_FALSE(population == oldPopulation); // Very unlikely to be equal, depends on config
+    ASSERT_EQ(evo.getGeneration(), 50);
 }

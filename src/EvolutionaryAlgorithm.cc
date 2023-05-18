@@ -19,7 +19,7 @@ EvolutionaryAlgorithm::EvolutionaryAlgorithm(int populationSize) {
         population_.push_back(chrom);
     }
 
-    //MKTODO: For now, spice it up by mutating cuple of times :)
+    // MKTODO: For now, spice it up by mutating cuple of times :)
     for (int i = 0; i < 10; ++i) {
         mutate();
     }
@@ -95,21 +95,19 @@ Chromosome EvolutionaryAlgorithm::tournament() {
 
     std::vector<Chromosome> candidates;
 
-    for(int i = 0; i < EvolutionaryAlgorithmConfig::TOURNAMENT_SIZE; ++i)
-    {
+    for (int i = 0; i < EvolutionaryAlgorithmConfig::TOURNAMENT_SIZE; ++i) {
         candidates.push_back(population_[uniform_dist(gen)]);
     }
 
     Chromosome tournament_winner = candidates[0];
 
-    for(int i = 1; i < EvolutionaryAlgorithmConfig::TOURNAMENT_SIZE; ++i){
-        if(candidates[i].fitness > tournament_winner.fitness){
+    for (int i = 1; i < EvolutionaryAlgorithmConfig::TOURNAMENT_SIZE; ++i) {
+        if (candidates[i].fitness > tournament_winner.fitness) {
             tournament_winner = candidates[i];
         }
     }
 
     return tournament_winner;
-
 }
 void EvolutionaryAlgorithm::tournamentSelection() {
     std::vector<Chromosome> tournament_winners;
@@ -124,9 +122,8 @@ void EvolutionaryAlgorithm::tournamentSelection() {
 void EvolutionaryAlgorithm::nextGeneration() {
     tournamentSelection();
     mutate();
-    generation_++;
+    ++generation_;
 }
-
 
 // void EvolutionaryAlgorithm::crossover() {
 //     std::random_device rd;
