@@ -60,6 +60,8 @@ int main() {
         {2.54951f, 2.12132f, 2.12132f, 2.54951f, 2.54951f, 2.12132f, 2.12132f, 2.54951f},
         {33.7f, 90.0f, 33.7f, 22.6f, 33.7f, 90.0f, 33.7f, 22.6f});
 
+    sf::Color bodyColor = sf::Color(50, 200, 50);
+    sf::Color wheelColor = sf::Color(225, 50, 50);
     Car car = Car(world, 350, 300, vertices, 100.0f, 25.0f, bodyColor, wheelColor);
 
     sf::Color bodyColor2 = sf::Color(25, 100, 25);
