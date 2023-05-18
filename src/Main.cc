@@ -46,17 +46,19 @@ int main() {
     Box ground = createGround(world, 350, 50, 500, 100, sf::Color(50, 50, 50));
     boxes.push_back(ground);
 
-    sf::Color bodyColor = sf::Color(50, 200, 50);
-    sf::Color wheelColor = sf::Color(225, 50, 50);
     std::vector<b2Vec2> vertices;
-    vertices.push_back(b2Vec2(0.0f, 0.0f));
-    vertices.push_back(b2Vec2(1.0f, -1.0f));
-    vertices.push_back(b2Vec2(4.0f, -1.0f));
-    vertices.push_back(b2Vec2(5.0f, 0.0f));
-    vertices.push_back(b2Vec2(5.0f, 1.0f));
-    vertices.push_back(b2Vec2(4.0f, 2.0f));
-    vertices.push_back(b2Vec2(1.0f, 2.0f));
-    vertices.push_back(b2Vec2(0.0f, 1.0f));
+    vertices.push_back(b2Vec2(-2.5f, -0.5f));
+    vertices.push_back(b2Vec2(-1.5f, -1.5f));
+    vertices.push_back(b2Vec2(1.5f, -1.5f));
+    vertices.push_back(b2Vec2(2.5f, -0.5f));
+    vertices.push_back(b2Vec2(2.5f, 0.5f));
+    vertices.push_back(b2Vec2(1.5f, 1.5f));
+    vertices.push_back(b2Vec2(-1.5f, 1.5f));
+    vertices.push_back(b2Vec2(-2.5f, 0.5f));
+
+    auto vertices_gen = createVertices(
+        {2.54951f, 2.12132f, 2.12132f, 2.54951f, 2.54951f, 2.12132f, 2.12132f, 2.54951f},
+        {33.7f, 90.0f, 33.7f, 22.6f, 33.7f, 90.0f, 33.7f, 22.6f});
 
     Car car = Car(world, 350, 300, vertices, 100.0f, 25.0f, bodyColor, wheelColor);
 
@@ -81,11 +83,16 @@ int main() {
         car->setCollisionFilter(filter);
     }
 
+    bool paused = false;
+    bool pause_check = true;
+
     sf::Clock deltaClock;
     /** PROGRAM LOOP **/
     while (w.isOpen()) {
         // Update the world, standard arguments
-        world->Step(1 / 60.f, 6, 3);
+        if (!paused) {
+            world->Step(1 / 60.f, 6, 3);
+        }
         // Render everything
         render(w, boxes, cars);
 
@@ -96,7 +103,7 @@ int main() {
         ImGui::Begin("Car Demo");
         ImGui::Text("Left/Right arrow keys to rotate the wheels.");
         ImGui::Text("Hold C to attach the camera to the car.");
-        ImGui::Text("");
+        ImGui::Text("\n");
 
         ImGui::BeginChild("Car Settings");
 
@@ -157,20 +164,31 @@ int main() {
             w.setView(cameraView);
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-            // Rotate the circles left
-            car.getFrontWheel()->body->ApplyTorque(1000, false);
-            car.getBackWheel()->body->ApplyTorque(1000, false);
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-            // Rotate the circles right
-            car.getFrontWheel()->body->ApplyTorque(-1000, false);
-            car.getBackWheel()->body->ApplyTorque(-1000, false);
+        if (!paused) {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+                // Rotate the circles left
+                car.getFrontWheel()->body->ApplyTorque(1000, false);
+                car.getBackWheel()->body->ApplyTorque(1000, false);
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+                // Rotate the circles right
+                car.getFrontWheel()->body->ApplyTorque(-1000, false);
+                car.getBackWheel()->body->ApplyTorque(-1000, false);
+            }
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
             // Close the window
             w.close();
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::P) ||
+            sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+            // Pause the simulation
+            if (pause_check) {
+                paused = !paused;
+                pause_check = false;
+            }
         }
 
         // Display FPS in window title
@@ -183,6 +201,12 @@ int main() {
             // Close window : exit
             if (event.type == sf::Event::Closed) {
                 w.close();
+            }
+            // Allow user to toggle pause again
+            if (event.type == sf::Event::KeyReleased) {
+                if (event.key.code == sf::Keyboard::P || event.key.code == sf::Keyboard::Space) {
+                    pause_check = true;
+                }
             }
         }
     }
