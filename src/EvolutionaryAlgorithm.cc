@@ -120,6 +120,7 @@ void EvolutionaryAlgorithm::tournamentSelection() {
 }
 
 void EvolutionaryAlgorithm::nextGeneration() {
+    exportPopulation();
     tournamentSelection();
     mutate();
     ++generation_;
@@ -163,3 +164,26 @@ void EvolutionaryAlgorithm::nextGeneration() {
 //     population_ = offspring;
 //     generation_++;
 //}
+
+void EvolutionaryAlgorithm::exportPopulation(){
+        nlohmann::json jsonArray;
+    for (const auto& chromosome : chromosomes) {
+        nlohmann::json chromosomeJson;
+        chromosomeJson["bodyLengths"] = chromosome.bodyLengths;
+        chromosomeJson["bodyDensity"] = chromosome.bodyDensity;
+        chromosomeJson["wheelRadius"] = { chromosome.wheelRadius.first, chromosome.wheelRadius.second };
+        chromosomeJson["wheelDensity"] = { chromosome.wheelDensity.first, chromosome.wheelDensity.second };
+        chromosomeJson["fitness"] = chromosome.fitness;
+        jsonArray.push_back(chromosomeJson);
+    }
+
+    // Save the JSON array to a file
+    std::ofstream outputFile("evoRacerOutput.json");
+    if (!outputFile.is_open()) {
+        return 1;
+    }
+    outputFile << jsonArray.dump(4);  // dump(4) for pretty printing with indentation
+    outputFile.close();
+
+    return 0;
+}
