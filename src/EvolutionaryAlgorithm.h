@@ -10,6 +10,7 @@ Description:    Header file for EvolutionaryAlgorithm class.
 #include "../config/EvolutionaryAlgorithmConfig.h"
 #include <fstream>
 #include <nlohmann/json.hpp>
+#include <deque>
 
 struct Chromosome {
     std::vector<float> bodyLengths;
