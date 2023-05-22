@@ -165,14 +165,16 @@ void EvolutionaryAlgorithm::nextGeneration() {
 //     generation_++;
 //}
 
-void EvolutionaryAlgorithm::exportPopulation(){
-        nlohmann::json jsonArray;
-    for (const auto& chromosome : chromosomes) {
+int EvolutionaryAlgorithm::exportPopulation() {
+    nlohmann::json jsonArray;
+    for (const auto& chromosome : population_) {
         nlohmann::json chromosomeJson;
         chromosomeJson["bodyLengths"] = chromosome.bodyLengths;
         chromosomeJson["bodyDensity"] = chromosome.bodyDensity;
-        chromosomeJson["wheelRadius"] = { chromosome.wheelRadius.first, chromosome.wheelRadius.second };
-        chromosomeJson["wheelDensity"] = { chromosome.wheelDensity.first, chromosome.wheelDensity.second };
+        chromosomeJson["wheelRadius"] = {chromosome.wheelRadius.first,
+                                         chromosome.wheelRadius.second};
+        chromosomeJson["wheelDensity"] = {chromosome.wheelDensity.first,
+                                          chromosome.wheelDensity.second};
         chromosomeJson["fitness"] = chromosome.fitness;
         jsonArray.push_back(chromosomeJson);
     }

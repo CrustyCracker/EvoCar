@@ -8,6 +8,7 @@ Description:    Header file for EvolutionaryAlgorithm class.
 #include <vector>
 #include <random>
 #include "../config/EvolutionaryAlgorithmConfig.h"
+#include <fstream>
 #include <nlohmann/json.hpp>
 
 struct Chromosome {
@@ -35,7 +36,7 @@ class EvolutionaryAlgorithm {
     void setFitness(int index, float fitness) { population_[index].fitness = fitness; }
     int getGeneration() { return generation_; }
     int getPopulationSize() { return populationSize_; }
-    void exportPopulation();
+    int exportPopulation();
 };
 
 #endif

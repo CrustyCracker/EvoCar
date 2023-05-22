@@ -9,4 +9,5 @@ IF(WIN32)
   add_dependencies(EvoRacerLib box2d)
 ENDIF()
 
-target_link_libraries(EvoRacerLib sfml-graphics box2d)
+target_link_libraries(EvoRacerLib sfml-graphics box2d nlohmann_json::nlohmann_json)
+

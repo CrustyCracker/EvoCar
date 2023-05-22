@@ -29,12 +29,8 @@ FetchContent_Declare(
   googletest
   URL https://github.com/google/googletest/archive/release-${GOOGLETEST_VERSION}.zip
 )
-
-FetchContent_Declare(
-  json
-  GIT_REPOSITORY https://github.com/nlohmann/json.git
-  GIT_TAG v3.10.2
-)
+message(STATUS "Fetching JSON...")
+FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz)
 FetchContent_MakeAvailable(json)
 
 IF(WIN32)
