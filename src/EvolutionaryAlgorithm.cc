@@ -162,11 +162,21 @@ void EvolutionaryAlgorithm::nextGeneration() {
 
 //     // Replace the old generation with the offspring
 //     population_ = offspring;
-//     generation_++;
 //}
 
 int EvolutionaryAlgorithm::exportPopulation() {
-    nlohmann::json jsonArray;
+    // Read the existing file content, if any
+    std::ifstream inputFile("evoRacerOutput.json");
+    nlohmann::json existingData;
+    if (inputFile.is_open()) {
+        inputFile >> existingData;
+        inputFile.close();
+    }
+
+    nlohmann::json jsonData;
+    jsonData["generation"] = generation_;
+
+    nlohmann::json existingPopulation = existingData["population"];
     for (const auto& chromosome : population_) {
         nlohmann::json chromosomeJson;
         chromosomeJson["bodyLengths"] = chromosome.bodyLengths;
@@ -176,15 +186,15 @@ int EvolutionaryAlgorithm::exportPopulation() {
         chromosomeJson["wheelDensity"] = {chromosome.wheelDensity.first,
                                           chromosome.wheelDensity.second};
         chromosomeJson["fitness"] = chromosome.fitness;
-        jsonArray.push_back(chromosomeJson);
+        existingPopulation.push_back(chromosomeJson);
     }
+    jsonData["population"] = existingPopulation;
 
-    // Save the JSON array to a file
     std::ofstream outputFile("evoRacerOutput.json");
     if (!outputFile.is_open()) {
         return 1;
     }
-    outputFile << jsonArray.dump(4);  // dump(4) for pretty printing with indentation
+    outputFile << jsonData.dump(4);
     outputFile.close();
 
     return 0;
