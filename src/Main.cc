@@ -4,6 +4,7 @@
 #include "box2d/box2d.h"
 #include "imgui-SFML.h"
 #include "imgui.h"
+#include "implot.h"
 
 #include "../config/Config.h"
 #include "Car.h"
