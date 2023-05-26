@@ -1,4 +1,5 @@
 #include <iostream>
+#include <numeric>
 
 #include "SFML/Graphics.hpp"
 #include "box2d/box2d.h"
@@ -20,6 +21,13 @@ typedef std::shared_ptr<b2World> b2WorldPtr;
 // initialize the world as a shared pointer
 b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
 
+void updateArray(float *arr, int size, float value) {
+    for (int i = 1; i < size; ++i) {
+        arr[i - 1] = arr[i];
+    }
+    arr[size - 1] = value;
+}
+
 int main() {
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
@@ -28,6 +36,9 @@ int main() {
     sf::RenderWindow w(sf::VideoMode(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT), "SFML + Box2D",
                        sf::Style::Default, settings);
     w.setFramerateLimit(60);
+
+    ImGui::CreateContext();
+    ImPlot::CreateContext();
 
     // Initialize ImGui-SFML
     ImGui::SFML::Init(w);
@@ -89,6 +100,12 @@ int main() {
     bool paused = false;
     bool pause_check = true;
 
+    float v_axis[Config::VELOCITY_ARRAY_SIZE];
+    float v_values[Config::VELOCITY_ARRAY_SIZE];
+
+    std::iota(std::begin(v_axis), std::end(v_axis), 1);
+    memset(v_values, 0, sizeof(v_values));
+
     sf::Clock deltaClock;
     /** PROGRAM LOOP **/
     while (w.isOpen()) {
@@ -134,6 +151,21 @@ int main() {
         ImGui::Begin("Last Ground's Right Edge's Position");
         ImGui::Text("Last ground's right edge's position: %.1f",
                     lastGround.body->GetPosition().x * Config::PPM + lastGround.width / 2);
+        ImGui::End();
+
+        ImGui::SetNextWindowSize(ImVec2(230, 340), ImGuiCond_FirstUseEver);
+        ImGui::SetNextWindowPos(ImVec2(10, 144), ImGuiCond_FirstUseEver);
+        ImGui::Begin("Car's Velocity");
+        ImPlot::SetNextAxesToFit();
+        if (ImPlot::BeginPlot("Velocity")) {
+            if (!paused) {
+                updateArray(v_values, Config::VELOCITY_ARRAY_SIZE,
+                            std::sqrt(std::pow(car.getBody()->body->GetLinearVelocity().x, 2) +
+                                      std::pow(car.getBody()->body->GetLinearVelocity().y, 2)));
+            }
+            ImPlot::PlotLine("V", v_axis, v_values, Config::VELOCITY_ARRAY_SIZE);
+            ImPlot::EndPlot();
+        }
         ImGui::End();
 
         const float generateDistance = 200;
@@ -213,6 +245,11 @@ int main() {
             }
         }
     }
+
     ImGui::SFML::Shutdown();
+
+    ImPlot::DestroyContext();
+    ImGui::DestroyContext();
+
     return 0;
 }
