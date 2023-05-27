@@ -21,13 +21,6 @@ typedef std::shared_ptr<b2World> b2WorldPtr;
 // initialize the world as a shared pointer
 b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
 
-void updateArray(float *arr, int size, float value) {
-    for (int i = 1; i < size; ++i) {
-        arr[i - 1] = arr[i];
-    }
-    arr[size - 1] = value;
-}
-
 int main() {
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
@@ -100,11 +93,10 @@ int main() {
     bool paused = false;
     bool pause_check = true;
 
-    float v_axis[Config::VELOCITY_ARRAY_SIZE];
-    float v_values[Config::VELOCITY_ARRAY_SIZE];
+    std::vector<float> v_axis(Config::VELOCITY_ARRAY_SIZE);
+    std::vector<float> v_values(Config::VELOCITY_ARRAY_SIZE);
 
     std::iota(std::begin(v_axis), std::end(v_axis), 1);
-    memset(v_values, 0, sizeof(v_values));
 
     sf::Clock deltaClock;
     /** PROGRAM LOOP **/
@@ -159,11 +151,15 @@ int main() {
         ImPlot::SetNextAxesToFit();
         if (ImPlot::BeginPlot("Velocity")) {
             if (!paused) {
-                updateArray(v_values, Config::VELOCITY_ARRAY_SIZE,
-                            std::sqrt(std::pow(car.getBody()->body->GetLinearVelocity().x, 2) +
-                                      std::pow(car.getBody()->body->GetLinearVelocity().y, 2)));
+                v_axis.push_back(v_axis.back() + 1);
+                v_values.push_back(car.getVelocity());
             }
-            ImPlot::PlotLine("V", v_axis, v_values, Config::VELOCITY_ARRAY_SIZE);
+            std::vector<float> v_axis_crop =
+                std::vector<float>(v_axis.end() - Config::VELOCITY_ARRAY_SIZE, v_axis.end());
+            std::vector<float> v_values_crop =
+                std::vector<float>(v_values.end() - Config::VELOCITY_ARRAY_SIZE, v_values.end());
+            ImPlot::PlotLine("V", &(v_axis_crop[0]), &(v_values_crop[0]),
+                             Config::VELOCITY_ARRAY_SIZE);
             ImPlot::EndPlot();
         }
         ImGui::End();
