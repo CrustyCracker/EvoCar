@@ -25,7 +25,9 @@ class EvolutionaryAlgorithm {
     unsigned long int generation_;
     unsigned long int populationSize_;
     std::vector<Chromosome> population_;
+    bool saveToFile_ = false;
     Chromosome tournament();
+    void initializePopulation();
 
    public:
     EvolutionaryAlgorithm(int populationSize);
@@ -33,7 +35,6 @@ class EvolutionaryAlgorithm {
     void mutate();
     void tournamentSelection();
     void nextGeneration();
-    // void crossover();
     void setFitness(int index, float fitness) { population_[index].fitness = fitness; }
     int getGeneration() { return generation_; }
     int getPopulationSize() { return populationSize_; }
