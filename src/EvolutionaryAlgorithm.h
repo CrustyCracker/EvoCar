@@ -30,7 +30,7 @@ class EvolutionaryAlgorithm {
     void initializePopulation();
 
    public:
-    EvolutionaryAlgorithm(int populationSize);
+    EvolutionaryAlgorithm(int populationSize, bool saveToFile = false);
     std::vector<Chromosome> getPopulation() { return population_; }
     void mutate();
     void tournamentSelection();

@@ -6,78 +6,76 @@ Description:    Implementation file for EvolutionaryAlgorithm class, Algorithm u
                 cars.
 */
 
-EvolutionaryAlgorithm::EvolutionaryAlgorithm(int populationSize, bool saveToFile = false) {
+EvolutionaryAlgorithm::EvolutionaryAlgorithm(int populationSize, bool saveToFile) {
     populationSize_ = populationSize;
     generation_ = 0;
     initializePopulation();
     saveToFile_ = saveToFile;
 }
 
-void EvolutionaryAlgorithm::initializePopulation(){
+void EvolutionaryAlgorithm::initializePopulation() {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::normal_distribution<float> dist(0.0, 1.0);
-        // add variation and mean
-     for (int i = 0; i < populationSize_; ++i) {
+    // add variation and mean
+    for (int i = 0; i < populationSize_; ++i) {
         Chromosome chrom;
-        //MKTODO czange the 8
+        // MKTODO czange the 8
         for (int p = 0; p < 8; ++p) {
-                float length = dist(gen) * EvolutionaryAlgorithmConfig::INITIAL_BODY_LENGTH_VARIANCE + EvolutionaryAlgorithmConfig::INITIAL_BODY_LENGTH_MEAN;
-                length = std::max(length, EvolutionaryAlgorithmConfig::MIN_BODY_LENGTH);
-                length = std::min(length, EvolutionaryAlgorithmConfig::MAX_BODY_LENGTH);
-                chrom.bodyLengths.push_back(length);
+            float length = dist(gen) * EvolutionaryAlgorithmConfig::INITIAL_BODY_LENGTH_VARIANCE +
+                           EvolutionaryAlgorithmConfig::INITIAL_BODY_LENGTH_MEAN;
+            length = std::max(length, EvolutionaryAlgorithmConfig::MIN_BODY_LENGTH);
+            length = std::min(length, EvolutionaryAlgorithmConfig::MAX_BODY_LENGTH);
+            chrom.bodyLengths.push_back(length);
         }
-        
 
         // Initialize bodyDensity
 
-            chrom.bodyDensity =
-                dist(gen) * EvolutionaryAlgorithmConfig::INITIAL_BODY_DENSITY_VARIANCE + EvolutionaryAlgorithmConfig::INITIAL_BODY_DENSITY_MEAN;
+        chrom.bodyDensity = dist(gen) * EvolutionaryAlgorithmConfig::INITIAL_BODY_DENSITY_VARIANCE +
+                            EvolutionaryAlgorithmConfig::INITIAL_BODY_DENSITY_MEAN;
 
-            chrom.bodyDensity =
-                std::max(chrom.bodyDensity, EvolutionaryAlgorithmConfig::MIN_BODY_DENSITY);
-            chrom.bodyDensity =
-                std::min(chrom.bodyDensity, EvolutionaryAlgorithmConfig::MAX_BODY_DENSITY);
-        
+        chrom.bodyDensity =
+            std::max(chrom.bodyDensity, EvolutionaryAlgorithmConfig::MIN_BODY_DENSITY);
+        chrom.bodyDensity =
+            std::min(chrom.bodyDensity, EvolutionaryAlgorithmConfig::MAX_BODY_DENSITY);
 
         // initialize wheelRadius
 
-            chrom.wheelRadius.first =
-                dist(gen) * EvolutionaryAlgorithmConfig::INITIAL_WHEEL_RADIUS_VARIANCE + EvolutionaryAlgorithmConfig::INITIAL_WHEEL_RADIUS_MEAN;
-            chrom.wheelRadius.first =
-                std::max(chrom.wheelRadius.first, EvolutionaryAlgorithmConfig::MIN_WHEEL_RADIUS);
-            chrom.wheelRadius.first =
-
+        chrom.wheelRadius.first =
+            dist(gen) * EvolutionaryAlgorithmConfig::INITIAL_WHEEL_RADIUS_VARIANCE +
+            EvolutionaryAlgorithmConfig::INITIAL_WHEEL_RADIUS_MEAN;
+        chrom.wheelRadius.first =
+            std::max(chrom.wheelRadius.first, EvolutionaryAlgorithmConfig::MIN_WHEEL_RADIUS);
+        chrom.wheelRadius.first =
 
             chrom.wheelRadius.second +=
-                dist(gen) * EvolutionaryAlgorithmConfig::INITIAL_WHEEL_RADIUS_VARIANCE + EvolutionaryAlgorithmConfig::INITIAL_WHEEL_RADIUS_MEAN;
-            chrom.wheelRadius.second =
-                std::max(chrom.wheelRadius.second, EvolutionaryAlgorithmConfig::MIN_WHEEL_RADIUS);
-            chrom.wheelRadius.second =
-                std::min(chrom.wheelRadius.second, EvolutionaryAlgorithmConfig::MAX_WHEEL_RADIUS);
-        
+            dist(gen) * EvolutionaryAlgorithmConfig::INITIAL_WHEEL_RADIUS_VARIANCE +
+            EvolutionaryAlgorithmConfig::INITIAL_WHEEL_RADIUS_MEAN;
+        chrom.wheelRadius.second =
+            std::max(chrom.wheelRadius.second, EvolutionaryAlgorithmConfig::MIN_WHEEL_RADIUS);
+        chrom.wheelRadius.second =
+            std::min(chrom.wheelRadius.second, EvolutionaryAlgorithmConfig::MAX_WHEEL_RADIUS);
 
         // Initialize wheelDensity
 
-            chrom.wheelDensity.first +=
-                dist(gen) * EvolutionaryAlgorithmConfig::INITIAL_WHEEL_DENSITY_VARIANCE + EvolutionaryAlgorithmConfig::INITIAL_WHEEL_DENSITY_MEAN;
-            chrom.wheelDensity.first =
-                std::max(chrom.wheelDensity.first, EvolutionaryAlgorithmConfig::MIN_WHEEL_DENSITY);
-            chrom.wheelDensity.first =
-                std::min(chrom.wheelDensity.first, EvolutionaryAlgorithmConfig::MAX_WHEEL_DENSITY);
-        
+        chrom.wheelDensity.first +=
+            dist(gen) * EvolutionaryAlgorithmConfig::INITIAL_WHEEL_DENSITY_VARIANCE +
+            EvolutionaryAlgorithmConfig::INITIAL_WHEEL_DENSITY_MEAN;
+        chrom.wheelDensity.first =
+            std::max(chrom.wheelDensity.first, EvolutionaryAlgorithmConfig::MIN_WHEEL_DENSITY);
+        chrom.wheelDensity.first =
+            std::min(chrom.wheelDensity.first, EvolutionaryAlgorithmConfig::MAX_WHEEL_DENSITY);
 
-            chrom.wheelDensity.second +=
-                dist(gen) * EvolutionaryAlgorithmConfig::INITIAL_WHEEL_DENSITY_VARIANCE + EvolutionaryAlgorithmConfig::INITIAL_WHEEL_DENSITY_MEAN;
-            chrom.wheelDensity.second =
-                std::max(chrom.wheelDensity.second, EvolutionaryAlgorithmConfig::MIN_WHEEL_DENSITY);
-            chrom.wheelDensity.second =
-                std::min(chrom.wheelDensity.second, EvolutionaryAlgorithmConfig::MAX_WHEEL_DENSITY);
-        
+        chrom.wheelDensity.second +=
+            dist(gen) * EvolutionaryAlgorithmConfig::INITIAL_WHEEL_DENSITY_VARIANCE +
+            EvolutionaryAlgorithmConfig::INITIAL_WHEEL_DENSITY_MEAN;
+        chrom.wheelDensity.second =
+            std::max(chrom.wheelDensity.second, EvolutionaryAlgorithmConfig::MIN_WHEEL_DENSITY);
+        chrom.wheelDensity.second =
+            std::min(chrom.wheelDensity.second, EvolutionaryAlgorithmConfig::MAX_WHEEL_DENSITY);
+
         population_.push_back(chrom);
     }
-
-
 }
 
 void EvolutionaryAlgorithm::mutate() {
@@ -175,8 +173,7 @@ void EvolutionaryAlgorithm::tournamentSelection() {
 }
 
 void EvolutionaryAlgorithm::nextGeneration() {
-    if(saveToFile_)
-    {
+    if (saveToFile_) {
         exportPopulation();
     }
     tournamentSelection();

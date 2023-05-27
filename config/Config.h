@@ -10,6 +10,7 @@ class Config {
    public:
     static constexpr int WINDOW_WIDTH = 800;
     static constexpr int WINDOW_HEIGHT = 600;
+    static constexpr bool SAVE_TO_FILE = false;
 
     // Pixels per meter. Box2D uses metric units, so we need PPM for conversion pourposes
     static constexpr float PPM = 30.0F;

@@ -74,13 +74,12 @@ int main() {
     // Car car3 = Car(world, 250, 500, vertices_gen, 100.0f, 25.0f, bodyColor3, wheelColor3);
     cars.push_back(&car);
 
-    EvolutionaryAlgorithm ea(10);
+    EvolutionaryAlgorithm ea(10, Config::SAVE_TO_FILE);
 
     for (int i = 0; i < ea.getPopulationSize(); ++i) {
         Car *car = new Car(world, 350, 300, vertices, 100.0f, 25.0f, bodyColor, wheelColor);
         cars.push_back(car);
     }
-
 
     // Make cars pass through eachother
     // by setting collision filtering
