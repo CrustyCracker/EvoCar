@@ -94,7 +94,7 @@ Circle createCircle(b2WorldPtr world, float x, float y, float radius, float dens
 Polygon createPolygon(b2WorldPtr world, float x, float y, std::vector<b2Vec2> vertices,
                       float density, float friction, sf::Color color) {
     // Argument validation
-    if (vertices.size() < 3 || vertices.size() > Config::CAR_VERTICES) {
+    if (vertices.size() < 3 || vertices.size() > CarConfig::CAR_VERTICES) {
         throw std::invalid_argument("Invalid vertices size");
     } else if (density <= 0.0f) {
         throw std::invalid_argument("Invalid density parameter");

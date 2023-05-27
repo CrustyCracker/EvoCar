@@ -7,6 +7,7 @@ Description:    Header file for functions for creating Box2D objects.
 #define SHAPE_H
 
 #include "../config/Config.h"
+#include "../config/CarConfig.h"
 #include "SFML/Graphics.hpp"
 #include "box2d/box2d.h"
 #include <memory>

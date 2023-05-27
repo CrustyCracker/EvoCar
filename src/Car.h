@@ -9,6 +9,7 @@ Description:    Creates a car with a polygon (car's body)
 #include "box2d/box2d.h"
 #include "Shape.h"
 #include "../config/Config.h"
+#include "../config/CarConfig.h"
 /*
 Author:         Jakub Marcowski, Mateusz Krakowski
 Description:    Header file for Car class.
