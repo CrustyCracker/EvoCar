@@ -220,9 +220,9 @@ int main() {
 
         car.getBody()->body->ApplyForceToCenter(
             b2Vec2(-1.84 * car.getBody()->body->GetLinearVelocity().x *
-                       car.getBody()->body->GetLinearVelocity().x,
+                       abs(car.getBody()->body->GetLinearVelocity().x),
                    -1.84 * car.getBody()->body->GetLinearVelocity().y *
-                       car.getBody()->body->GetLinearVelocity().y),
+                       abs(car.getBody()->body->GetLinearVelocity().y)),
             true);
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
