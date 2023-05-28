@@ -22,7 +22,7 @@ Car::Car(b2WorldPtr world, float x, float y, std::vector<b2Vec2> vertices, float
     jointDef2.bodyB = frontWheel.body;
     jointDef2.localAnchorA = vertices[1];
     jointDef2.localAnchorB = b2Vec2(0.0f, 0.0f);
-    jointDef2.maxLength = Config::MAX_JOINT_LENGTH;
+    jointDef2.maxLength = CarConfig::MAX_JOINT_LENGTH;
     jointDef2.collideConnected = false;
     world->CreateJoint(&jointDef2);
 
@@ -30,7 +30,7 @@ Car::Car(b2WorldPtr world, float x, float y, std::vector<b2Vec2> vertices, float
     jointDef2.bodyB = backWheel.body;
     jointDef2.localAnchorA = vertices[2];
     jointDef2.localAnchorB = b2Vec2(0.0f, 0.0f);
-    jointDef2.maxLength = Config::MAX_JOINT_LENGTH;
+    jointDef2.maxLength = CarConfig::MAX_JOINT_LENGTH;
     jointDef2.collideConnected = false;
     world->CreateJoint(&jointDef2);
 }
