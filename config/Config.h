@@ -22,7 +22,7 @@ class Config {
     // Draw debug geometry
     static constexpr bool DEBUG = true;
 
-    // Psychics
+    // Physics
     static constexpr double GRAVITIATIONAL_ACCELERATION = -9.81f;
     static constexpr float FRICTION = 0.3f;
     static constexpr double PI = 3.14159265358979323846;
