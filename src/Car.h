@@ -32,6 +32,8 @@ class Car {
     Circle* getFrontWheel();
     Circle* getBackWheel();
     sf::Color* getBodyColor();
+    b2Vec2 getVelocityVec();
+    float getVelocity();
     void setCollisionFilter(b2Filter filter);
 };
 

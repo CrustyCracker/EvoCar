@@ -43,6 +43,10 @@ Circle* Car::getBackWheel() { return &backWheel; }
 
 sf::Color* Car::getBodyColor() { return &bodyColor; }
 
+b2Vec2 Car::getVelocityVec() { return body.body->GetLinearVelocity(); }
+
+float Car::getVelocity() { return body.body->GetLinearVelocity().Length(); }
+
 void Car::setCollisionFilter(b2Filter filter) {
     body.body->GetFixtureList()->SetFilterData(filter);
     frontWheel.body->GetFixtureList()->SetFilterData(filter);

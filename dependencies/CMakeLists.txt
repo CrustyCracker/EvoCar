@@ -3,6 +3,7 @@ include(FetchContent)
 set(SFML_VERSION 2.5.1)
 set(IMGUI_SFML_VERSION 2.5)
 set(IMGUI_VERSION 1.86)
+set(IMPLOT_VERSION 0.14)
 set(GOOGLETEST_VERSION 1.12.1)
 set(BOX2D_VERSION 2.4.1)
 
@@ -23,6 +24,11 @@ FetchContent_Declare(
 FetchContent_Declare(
   imgui
   URL https://github.com/ocornut/imgui/archive/v${IMGUI_VERSION}.zip
+)
+
+FetchContent_Declare(
+  implot
+  URL https://github.com/epezent/implot/archive/v${IMPLOT_VERSION}.zip
 )
 
 FetchContent_Declare(
@@ -56,18 +62,43 @@ FetchContent_MakeAvailable(SFML)
 
 message(STATUS "Fetching ImGui...")
 FetchContent_MakeAvailable(imgui)
-add_library(imgui STATIC
-  ${imgui_SOURCE_DIR}/imgui.cpp
+set(IMGUI_SRC
   ${imgui_SOURCE_DIR}/imgui_demo.cpp
   ${imgui_SOURCE_DIR}/imgui_draw.cpp
+  ${imgui_SOURCE_DIR}/imgui_tables.cpp
   ${imgui_SOURCE_DIR}/imgui_widgets.cpp
+  ${imgui_SOURCE_DIR}/imgui.cpp
+)
+set(IMGUI_HEADERS
   ${imgui_SOURCE_DIR}/imconfig.h
-  ${imgui_SOURCE_DIR}/imgui.h
   ${imgui_SOURCE_DIR}/imgui_internal.h
+  ${imgui_SOURCE_DIR}/imgui.h
   ${imgui_SOURCE_DIR}/imstb_rectpack.h
   ${imgui_SOURCE_DIR}/imstb_textedit.h
   ${imgui_SOURCE_DIR}/imstb_truetype.h
 )
+add_library(imgui STATIC
+  ${IMGUI_HEADERS}
+  ${IMGUI_SRC}
+)
+
+message(STATUS "Fetching ImPlot...")
+FetchContent_MakeAvailable(implot)
+set(IMPLOT_SRC
+  ${implot_SOURCE_DIR}/implot.cpp
+  ${implot_SOURCE_DIR}/implot_items.cpp
+  ${implot_SOURCE_DIR}/implot_demo.cpp
+)
+set(IMPLOT_HEADERS
+  ${implot_SOURCE_DIR}/implot.h
+  ${implot_SOURCE_DIR}/implot_internal.h
+)
+add_library(implot STATIC
+  ${IMPLOT_HEADERS}
+  ${IMPLOT_SRC}
+)
+target_include_directories(implot PRIVATE ${imgui_SOURCE_DIR})
+target_include_directories(implot PUBLIC ${implot_SOURCE_DIR})
 
 message(STATUS "Fetching ImGui-SFML...")
 set(IMGUI_DIR ${imgui_SOURCE_DIR})
