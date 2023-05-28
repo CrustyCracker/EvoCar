@@ -1,9 +1,11 @@
 #include <iostream>
+#include <numeric>
 
 #include "SFML/Graphics.hpp"
 #include "box2d/box2d.h"
 #include "imgui-SFML.h"
 #include "imgui.h"
+#include "implot.h"
 
 #include "../config/Config.h"
 #include "Car.h"
@@ -27,6 +29,9 @@ int main() {
     sf::RenderWindow w(sf::VideoMode(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT), "SFML + Box2D",
                        sf::Style::Default, settings);
     w.setFramerateLimit(60);
+
+    ImGui::CreateContext();
+    ImPlot::CreateContext();
 
     // Initialize ImGui-SFML
     ImGui::SFML::Init(w);
@@ -88,6 +93,11 @@ int main() {
     bool paused = false;
     bool pause_check = true;
 
+    std::vector<float> v_axis(Config::VELOCITY_ARRAY_SIZE);
+    std::vector<float> v_values(Config::VELOCITY_ARRAY_SIZE);
+
+    std::iota(std::begin(v_axis), std::end(v_axis), 1);
+
     sf::Clock deltaClock;
     /** PROGRAM LOOP **/
     while (w.isOpen()) {
@@ -135,6 +145,25 @@ int main() {
                     lastGround.body->GetPosition().x * Config::PPM + lastGround.width / 2);
         ImGui::End();
 
+        ImGui::SetNextWindowSize(ImVec2(230, 340), ImGuiCond_FirstUseEver);
+        ImGui::SetNextWindowPos(ImVec2(10, 144), ImGuiCond_FirstUseEver);
+        ImGui::Begin("Car's Velocity");
+        ImPlot::SetNextAxesToFit();
+        if (ImPlot::BeginPlot("Velocity")) {
+            if (!paused) {
+                v_axis.push_back(v_axis.back() + 1);
+                v_values.push_back(car.getVelocity());
+            }
+            std::vector<float> v_axis_crop =
+                std::vector<float>(v_axis.end() - Config::VELOCITY_ARRAY_SIZE, v_axis.end());
+            std::vector<float> v_values_crop =
+                std::vector<float>(v_values.end() - Config::VELOCITY_ARRAY_SIZE, v_values.end());
+            ImPlot::PlotLine("V", &(v_axis_crop[0]), &(v_values_crop[0]),
+                             Config::VELOCITY_ARRAY_SIZE);
+            ImPlot::EndPlot();
+        }
+        ImGui::End();
+
         const float generateDistance = 200;
         // if car is far enough to the right, generate a new ground
         if (lastGround.body->GetPosition().x * Config::PPM + lastGround.width / 2 <
@@ -179,6 +208,23 @@ int main() {
             }
         }
 
+        // simplified air drag
+        //
+        // F = V^2 * k
+        // k ≈ 1/2 * ρ * A * C_d ≈ 3.4
+        // ρ = 1.293 kg/m^3
+        // A = ? (let's assume 5 m^2)
+        // C_d = ? (let's assume 1.05)
+        //
+        // F = 3.4 * V^2
+
+        car.getBody()->body->ApplyForceToCenter(
+            b2Vec2(-1.84 * car.getBody()->body->GetLinearVelocity().x *
+                       abs(car.getBody()->body->GetLinearVelocity().x),
+                   -1.84 * car.getBody()->body->GetLinearVelocity().y *
+                       abs(car.getBody()->body->GetLinearVelocity().y)),
+            true);
+
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
             // Close the window
             w.close();
@@ -212,6 +258,11 @@ int main() {
             }
         }
     }
+
     ImGui::SFML::Shutdown();
+
+    ImPlot::DestroyContext();
+    ImGui::DestroyContext();
+
     return 0;
 }

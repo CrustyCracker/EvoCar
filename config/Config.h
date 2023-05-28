@@ -8,8 +8,8 @@ Description: This file contains all the constant values used in the program.
 
 class Config {
    public:
-    static constexpr int WINDOW_WIDTH = 800;
-    static constexpr int WINDOW_HEIGHT = 600;
+    static constexpr int WINDOW_WIDTH = 1280;
+    static constexpr int WINDOW_HEIGHT = 720;
 
     // Pixels per meter. Box2D uses metric units, so we need PPM for conversion pourposes
     static constexpr float PPM = 30.0F;
@@ -21,6 +21,8 @@ class Config {
 
     // Draw debug geometry
     static constexpr bool DEBUG = true;
+
+    static constexpr int VELOCITY_ARRAY_SIZE = 1000;
 
     static constexpr double PI = 3.14159265358979323846;
 };
