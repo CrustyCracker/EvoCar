@@ -11,6 +11,7 @@
 #include "Car.h"
 #include "Shape.h"
 #include "Render.h"
+#include "EvolutionaryAlgorithm.h"
 
 /*
 Author:        Jakub Marcowski, Mateusz Krakowski
@@ -63,23 +64,27 @@ int main() {
 
     auto vertices_gen = createVertices(
         {2.54951f, 2.12132f, 2.12132f, 2.54951f, 2.54951f, 2.12132f, 2.12132f, 2.54951f},
-        {33.7f, 90.0f, 33.7f, 22.6f, 33.7f, 90.0f, 33.7f, 22.6f});
+        {45.0f, 45.0f, 45.0f, 45.0f, 45.0f, 45.0f, 45.0f, 45.0f});
 
     sf::Color bodyColor = sf::Color(50, 200, 50);
     sf::Color wheelColor = sf::Color(225, 50, 50);
-    Car car = Car(world, 255, 400, vertices, 100.0f, 0.3f, 25.0f, bodyColor, wheelColor);
+    Car car = Car(world, 350, 300, vertices, 100.0f, 25.0f, bodyColor, wheelColor);
 
-    sf::Color bodyColor2 = sf::Color(25, 100, 25);
-    sf::Color wheelColor2 = sf::Color(113, 25, 25);
-    Car car2 = Car(world, 225, 300, vertices_gen, 100.0f, 0.3f, 25.0f, bodyColor2, wheelColor2);
+    // sf::Color bodyColor2 = sf::Color(25, 100, 25);
+    // sf::Color wheelColor2 = sf::Color(113, 25, 25);
+    // Car car2 = Car(world, 150, 300, vertices_gen, 100.0f, 25.0f, bodyColor2, wheelColor2);
 
-    sf::Color bodyColor3 = sf::Color(13, 50, 13);
-    sf::Color wheelColor3 = sf::Color(57, 13, 13);
-    Car car3 = Car(world, 195, 200, vertices, 100.0f, 0.3f, 25.0f, bodyColor3, wheelColor3);
-
-    cars.push_back(&car3);
-    cars.push_back(&car2);
+    // sf::Color bodyColor3 = sf::Color(13, 50, 13);
+    // sf::Color wheelColor3 = sf::Color(57, 13, 13);
+    // Car car3 = Car(world, 250, 500, vertices_gen, 100.0f, 25.0f, bodyColor3, wheelColor3);
     cars.push_back(&car);
+
+    EvolutionaryAlgorithm ea(10, Config::SAVE_TO_FILE);
+
+    for (int i = 0; i < ea.getPopulationSize(); ++i) {
+        Car *car = new Car(world, 350, 300, vertices, 100.0f, 25.0f, bodyColor, wheelColor);
+        cars.push_back(car);
+    }
 
     // Make cars pass through eachother
     // by setting collision filtering

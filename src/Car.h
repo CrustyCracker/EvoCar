@@ -26,7 +26,7 @@ class Car {
 
    public:
     Car(b2WorldPtr world, float x, float y, std::vector<b2Vec2> vertices, float density,
-        float friction, float wheelRadious, sf::Color bodyColor, sf::Color wheelColor);
+        float wheelRadious, sf::Color bodyColor, sf::Color wheelColor);
 
     Polygon* getBody();
     Circle* getFrontWheel();
