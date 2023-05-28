@@ -12,6 +12,7 @@ class Config {
     static constexpr int WINDOW_WIDTH = 1280;
     static constexpr int WINDOW_HEIGHT = 720;
     static constexpr bool SAVE_TO_FILE = false;
+    static constexpr string SAVE_FILE_NAME = "evoRacerOutput.json";
 
     // Pixels per meter. Box2D uses metric units, so we need PPM for conversion pourposes
     static constexpr float PPM = 30.0F;
