@@ -1,6 +1,4 @@
 #include <iostream>
-#include <numeric>
-#include <random>
 
 #include "SFML/Graphics.hpp"
 #include "box2d/box2d.h"
@@ -54,22 +52,10 @@ int main() {
     Box ground = createGround(world, 350, 50, 500, 100, sf::Color(50, 50, 50));
     boxes.push_back(ground);
 
-    auto vertices_gen = createVertices(
-        {2.54951f, 2.12132f, 2.12132f, 2.54951f, 2.54951f, 2.12132f, 2.12132f, 2.54951f},
-        {33.7f, 90.0f, 33.7f, 22.6f, 33.7f, 90.0f, 33.7f, 22.6f});
-
-    std::random_device rd;                            // obtain a random number from hardware
-    std::mt19937 gen(rd());                           // seed the generator
-    std::uniform_int_distribution<> distr(200, 400);  // define the range
-
-    sf::Color bodyColor = sf::Color(50, 200, 50);
-    sf::Color wheelColor = sf::Color(225, 50, 50);
-
     EvolutionaryAlgorithm ea(10, Config::SAVE_TO_FILE);
 
     for (int i = 0; i < ea.getPopulationSize(); ++i) {
-        Car car = Car(world, distr(gen), 300, vertices_gen, 100.0f, 25.0f, bodyColor, wheelColor);
-        cars.push_back(car);
+        cars.push_back(generateRandomCar(world));
     }
 
     // Make cars pass through eachother
@@ -83,11 +69,6 @@ int main() {
 
     bool paused = false;
     bool pause_check = true;
-
-    std::vector<float> v_axis(Config::VELOCITY_ARRAY_SIZE);
-    std::vector<float> v_values(Config::VELOCITY_ARRAY_SIZE);
-
-    std::iota(std::begin(v_axis), std::end(v_axis), 1);
 
     sf::Clock deltaClock;
     /** PROGRAM LOOP **/
@@ -134,16 +115,23 @@ int main() {
         ImGui::Begin("Car's Velocity");
         ImPlot::SetNextAxesToFit();
         if (ImPlot::BeginPlot("Velocity")) {
-            if (!paused) {
-                v_axis.push_back(v_axis.back() + 1);
-                v_values.push_back(cars[0].getVelocity());
+            for (int i = 0; i < cars.size(); ++i) {
+                char i_str[10];
+                sprintf(i_str, "%d", i);
+
+                if (!paused) {
+                    cars[i].getVelX()->push_back(cars[i].getVelX()->back() + 1);
+                    cars[i].getVelY()->push_back(cars[i].getVelocity());
+                }
+                std::vector<float> v_axis_crop =
+                    std::vector<float>(cars[i].getVelX()->end() - Config::VELOCITY_ARRAY_SIZE,
+                                       cars[i].getVelX()->end());
+                std::vector<float> v_values_crop =
+                    std::vector<float>(cars[i].getVelY()->end() - Config::VELOCITY_ARRAY_SIZE,
+                                       cars[i].getVelY()->end());
+                ImPlot::PlotLine(i_str, &(v_axis_crop[0]), &(v_values_crop[0]),
+                                 Config::VELOCITY_ARRAY_SIZE);
             }
-            std::vector<float> v_axis_crop =
-                std::vector<float>(v_axis.end() - Config::VELOCITY_ARRAY_SIZE, v_axis.end());
-            std::vector<float> v_values_crop =
-                std::vector<float>(v_values.end() - Config::VELOCITY_ARRAY_SIZE, v_values.end());
-            ImPlot::PlotLine("V", &(v_axis_crop[0]), &(v_values_crop[0]),
-                             Config::VELOCITY_ARRAY_SIZE);
             ImPlot::EndPlot();
         }
         ImGui::End();

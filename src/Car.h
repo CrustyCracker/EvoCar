@@ -6,6 +6,9 @@ Description:    Creates a car with a polygon (car's body)
 
 #ifndef CAR_H
 #define CAR_H
+
+#include <numeric>
+
 #include "box2d/box2d.h"
 #include "Shape.h"
 #include "../config/Config.h"
@@ -24,6 +27,8 @@ class Car {
     Circle frontWheel;
     Circle backWheel;
     sf::Color bodyColor;
+    std::vector<float> velX;
+    std::vector<float> velY;
 
    public:
     Car(b2WorldPtr world, float x, float y, std::vector<b2Vec2> vertices, float density,
@@ -33,6 +38,8 @@ class Car {
     Circle* getFrontWheel();
     Circle* getBackWheel();
     sf::Color* getBodyColor();
+    std::vector<float>* getVelX();
+    std::vector<float>* getVelY();
     b2Vec2 getVelocityVec();
     float getVelocity();
     void setCollisionFilter(b2Filter filter);

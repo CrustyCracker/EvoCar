@@ -6,9 +6,13 @@ Description:    -
 #ifndef UTILITY_H
 #define UTILITY_H
 
+#include <random>
+
 #include "Car.h"
 
 typedef std::shared_ptr<b2World> b2WorldPtr;
+
+// TODO: think if some of these functions should be moved to other files
 
 /*
 simplified air drag
@@ -24,5 +28,7 @@ F = 3.4 * V^2
 void applyAirResistance(Car car);
 
 void generateGround(b2WorldPtr world, std::vector<Box> *boxes, std::vector<Car> cars);
+
+Car generateRandomCar(b2WorldPtr world);
 
 #endif
