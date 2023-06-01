@@ -1,5 +1,6 @@
 #include <iostream>
 #include <numeric>
+#include <random>
 
 #include "SFML/Graphics.hpp"
 #include "box2d/box2d.h"
@@ -42,7 +43,7 @@ int main() {
 
     // Containers to hold objects we create
     std::vector<Box> boxes;
-    std::vector<Car *> cars;
+    std::vector<Car> cars;
 
     // Add a wall (uses "ground" object, for now)
     Box wall = createGround(world, 50, 350, 100, 700, sf::Color(50, 50, 50));
@@ -52,37 +53,21 @@ int main() {
     Box ground = createGround(world, 350, 50, 500, 100, sf::Color(50, 50, 50));
     boxes.push_back(ground);
 
-    std::vector<b2Vec2> vertices;
-    vertices.push_back(b2Vec2(-2.5f, -0.5f));
-    vertices.push_back(b2Vec2(-1.5f, -1.5f));
-    vertices.push_back(b2Vec2(1.5f, -1.5f));
-    vertices.push_back(b2Vec2(2.5f, -0.5f));
-    vertices.push_back(b2Vec2(2.5f, 0.5f));
-    vertices.push_back(b2Vec2(1.5f, 1.5f));
-    vertices.push_back(b2Vec2(-1.5f, 1.5f));
-    vertices.push_back(b2Vec2(-2.5f, 0.5f));
-
     auto vertices_gen = createVertices(
         {2.54951f, 2.12132f, 2.12132f, 2.54951f, 2.54951f, 2.12132f, 2.12132f, 2.54951f},
-        {45.0f, 45.0f, 45.0f, 45.0f, 45.0f, 45.0f, 45.0f, 45.0f});
+        {33.7f, 90.0f, 33.7f, 22.6f, 33.7f, 90.0f, 33.7f, 22.6f});
+
+    std::random_device rd;                            // obtain a random number from hardware
+    std::mt19937 gen(rd());                           // seed the generator
+    std::uniform_int_distribution<> distr(150, 350);  // define the range
 
     sf::Color bodyColor = sf::Color(50, 200, 50);
     sf::Color wheelColor = sf::Color(225, 50, 50);
-    Car car = Car(world, 350, 300, vertices, 100.0f, 25.0f, bodyColor, wheelColor);
-
-    // sf::Color bodyColor2 = sf::Color(25, 100, 25);
-    // sf::Color wheelColor2 = sf::Color(113, 25, 25);
-    // Car car2 = Car(world, 150, 300, vertices_gen, 100.0f, 25.0f, bodyColor2, wheelColor2);
-
-    // sf::Color bodyColor3 = sf::Color(13, 50, 13);
-    // sf::Color wheelColor3 = sf::Color(57, 13, 13);
-    // Car car3 = Car(world, 250, 500, vertices_gen, 100.0f, 25.0f, bodyColor3, wheelColor3);
-    cars.push_back(&car);
 
     EvolutionaryAlgorithm ea(10, Config::SAVE_TO_FILE);
 
     for (int i = 0; i < ea.getPopulationSize(); ++i) {
-        Car *car = new Car(world, 350, 300, vertices, 100.0f, 25.0f, bodyColor, wheelColor);
+        Car car = Car(world, distr(gen), 300, vertices_gen, 100.0f, 25.0f, bodyColor, wheelColor);
         cars.push_back(car);
     }
 
@@ -91,8 +76,8 @@ int main() {
     b2Filter filter;
     filter.categoryBits = 2;
     filter.maskBits = 1;
-    for (Car *car : cars) {
-        car->setCollisionFilter(filter);
+    for (Car car : cars) {
+        car.setCollisionFilter(filter);
     }
 
     bool paused = false;
@@ -124,13 +109,13 @@ int main() {
 
         ImGui::BeginChild("Car Settings");
 
-        ImGui::SliderFloat("Wheel 1 Radius [px]", &car.getFrontWheel()->radius, 0.0f, 100.0f);
-        car.getFrontWheel()->body->GetFixtureList()->GetShape()->m_radius =
-            car.getFrontWheel()->radius / Config::PPM;
+        ImGui::SliderFloat("Wheel 1 Radius [px]", &cars[0].getFrontWheel()->radius, 0.0f, 100.0f);
+        cars[0].getFrontWheel()->body->GetFixtureList()->GetShape()->m_radius =
+            cars[0].getFrontWheel()->radius / Config::PPM;
 
-        ImGui::SliderFloat("Wheel 2 Radius [px]", &car.getBackWheel()->radius, 0.0f, 100.0f);
-        car.getBackWheel()->body->GetFixtureList()->GetShape()->m_radius =
-            car.getBackWheel()->radius / Config::PPM;
+        ImGui::SliderFloat("Wheel 2 Radius [px]", &cars[0].getBackWheel()->radius, 0.0f, 100.0f);
+        cars[0].getBackWheel()->body->GetFixtureList()->GetShape()->m_radius =
+            cars[0].getBackWheel()->radius / Config::PPM;
         ImGui::EndChild();
 
         ImGui::End();
@@ -138,9 +123,9 @@ int main() {
         ImGui::SetNextWindowPos(ImVec2(440, 10), ImGuiCond_FirstUseEver);
         ImGui::Begin("Car's Position");
         ImGui::Text("Car's position: (%.1f, %.1f)",
-                    car.getBody()->body->GetPosition().x * Config::PPM,
-                    car.getBody()->body->GetPosition().y * Config::PPM);
-        ImGui::Text("Car's angle: %.1f", car.getBody()->body->GetAngle() * 180 / b2_pi);
+                    cars[0].getBody()->body->GetPosition().x * Config::PPM,
+                    cars[0].getBody()->body->GetPosition().y * Config::PPM);
+        ImGui::Text("Car's angle: %.1f", cars[0].getBody()->body->GetAngle() * 180 / b2_pi);
         ImGui::End();
 
         Box lastGround = boxes.back();
@@ -157,7 +142,7 @@ int main() {
         if (ImPlot::BeginPlot("Velocity")) {
             if (!paused) {
                 v_axis.push_back(v_axis.back() + 1);
-                v_values.push_back(car.getVelocity());
+                v_values.push_back(cars[0].getVelocity());
             }
             std::vector<float> v_axis_crop =
                 std::vector<float>(v_axis.end() - Config::VELOCITY_ARRAY_SIZE, v_axis.end());
@@ -172,7 +157,7 @@ int main() {
         const float generateDistance = 200;
         // if car is far enough to the right, generate a new ground
         if (lastGround.body->GetPosition().x * Config::PPM + lastGround.width / 2 <
-            car.getBody()->body->GetPosition().x * Config::PPM + generateDistance) {
+            cars[0].getBody()->body->GetPosition().x * Config::PPM + generateDistance) {
             Box ground = createGround(
                 world, lastGround.body->GetPosition().x * Config::PPM + lastGround.width, 50, 500,
                 100, sf::Color(50, 50, 50));
@@ -186,11 +171,11 @@ int main() {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
             // Attach camera to the car's body
             sf::View cameraView =
-                sf::View(sf::Vector2f(car.getBody()->body->GetPosition().x * Config::PPM,
+                sf::View(sf::Vector2f(cars[0].getBody()->body->GetPosition().x * Config::PPM,
                                       Config::WINDOW_HEIGHT -
-                                          (car.getBody()->body->GetPosition().y * Config::PPM)),
+                                          (cars[0].getBody()->body->GetPosition().y * Config::PPM)),
                          sf::Vector2f(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT));
-            cameraView.setRotation((-1) * car.getBody()->body->GetAngle() * 180 / b2_pi);
+            cameraView.setRotation((-1) * cars[0].getBody()->body->GetAngle() * 180 / b2_pi);
             w.setView(cameraView);
         } else {
             // Reset camera
@@ -203,13 +188,13 @@ int main() {
         if (!paused) {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
                 // Rotate the circles left
-                car.getFrontWheel()->body->ApplyTorque(1000, false);
-                car.getBackWheel()->body->ApplyTorque(1000, false);
+                cars[0].getFrontWheel()->body->ApplyTorque(1000, false);
+                cars[0].getBackWheel()->body->ApplyTorque(1000, false);
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
                 // Rotate the circles right
-                car.getFrontWheel()->body->ApplyTorque(-1000, false);
-                car.getBackWheel()->body->ApplyTorque(-1000, false);
+                cars[0].getFrontWheel()->body->ApplyTorque(-1000, false);
+                cars[0].getBackWheel()->body->ApplyTorque(-1000, false);
             }
         }
 
@@ -223,11 +208,11 @@ int main() {
         //
         // F = 3.4 * V^2
 
-        car.getBody()->body->ApplyForceToCenter(
-            b2Vec2(-1.84 * car.getBody()->body->GetLinearVelocity().x *
-                       abs(car.getBody()->body->GetLinearVelocity().x),
-                   -1.84 * car.getBody()->body->GetLinearVelocity().y *
-                       abs(car.getBody()->body->GetLinearVelocity().y)),
+        cars[0].getBody()->body->ApplyForceToCenter(
+            b2Vec2(-1.84 * cars[0].getBody()->body->GetLinearVelocity().x *
+                       abs(cars[0].getBody()->body->GetLinearVelocity().x),
+                   -1.84 * cars[0].getBody()->body->GetLinearVelocity().y *
+                       abs(cars[0].getBody()->body->GetLinearVelocity().y)),
             true);
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {

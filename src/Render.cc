@@ -106,23 +106,23 @@ void renderPolygonDebug(sf::RenderWindow &w, Polygon *polygon) {
     }
 }
 
-void renderCar(sf::RenderWindow &w, Car *car) {
-    renderPolygon(w, car->getBody());
-    renderCircle(w, car->getFrontWheel());
-    renderCircle(w, car->getBackWheel());
+void renderCar(sf::RenderWindow &w, Car car) {
+    renderPolygon(w, car.getBody());
+    renderCircle(w, car.getFrontWheel());
+    renderCircle(w, car.getBackWheel());
     if (Config::DEBUG) {
-        renderPolygonDebug(w, car->getBody());
-        renderCircleDebug(w, car->getFrontWheel());
-        renderCircleDebug(w, car->getBackWheel());
+        renderPolygonDebug(w, car.getBody());
+        renderCircleDebug(w, car.getFrontWheel());
+        renderCircleDebug(w, car.getBackWheel());
     }
 }
 
-void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Car *> &cars) {
+void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Car> &cars) {
     w.clear();
     for (Box &box : boxes) {
         renderBox(w, box);
     }
-    for (const auto &car : cars) {
+    for (Car &car : cars) {
         renderCar(w, car);
     }
 }
