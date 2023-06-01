@@ -16,6 +16,7 @@ Description:    Header file for Car class.
 */
 
 typedef std::shared_ptr<b2World> b2WorldPtr;
+
 class Car {
    private:
     b2WorldPtr world;

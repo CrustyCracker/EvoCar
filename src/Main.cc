@@ -10,9 +10,10 @@
 
 #include "../config/Config.h"
 #include "Car.h"
+#include "EvolutionaryAlgorithm.h"
 #include "Shape.h"
 #include "Render.h"
-#include "EvolutionaryAlgorithm.h"
+#include "Utility.h"
 
 /*
 Author:        Jakub Marcowski, Mateusz Krakowski
@@ -59,7 +60,7 @@ int main() {
 
     std::random_device rd;                            // obtain a random number from hardware
     std::mt19937 gen(rd());                           // seed the generator
-    std::uniform_int_distribution<> distr(150, 350);  // define the range
+    std::uniform_int_distribution<> distr(200, 400);  // define the range
 
     sf::Color bodyColor = sf::Color(50, 200, 50);
     sf::Color wheelColor = sf::Color(225, 50, 50);
@@ -128,13 +129,6 @@ int main() {
         ImGui::Text("Car's angle: %.1f", cars[0].getBody()->body->GetAngle() * 180 / b2_pi);
         ImGui::End();
 
-        Box lastGround = boxes.back();
-        ImGui::SetNextWindowPos(ImVec2(440, 80), ImGuiCond_FirstUseEver);
-        ImGui::Begin("Last Ground's Right Edge's Position");
-        ImGui::Text("Last ground's right edge's position: %.1f",
-                    lastGround.body->GetPosition().x * Config::PPM + lastGround.width / 2);
-        ImGui::End();
-
         ImGui::SetNextWindowSize(ImVec2(230, 340), ImGuiCond_FirstUseEver);
         ImGui::SetNextWindowPos(ImVec2(10, 144), ImGuiCond_FirstUseEver);
         ImGui::Begin("Car's Velocity");
@@ -154,15 +148,7 @@ int main() {
         }
         ImGui::End();
 
-        const float generateDistance = 200;
-        // if car is far enough to the right, generate a new ground
-        if (lastGround.body->GetPosition().x * Config::PPM + lastGround.width / 2 <
-            cars[0].getBody()->body->GetPosition().x * Config::PPM + generateDistance) {
-            Box ground = createGround(
-                world, lastGround.body->GetPosition().x * Config::PPM + lastGround.width, 50, 500,
-                100, sf::Color(50, 50, 50));
-            boxes.push_back(ground);
-        }
+        generateGround(world, &boxes, cars);
 
         ImGui::SFML::Render(w);
 
@@ -198,24 +184,12 @@ int main() {
             }
         }
 
-        // simplified air drag
-        //
-        // F = V^2 * k
-        // k ≈ 1/2 * ρ * A * C_d ≈ 3.4
-        // ρ = 1.293 kg/m^3
-        // A = ? (let's assume 5 m^2)
-        // C_d = ? (let's assume 1.05)
-        //
-        // F = 3.4 * V^2
+        for (Car car : cars) {
+            applyAirResistance(car);
+        }
 
-        cars[0].getBody()->body->ApplyForceToCenter(
-            b2Vec2(-1.84 * cars[0].getBody()->body->GetLinearVelocity().x *
-                       abs(cars[0].getBody()->body->GetLinearVelocity().x),
-                   -1.84 * cars[0].getBody()->body->GetLinearVelocity().y *
-                       abs(cars[0].getBody()->body->GetLinearVelocity().y)),
-            true);
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) ||
+            sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
             // Close the window
             w.close();
         }
