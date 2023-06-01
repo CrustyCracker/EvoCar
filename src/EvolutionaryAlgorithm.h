@@ -7,7 +7,6 @@ Description:    Header file for EvolutionaryAlgorithm class.
 #define GENOME_H
 #include <vector>
 #include <random>
-#include "../config/Config.h"
 #include "../config/EvolutionaryAlgorithmConfig.h"
 #include <fstream>
 #include <nlohmann/json.hpp>

@@ -8,11 +8,12 @@ Description: This file contains all the constant values used in the evolutionary
 
 class EvolutionaryAlgorithmConfig {
    public:
+    static constexpr char SAVE_FILE_NAME[] = "evoRacerOutput.json";
 
     // Evolutionary algorithm parameters
     static constexpr int POPULATION_SIZE = 10;
 
-    // boundries for the chromosomes
+    // Boundries for the chromosomes
     static constexpr float MIN_BODY_LENGTH = 1.0f;
     static constexpr float MAX_BODY_LENGTH = 10.0f;
 
@@ -37,13 +38,12 @@ class EvolutionaryAlgorithmConfig {
 
     static constexpr float INITIAL_WHEEL_DENSITY_MEAN = 100.0f;
     static constexpr float INITIAL_WHEEL_DENSITY_VARIANCE = 100.0f;
-    
 
     // Mutation hyperparameters
 
     static constexpr float MUTATION_RATE_BODY_LENGTHS = 0.1f;
     static constexpr float MUTATION_FACTOR_BODY_LENGTHS = 0.5f;
-    
+
     static constexpr float MUTATION_RATE_BODY_DENSITY = 0.2f;
     static constexpr float MUTATION_FACTOR_BODY_DENSITY = 20.0f;
 
@@ -52,9 +52,9 @@ class EvolutionaryAlgorithmConfig {
 
     static constexpr float MUTATION_RATE_WHEEL_DENSITY = 0.1f;
     static constexpr float MUTATION_FACTOR_WHEEL_DENSITY = 20.0f;
-    
+
     // Selection hyperparameters
-    static constexpr float TOURNAMENT_SIZE = 3; // Has to be equal or greater than POPULATION_SIZE
+    static constexpr float TOURNAMENT_SIZE = 3;  // Has to be equal or greater than POPULATION_SIZE
 };
 
 #endif  // EVOLUTIONARY_ALGORITHM_CONFIG_H

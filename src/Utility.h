@@ -13,6 +13,7 @@ Description:    -
 typedef std::shared_ptr<b2World> b2WorldPtr;
 
 // TODO: think if some of these functions should be moved to other files
+// and whether or not some constants should be moved to config
 
 /*
 simplified air drag

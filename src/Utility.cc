@@ -16,7 +16,7 @@ void applyAirResistance(Car car) {
 
 void generateGround(b2WorldPtr world, std::vector<Box> *boxes, std::vector<Car> cars) {
     Box lastGround = boxes->back();
-    const float generateDistance = 200;
+    const float generateDistance = 700;
     // if car is far enough to the right, generate a new ground
     if (lastGround.body->GetPosition().x * Config::PPM + lastGround.width / 2 <
         cars[0].getBody()->body->GetPosition().x * Config::PPM + generateDistance) {

@@ -82,36 +82,8 @@ int main() {
 
         ImGui::SFML::Update(w, deltaClock.restart());
 
-        ImGui::SetNextWindowSize(ImVec2(420, 130), ImGuiCond_FirstUseEver);
+        ImGui::SetNextWindowSize(ImVec2(340, 340), ImGuiCond_FirstUseEver);
         ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
-        ImGui::Begin("Car Demo");
-        ImGui::Text("Left/Right arrow keys to rotate the wheels.");
-        ImGui::Text("Hold C to attach the camera to the car.");
-        ImGui::Text("\n");
-
-        ImGui::BeginChild("Car Settings");
-
-        ImGui::SliderFloat("Wheel 1 Radius [px]", &cars[0].getFrontWheel()->radius, 0.0f, 100.0f);
-        cars[0].getFrontWheel()->body->GetFixtureList()->GetShape()->m_radius =
-            cars[0].getFrontWheel()->radius / Config::PPM;
-
-        ImGui::SliderFloat("Wheel 2 Radius [px]", &cars[0].getBackWheel()->radius, 0.0f, 100.0f);
-        cars[0].getBackWheel()->body->GetFixtureList()->GetShape()->m_radius =
-            cars[0].getBackWheel()->radius / Config::PPM;
-        ImGui::EndChild();
-
-        ImGui::End();
-
-        ImGui::SetNextWindowPos(ImVec2(440, 10), ImGuiCond_FirstUseEver);
-        ImGui::Begin("Car's Position");
-        ImGui::Text("Car's position: (%.1f, %.1f)",
-                    cars[0].getBody()->body->GetPosition().x * Config::PPM,
-                    cars[0].getBody()->body->GetPosition().y * Config::PPM);
-        ImGui::Text("Car's angle: %.1f", cars[0].getBody()->body->GetAngle() * 180 / b2_pi);
-        ImGui::End();
-
-        ImGui::SetNextWindowSize(ImVec2(230, 340), ImGuiCond_FirstUseEver);
-        ImGui::SetNextWindowPos(ImVec2(10, 144), ImGuiCond_FirstUseEver);
         ImGui::Begin("Car's Velocity");
         ImPlot::SetNextAxesToFit();
         if (ImPlot::BeginPlot("Velocity")) {
@@ -129,8 +101,13 @@ int main() {
                 std::vector<float> v_values_crop =
                     std::vector<float>(cars[i].getVelY()->end() - Config::VELOCITY_ARRAY_SIZE,
                                        cars[i].getVelY()->end());
+                ImVec4 color =
+                    ImVec4(cars[i].getBody()->color.r / 255.0f, cars[i].getBody()->color.g / 255.0f,
+                           cars[i].getBody()->color.b / 255.0f, 1.0f);
+                ImPlot::PushStyleColor(ImPlotCol_Line, color);
                 ImPlot::PlotLine(i_str, &(v_axis_crop[0]), &(v_values_crop[0]),
                                  Config::VELOCITY_ARRAY_SIZE);
+                ImPlot::PopStyleColor();
             }
             ImPlot::EndPlot();
         }
@@ -142,33 +119,19 @@ int main() {
 
         w.display();
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
-            // Attach camera to the car's body
-            sf::View cameraView =
-                sf::View(sf::Vector2f(cars[0].getBody()->body->GetPosition().x * Config::PPM,
-                                      Config::WINDOW_HEIGHT -
-                                          (cars[0].getBody()->body->GetPosition().y * Config::PPM)),
-                         sf::Vector2f(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT));
-            cameraView.setRotation((-1) * cars[0].getBody()->body->GetAngle() * 180 / b2_pi);
-            w.setView(cameraView);
-        } else {
-            // Reset camera
-            sf::View cameraView =
-                sf::View(sf::Vector2f(Config::WINDOW_WIDTH / 2, Config::WINDOW_HEIGHT / 2),
-                         sf::Vector2f(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT));
-            w.setView(cameraView);
-        }
+        // Attach camera to the car's body
+        sf::View cameraView =
+            sf::View(sf::Vector2f(cars[0].getBody()->body->GetPosition().x * Config::PPM,
+                                  Config::WINDOW_HEIGHT -
+                                      (cars[0].getBody()->body->GetPosition().y * Config::PPM)),
+                     sf::Vector2f(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT));
+        cameraView.setRotation((-1) * cars[0].getBody()->body->GetAngle() * 180 / b2_pi);
+        w.setView(cameraView);
 
         if (!paused) {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-                // Rotate the circles left
-                cars[0].getFrontWheel()->body->ApplyTorque(1000, false);
-                cars[0].getBackWheel()->body->ApplyTorque(1000, false);
-            }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-                // Rotate the circles right
-                cars[0].getFrontWheel()->body->ApplyTorque(-1000, false);
-                cars[0].getBackWheel()->body->ApplyTorque(-1000, false);
+            for (int i = 0; i < cars.size(); ++i) {
+                cars[i].getFrontWheel()->body->ApplyTorque(-1000 + (i * 10), false);
+                cars[i].getBackWheel()->body->ApplyTorque(-1000 + (i * 10), false);
             }
         }
 
