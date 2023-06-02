@@ -49,7 +49,7 @@ int main() {
     Box ground = createGround(world, -150, 50, 500, 100, sf::Color(18, 36, 35));
     boxes.push_back(ground);
 
-    EvolutionaryAlgorithm ea(10, Config::SAVE_TO_FILE);
+    EvolutionaryAlgorithm ea(EvolutionaryAlgorithmConfig::POPULATION_SIZE, Config::SAVE_TO_FILE);
 
     for (int i = 0; i < ea.getPopulationSize(); ++i) {
         cars.push_back(generateRandomCar(world));
