@@ -46,7 +46,7 @@ int main() {
     std::vector<Car> cars;
 
     // Generate ground
-    Box ground = createGround(world, 350, 50, 500, 100, sf::Color(50, 50, 50));
+    Box ground = createGround(world, -150, 50, 500, 100, sf::Color(18, 36, 35));
     boxes.push_back(ground);
 
     EvolutionaryAlgorithm ea(10, Config::SAVE_TO_FILE);
@@ -58,9 +58,15 @@ int main() {
     bool paused = false;
     bool pause_check = true;
 
+    // Set window icon
+    auto icon = sf::Image{};
+    if (icon.loadFromFile("../resources/placeholder_icon.png")) {
+        w.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+    }
+
     // Load background image
     sf::Texture background;
-    background.loadFromFile("../img/background_img.jpg");
+    background.loadFromFile("../resources/background_img.jpg");
     sf::Sprite bg(background);
     bg.setScale(sf::Vector2f(Config::WINDOW_WIDTH / bg.getLocalBounds().width,
                              Config::WINDOW_HEIGHT / bg.getLocalBounds().height));
@@ -76,6 +82,8 @@ int main() {
         render(w, bg, boxes, cars);
 
         ImGui::SFML::Update(w, deltaClock.restart());
+
+        ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.071f, 0.141f, 0.137f, 0.5f));
 
         ImGui::SetNextWindowSize(ImVec2(340, 340), ImGuiCond_FirstUseEver);
         ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
@@ -104,6 +112,8 @@ int main() {
             ImPlot::EndPlot();
         }
         ImGui::End();
+
+        ImGui::PopStyleColor();
 
         generateGround(world, &boxes, cars);
 

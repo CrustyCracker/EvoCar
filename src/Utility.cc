@@ -22,7 +22,7 @@ void generateGround(b2WorldPtr world, std::vector<Box>* boxes, std::vector<Car> 
         cars[0].getBody()->body->GetPosition().x * Config::PPM + generateDistance) {
         Box ground =
             createGround(world, lastGround.body->GetPosition().x * Config::PPM + lastGround.width,
-                         50, 500, 100, sf::Color(50, 50, 50));
+                         50, 500, 100, sf::Color(18, 36, 35));
         boxes->push_back(ground);
     }
 }
