@@ -34,6 +34,13 @@ Car::Car(b2WorldPtr world, float x, float y, std::vector<b2Vec2> vertices, float
     jointDef2.collideConnected = false;
     world->CreateJoint(&jointDef2);
 
+    // Make cars pass through eachother
+    // by setting collision filtering
+    b2Filter filter;
+    filter.categoryBits = 2;
+    filter.maskBits = 1;
+    this->setCollisionFilter(filter);
+
     std::vector<float> v_axis(Config::VELOCITY_ARRAY_SIZE);
     std::vector<float> v_values(Config::VELOCITY_ARRAY_SIZE);
 

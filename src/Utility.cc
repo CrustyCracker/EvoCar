@@ -34,13 +34,12 @@ Car generateRandomCar(b2WorldPtr world) {
 
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<> x_pos(200, 400);
     std::uniform_int_distribution<> rgb_value(50, 200);
 
     sf::Color bodyColor = sf::Color(rgb_value(gen), rgb_value(gen), rgb_value(gen));
     sf::Color wheelColor = sf::Color(rgb_value(gen), rgb_value(gen), rgb_value(gen));
 
-    return Car(world, x_pos(gen), 300, vertices_gen, 100.0f, 25.0f, bodyColor, wheelColor);
+    return Car(world, 250, 300, vertices_gen, 100.0f, 25.0f, bodyColor, wheelColor);
 }
 
 ImVec4 SFMLColorToImVec4(sf::Color color) {

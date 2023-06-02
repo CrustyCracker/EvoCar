@@ -20,8 +20,8 @@ void renderPolygon(sf::RenderWindow &w, Polygon *polygon);
 
 void renderPolygonDebug(sf::RenderWindow &w, Polygon *polygon);
 
-void renderCar(sf::RenderWindow &w, Car *car);
+void renderCar(sf::RenderWindow &w, Car car);
 
-void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Car> &cars);
+void render(sf::RenderWindow &w, sf::Sprite bg, std::vector<Box> &boxes, std::vector<Car> &cars);
 
 #endif

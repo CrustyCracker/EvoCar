@@ -103,7 +103,6 @@ add_library(implot STATIC
   ${IMPLOT_HEADERS}
   ${IMPLOT_SRC}
 )
-set(imgui_SOURCE_DIR "${imgui_SOURCE_DIR}" CACHE INTERNAL "")
 target_include_directories(implot PRIVATE ${imgui_SOURCE_DIR})
 target_include_directories(implot PUBLIC ${implot_SOURCE_DIR})
 
@@ -115,3 +114,6 @@ FetchContent_MakeAvailable(imgui-sfml)
 
 message(STATUS "Fetching GoogleTest...")
 FetchContent_MakeAvailable(googletest)
+
+set(imgui_SOURCE_DIR "${imgui_SOURCE_DIR}" CACHE INTERNAL "")
+set(imgui-sfml_SOURCE_DIR "${imgui-sfml_SOURCE_DIR}" CACHE INTERNAL "")

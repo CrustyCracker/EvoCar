@@ -26,6 +26,14 @@ void renderBox(sf::RenderWindow &w, Box &box) {
     rect.setRotation(-1 * box.body->GetAngle() * Config::DEG_PER_RAD);
 
     rect.setFillColor(box.color);
+
+    // If we're in debug mode,
+    // draw the box's outline (inwards)
+    if (Config::DEBUG) {
+        rect.setOutlineColor(sf::Color::White);
+        rect.setOutlineThickness(-2);
+    }
+
     w.draw(rect);
 }
 
@@ -117,8 +125,9 @@ void renderCar(sf::RenderWindow &w, Car car) {
     }
 }
 
-void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Car> &cars) {
+void render(sf::RenderWindow &w, sf::Sprite bg, std::vector<Box> &boxes, std::vector<Car> &cars) {
     w.clear();
+    w.draw(bg);
 
     for (Box &box : boxes) {
         renderBox(w, box);

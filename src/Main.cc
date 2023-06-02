@@ -11,6 +11,7 @@
 #include "EvolutionaryAlgorithm.h"
 #include "Shape.h"
 #include "Render.h"
+#include "UserInput.h"
 #include "Utility.h"
 
 /*
@@ -44,10 +45,6 @@ int main() {
     std::vector<Box> boxes;
     std::vector<Car> cars;
 
-    // Add a wall (uses "ground" object, for now)
-    Box wall = createGround(world, 50, 350, 100, 700, sf::Color(50, 50, 50));
-    boxes.push_back(wall);
-
     // Generate ground
     Box ground = createGround(world, 350, 50, 500, 100, sf::Color(50, 50, 50));
     boxes.push_back(ground);
@@ -58,17 +55,15 @@ int main() {
         cars.push_back(generateRandomCar(world));
     }
 
-    // Make cars pass through eachother
-    // by setting collision filtering
-    b2Filter filter;
-    filter.categoryBits = 2;
-    filter.maskBits = 1;
-    for (Car car : cars) {
-        car.setCollisionFilter(filter);
-    }
-
     bool paused = false;
     bool pause_check = true;
+
+    // Load background image
+    sf::Texture background;
+    background.loadFromFile("../img/background_img.jpg");
+    sf::Sprite bg(background);
+    bg.setScale(sf::Vector2f(Config::WINDOW_WIDTH / bg.getLocalBounds().width,
+                             Config::WINDOW_HEIGHT / bg.getLocalBounds().height));
 
     sf::Clock deltaClock;
     /** PROGRAM LOOP **/
@@ -78,7 +73,7 @@ int main() {
             world->Step(1 / 60.f, 6, 3);
         }
         // Render everything
-        render(w, boxes, cars);
+        render(w, bg, boxes, cars);
 
         ImGui::SFML::Update(w, deltaClock.restart());
 
@@ -119,11 +114,13 @@ int main() {
         // Attach camera to the car's body
         sf::View cameraView =
             sf::View(sf::Vector2f(cars[0].getBody()->body->GetPosition().x * Config::PPM,
-                                  Config::WINDOW_HEIGHT -
-                                      (cars[0].getBody()->body->GetPosition().y * Config::PPM)),
+                                  0.5 * Config::WINDOW_HEIGHT),
                      sf::Vector2f(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT));
-        cameraView.setRotation((-1) * cars[0].getBody()->body->GetAngle() * 180 / b2_pi);
         w.setView(cameraView);
+
+        // Move background sprite with camera
+        bg.setPosition(cameraView.getCenter() -
+                       sf::Vector2f(Config::WINDOW_WIDTH / 2, Config::WINDOW_HEIGHT / 2));
 
         if (!paused) {
             for (int i = 0; i < cars.size(); ++i) {
@@ -136,39 +133,12 @@ int main() {
             applyAirResistance(car);
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) ||
-            sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-            // Close the window
-            w.close();
-        }
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::P) ||
-            sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-            // Pause the simulation
-            if (pause_check) {
-                paused = !paused;
-                pause_check = false;
-            }
-        }
+        handleUserInput(w, paused, pause_check);
 
         // Display FPS in window title
         w.setTitle("SFML + Box2D, FPS: " + std::to_string((int)ImGui::GetIO().Framerate));
 
-        // Process events
-        sf::Event event;
-        while (w.pollEvent(event)) {
-            ImGui::SFML::ProcessEvent(event);
-            // Close window : exit
-            if (event.type == sf::Event::Closed) {
-                w.close();
-            }
-            // Allow user to toggle pause again
-            if (event.type == sf::Event::KeyReleased) {
-                if (event.key.code == sf::Keyboard::P || event.key.code == sf::Keyboard::Space) {
-                    pause_check = true;
-                }
-            }
-        }
+        handleEvents(w, pause_check);
     }
 
     ImGui::SFML::Shutdown();
