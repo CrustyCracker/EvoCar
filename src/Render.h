@@ -6,8 +6,8 @@ Description:    Header file for render function
 #ifndef RENDER_H
 #define RENDER_H
 
-#include "Car.h"
 #include "../config/Config.h"
+#include "Car.h"
 #include "Shape.h"
 
 void renderBox(sf::RenderWindow &w, Box &box);

@@ -1,12 +1,15 @@
 /*
 Author:         Jakub Marcowski
-Description:    -
+Description:    Header for a file containing utility functions.
 */
 
 #ifndef UTILITY_H
 #define UTILITY_H
 
 #include <random>
+
+#include "imgui.h"
+#include "SFML/Graphics.hpp"
 
 #include "Car.h"
 
@@ -28,8 +31,10 @@ F = 3.4 * V^2
 */
 void applyAirResistance(Car car);
 
-void generateGround(b2WorldPtr world, std::vector<Box> *boxes, std::vector<Car> cars);
+void generateGround(b2WorldPtr world, std::vector<Box>* boxes, std::vector<Car> cars);
 
 Car generateRandomCar(b2WorldPtr world);
+
+ImVec4 SFMLColorToImVec4(sf::Color color);
 
 #endif

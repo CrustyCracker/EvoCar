@@ -119,10 +119,13 @@ void renderCar(sf::RenderWindow &w, Car car) {
 
 void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Car> &cars) {
     w.clear();
+
     for (Box &box : boxes) {
         renderBox(w, box);
     }
-    for (Car &car : cars) {
-        renderCar(w, car);
+
+    // new cars should be rendered behind the old ones
+    for (int i = cars.size() - 1; i >= 0; --i) {
+        renderCar(w, cars[i]);
     }
 }

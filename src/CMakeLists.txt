@@ -11,3 +11,4 @@ IF(WIN32)
 ENDIF()
 
 target_link_libraries(EvoRacerLib sfml-graphics box2d nlohmann_json::nlohmann_json)
+target_include_directories(EvoRacerLib PUBLIC ${imgui_SOURCE_DIR})

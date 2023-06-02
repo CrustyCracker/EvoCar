@@ -2,7 +2,7 @@
 
 /*
 Author:         Jakub Marcowski
-Description:    -
+Description:    File containing utility functions.
 */
 
 void applyAirResistance(Car car) {
@@ -14,7 +14,7 @@ void applyAirResistance(Car car) {
         true);
 }
 
-void generateGround(b2WorldPtr world, std::vector<Box> *boxes, std::vector<Car> cars) {
+void generateGround(b2WorldPtr world, std::vector<Box>* boxes, std::vector<Car> cars) {
     Box lastGround = boxes->back();
     const float generateDistance = 700;
     // if car is far enough to the right, generate a new ground
@@ -41,4 +41,8 @@ Car generateRandomCar(b2WorldPtr world) {
     sf::Color wheelColor = sf::Color(rgb_value(gen), rgb_value(gen), rgb_value(gen));
 
     return Car(world, x_pos(gen), 300, vertices_gen, 100.0f, 25.0f, bodyColor, wheelColor);
+}
+
+ImVec4 SFMLColorToImVec4(sf::Color color) {
+    return ImVec4(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f, color.a / 255.0f);
 }

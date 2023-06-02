@@ -5,12 +5,14 @@ Description:    Header file for EvolutionaryAlgorithm class.
 
 #ifndef GENOME_H
 #define GENOME_H
-#include <vector>
-#include <random>
-#include "../config/EvolutionaryAlgorithmConfig.h"
+
+#include <deque>
 #include <fstream>
 #include <nlohmann/json.hpp>
-#include <deque>
+#include <random>
+#include <vector>
+
+#include "../config/EvolutionaryAlgorithmConfig.h"
 
 struct Chromosome {
     std::vector<float> bodyLengths;

@@ -49,11 +49,11 @@ Circle* Car::getFrontWheel() { return &frontWheel; }
 
 Circle* Car::getBackWheel() { return &backWheel; }
 
-sf::Color* Car::getBodyColor() { return &bodyColor; }
-
 std::vector<float>* Car::getVelX() { return &velX; }
 
 std::vector<float>* Car::getVelY() { return &velY; }
+
+sf::Color Car::getBodyColor() { return body.color; }
 
 b2Vec2 Car::getVelocityVec() { return body.body->GetLinearVelocity(); }
 

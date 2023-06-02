@@ -103,6 +103,7 @@ add_library(implot STATIC
   ${IMPLOT_HEADERS}
   ${IMPLOT_SRC}
 )
+set(imgui_SOURCE_DIR "${imgui_SOURCE_DIR}" CACHE INTERNAL "")
 target_include_directories(implot PRIVATE ${imgui_SOURCE_DIR})
 target_include_directories(implot PUBLIC ${implot_SOURCE_DIR})
 

@@ -1,10 +1,10 @@
 #include <iostream>
 
-#include "SFML/Graphics.hpp"
 #include "box2d/box2d.h"
-#include "imgui-SFML.h"
 #include "imgui.h"
+#include "imgui-SFML.h"
 #include "implot.h"
+#include "SFML/Graphics.hpp"
 
 #include "../config/Config.h"
 #include "Car.h"
@@ -38,7 +38,7 @@ int main() {
     ImGui::SFML::Init(w);
 
     // Change imgui.ini location
-    ImGui::GetIO().IniFilename = "build/imgui.ini";
+    ImGui::GetIO().IniFilename = "./imgui.ini";
 
     // Containers to hold objects we create
     std::vector<Box> boxes;
@@ -84,7 +84,7 @@ int main() {
 
         ImGui::SetNextWindowSize(ImVec2(340, 340), ImGuiCond_FirstUseEver);
         ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
-        ImGui::Begin("Car's Velocity");
+        ImGui::Begin("Cars' Velocity");
         ImPlot::SetNextAxesToFit();
         if (ImPlot::BeginPlot("Velocity")) {
             for (int i = 0; i < cars.size(); ++i) {
@@ -101,10 +101,7 @@ int main() {
                 std::vector<float> v_values_crop =
                     std::vector<float>(cars[i].getVelY()->end() - Config::VELOCITY_ARRAY_SIZE,
                                        cars[i].getVelY()->end());
-                ImVec4 color =
-                    ImVec4(cars[i].getBody()->color.r / 255.0f, cars[i].getBody()->color.g / 255.0f,
-                           cars[i].getBody()->color.b / 255.0f, 1.0f);
-                ImPlot::PushStyleColor(ImPlotCol_Line, color);
+                ImPlot::PushStyleColor(ImPlotCol_Line, SFMLColorToImVec4(cars[i].getBodyColor()));
                 ImPlot::PlotLine(i_str, &(v_axis_crop[0]), &(v_values_crop[0]),
                                  Config::VELOCITY_ARRAY_SIZE);
                 ImPlot::PopStyleColor();
