@@ -18,5 +18,10 @@ add_subdirectory(dependencies)
 add_subdirectory(src)
 add_subdirectory(test)
 
-add_executable(EvoRacer src/Main.cc)
+IF(WIN32)
+    add_executable(EvoRacer WIN32 src/Main.cc)
+ELSE()
+    add_executable(EvoRacer src/Main.cc)
+ENDIF()
+
 target_link_libraries(EvoRacer PRIVATE sfml-graphics ImGui-SFML::ImGui-SFML imgui box2d EvoRacerLib nlohmann_json::nlohmann_json implot)
