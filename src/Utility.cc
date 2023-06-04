@@ -52,6 +52,20 @@ float getNextGroundPartDegree() {
     return degree;
 }
 
+// Note: this doesn't remove ground boxes from
+// the world, it only stops them from rendering
+// off screen (iterating over thousands of ground
+// parts, when only ~30 are visible, is a complete
+// waste of resources)
+void removeOldGroundParts(std::vector<Polygon>* boxes) {
+    // TODO: change this condition to
+    // one that takes into account whether the
+    // ground boxes are off the screen
+    if (boxes->size() > 32) {
+        boxes->erase(boxes->begin());
+    }
+}
+
 Car generateRandomCar(b2WorldPtr world) {
     auto vertices_gen = createVertices(
         {2.54951f, 2.12132f, 2.12132f, 2.54951f, 2.54951f, 2.12132f, 2.12132f, 2.54951f},

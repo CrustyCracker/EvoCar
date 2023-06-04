@@ -37,6 +37,8 @@ void generateGround(b2WorldPtr world, std::vector<Polygon>* boxes, std::vector<C
 
 float getNextGroundPartDegree();
 
+void removeOldGroundParts(std::vector<Polygon>* boxes);
+
 Car generateRandomCar(b2WorldPtr world);
 
 ImVec4 SFMLColorToImVec4(sf::Color color);

@@ -122,6 +122,7 @@ int main() {
         ImGui::PopStyleColor();
 
         generateGround(world, &groundVector, cars);
+        removeOldGroundParts(&groundVector);
 
         ImGui::SFML::Render(w);
 
