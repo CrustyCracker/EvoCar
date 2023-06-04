@@ -6,6 +6,7 @@ set(IMGUI_VERSION 1.86)
 set(IMPLOT_VERSION 0.14)
 set(GOOGLETEST_VERSION 1.12.1)
 set(BOX2D_VERSION 2.4.1)
+set(JSON_VERSION 3.11.2)
 
 if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.24")
   cmake_policy(SET CMP0135 NEW)
@@ -35,8 +36,13 @@ FetchContent_Declare(
   googletest
   URL https://github.com/google/googletest/archive/release-${GOOGLETEST_VERSION}.zip
 )
+
+FetchContent_Declare(
+  json
+  URL https://github.com/nlohmann/json/archive/v${JSON_VERSION}.zip
+)
+
 message(STATUS "Fetching JSON...")
-FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz)
 FetchContent_MakeAvailable(json)
 
 IF(WIN32)
@@ -108,3 +114,6 @@ FetchContent_MakeAvailable(imgui-sfml)
 
 message(STATUS "Fetching GoogleTest...")
 FetchContent_MakeAvailable(googletest)
+
+set(imgui_SOURCE_DIR "${imgui_SOURCE_DIR}" CACHE INTERNAL "")
+set(imgui-sfml_SOURCE_DIR "${imgui-sfml_SOURCE_DIR}" CACHE INTERNAL "")

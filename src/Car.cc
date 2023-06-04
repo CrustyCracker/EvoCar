@@ -33,6 +33,21 @@ Car::Car(b2WorldPtr world, float x, float y, std::vector<b2Vec2> vertices, float
     jointDef2.maxLength = CarConfig::MAX_JOINT_LENGTH;
     jointDef2.collideConnected = false;
     world->CreateJoint(&jointDef2);
+
+    // Make cars pass through eachother
+    // by setting collision filtering
+    b2Filter filter;
+    filter.categoryBits = 2;
+    filter.maskBits = 1;
+    this->setCollisionFilter(filter);
+
+    std::vector<float> v_axis(Config::VELOCITY_ARRAY_SIZE);
+    std::vector<float> v_values(Config::VELOCITY_ARRAY_SIZE);
+
+    std::iota(std::begin(v_axis), std::end(v_axis), 1);
+
+    velX = v_axis;
+    velY = v_values;
 }
 
 Polygon* Car::getBody() { return &body; }
@@ -41,7 +56,11 @@ Circle* Car::getFrontWheel() { return &frontWheel; }
 
 Circle* Car::getBackWheel() { return &backWheel; }
 
-sf::Color* Car::getBodyColor() { return &bodyColor; }
+std::vector<float>* Car::getVelX() { return &velX; }
+
+std::vector<float>* Car::getVelY() { return &velY; }
+
+sf::Color Car::getBodyColor() { return body.color; }
 
 b2Vec2 Car::getVelocityVec() { return body.body->GetLinearVelocity(); }
 

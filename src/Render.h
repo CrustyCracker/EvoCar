@@ -6,8 +6,8 @@ Description:    Header file for render function
 #ifndef RENDER_H
 #define RENDER_H
 
-#include "Car.h"
 #include "../config/Config.h"
+#include "Car.h"
 #include "Shape.h"
 
 void renderBox(sf::RenderWindow &w, Box &box);
@@ -20,8 +20,9 @@ void renderPolygon(sf::RenderWindow &w, Polygon *polygon);
 
 void renderPolygonDebug(sf::RenderWindow &w, Polygon *polygon);
 
-void renderCar(sf::RenderWindow &w, Car *car);
+void renderCar(sf::RenderWindow &w, Car car);
 
-void render(sf::RenderWindow &w, std::vector<Box> &boxes, std::vector<Car *> &cars);
+void render(sf::RenderWindow &w, sf::Sprite bg, std::vector<Polygon> &ground,
+            std::vector<Car> &cars);
 
 #endif
