@@ -129,8 +129,7 @@ int main() {
 
         // Attach camera to the car's body
         sf::View cameraView =
-            sf::View(sf::Vector2f(cars[0].getBody()->body->GetPosition().x * Config::PPM,
-                                  0.5 * Config::WINDOW_HEIGHT),
+            sf::View(sf::Vector2f(getFurthestCarX(cars) * Config::PPM, 0.5 * Config::WINDOW_HEIGHT),
                      sf::Vector2f(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT));
         w.setView(cameraView);
 

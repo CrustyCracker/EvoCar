@@ -17,7 +17,7 @@ void applyAirResistance(Car car) {
 void generateGround(b2WorldPtr world, std::vector<Polygon>* groundVector, std::vector<Car> cars) {
     Polygon lastGround = groundVector->back();
     if (lastGround.vertices[1].x * Config::PPM <
-        cars[0].getBody()->body->GetPosition().x * Config::PPM + MapGenConfig::GENERATE_DISTANCE) {
+        getFurthestCarX(cars) * Config::PPM + MapGenConfig::GENERATE_DISTANCE) {
         float degree = getNextGroundPartDegree();
         float angle_in_radians = degree * (M_PI / 180.0f);
 
@@ -69,4 +69,15 @@ Car generateRandomCar(b2WorldPtr world) {
 
 ImVec4 SFMLColorToImVec4(sf::Color color) {
     return ImVec4(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f, color.a / 255.0f);
+}
+
+float getFurthestCarX(std::vector<Car> cars) {
+    float furthestCarX = 0;
+    for (auto car : cars) {
+        float currentCarX = car.getBody()->body->GetPosition().x;
+        if (currentCarX > furthestCarX) {
+            furthestCarX = currentCarX;
+        }
+    }
+    return furthestCarX;
 }

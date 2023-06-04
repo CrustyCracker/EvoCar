@@ -40,4 +40,6 @@ Car generateRandomCar(b2WorldPtr world);
 
 ImVec4 SFMLColorToImVec4(sf::Color color);
 
+float getFurthestCarX(std::vector<Car> cars);
+
 #endif
