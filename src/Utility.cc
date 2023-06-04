@@ -57,12 +57,12 @@ float getNextGroundPartDegree() {
 // off screen (iterating over thousands of ground
 // parts, when only ~30 are visible, is a complete
 // waste of resources)
-void removeOldGroundParts(std::vector<Polygon>* boxes) {
-    // TODO: change this condition to
-    // one that takes into account whether the
-    // ground boxes are off the screen
-    if (boxes->size() > 32) {
-        boxes->erase(boxes->begin());
+void removeOldGroundParts(std::vector<Polygon>* boxes) {  // New idea:
+    // TODO: change this condition to                        instead of calling
+    // one that takes into account whether the               this function to trim
+    // ground boxes are off the screen                       the vector, we could
+    if (boxes->size() > 32) {          //                    iterate over a slice
+        boxes->erase(boxes->begin());  //                    in the render function
     }
 }
 
