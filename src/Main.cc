@@ -146,15 +146,12 @@ int main() {
             }
         }
 
-        handleUserInput(w, paused, pause_check);
-
         // Display FPS in window title
         w.setTitle("EvoRacer, FPS: " + std::to_string((int)ImGui::GetIO().Framerate));
 
         handleEvents(w, pause_check);
+        handleUserInput(w, paused, pause_check);
     }
-
-    ImGui::SFML::Shutdown();
 
     ImPlot::DestroyContext();
     ImGui::DestroyContext();
