@@ -142,11 +142,8 @@ int main() {
             for (int i = 0; i < cars.size(); ++i) {
                 cars[i].getFrontWheel()->body->ApplyTorque(-1000 + (i * 10), false);
                 cars[i].getBackWheel()->body->ApplyTorque(-1000 + (i * 10), false);
+                applyAirResistance(cars[i]);
             }
-        }
-
-        for (Car car : cars) {
-            applyAirResistance(car);
         }
 
         handleUserInput(w, paused, pause_check);
