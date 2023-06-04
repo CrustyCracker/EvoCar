@@ -7,6 +7,7 @@
 #include "SFML/Graphics.hpp"
 
 #include "../config/Config.h"
+#include "../config/MapGenConfig.h"
 #include "Car.h"
 #include "EvolutionaryAlgorithm.h"
 #include "Shape.h"
@@ -42,12 +43,17 @@ int main() {
     ImGui::GetIO().IniFilename = "./imgui.ini";
 
     // Containers to hold objects we create
-    std::vector<Box> boxes;
+    std::vector<Polygon> groundVector;
     std::vector<Car> cars;
 
     // Generate ground
-    Box ground = createGround(world, -150, 50, 500, 100, sf::Color(18, 36, 35));
-    boxes.push_back(ground);
+    std::vector<b2Vec2> groundVertecies = {b2Vec2(-MapGenConfig::GROUND_PART_LENGTH, 0),
+                                           b2Vec2(MapGenConfig::GROUND_PART_LENGTH, 0),
+                                           b2Vec2(0, -MapGenConfig::GROUND_LEG_LENGTH)};
+    Polygon ground =
+        createGround(world, MapGenConfig::GROUND_STARTING_X, MapGenConfig::GROUND_STARTING_Y,
+                     groundVertecies, sf::Color(255, 36, 35));
+    groundVector.push_back(ground);
 
     EvolutionaryAlgorithm ea(EvolutionaryAlgorithmConfig::POPULATION_SIZE, Config::SAVE_TO_FILE);
 
@@ -79,7 +85,7 @@ int main() {
             world->Step(1 / 60.f, 6, 3);
         }
         // Render everything
-        render(w, bg, boxes, cars);
+        render(w, bg, groundVector, cars);
 
         ImGui::SFML::Update(w, deltaClock.restart());
 
@@ -115,7 +121,7 @@ int main() {
 
         ImGui::PopStyleColor();
 
-        generateGround(world, &boxes, cars);
+        generateGround(world, &groundVector, cars);
 
         ImGui::SFML::Render(w);
 

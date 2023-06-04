@@ -22,6 +22,7 @@ void renderPolygonDebug(sf::RenderWindow &w, Polygon *polygon);
 
 void renderCar(sf::RenderWindow &w, Car car);
 
-void render(sf::RenderWindow &w, sf::Sprite bg, std::vector<Box> &boxes, std::vector<Car> &cars);
+void render(sf::RenderWindow &w, sf::Sprite bg, std::vector<Polygon> &ground,
+            std::vector<Car> &cars);
 
 #endif

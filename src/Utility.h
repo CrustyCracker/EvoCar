@@ -7,9 +7,10 @@ Description:    Header for a file containing utility functions.
 #define UTILITY_H
 
 #include <random>
-
+#include <math.h>
 #include "imgui.h"
 #include "SFML/Graphics.hpp"
+#include "../config/MapGenConfig.h"
 
 #include "Car.h"
 
@@ -31,7 +32,9 @@ F = 3.4 * V^2
 */
 void applyAirResistance(Car car);
 
-void generateGround(b2WorldPtr world, std::vector<Box>* boxes, std::vector<Car> cars);
+void generateGround(b2WorldPtr world, std::vector<Polygon>* boxes, std::vector<Car> cars);
+
+float getNextGroundPartDegree();
 
 Car generateRandomCar(b2WorldPtr world);
 

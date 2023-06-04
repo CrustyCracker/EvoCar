@@ -125,12 +125,13 @@ void renderCar(sf::RenderWindow &w, Car car) {
     }
 }
 
-void render(sf::RenderWindow &w, sf::Sprite bg, std::vector<Box> &boxes, std::vector<Car> &cars) {
+void render(sf::RenderWindow &w, sf::Sprite bg, std::vector<Polygon> &groundVector,
+            std::vector<Car> &cars) {
     w.clear();
     w.draw(bg);
 
-    for (Box &box : boxes) {
-        renderBox(w, box);
+    for (Polygon ground : groundVector) {
+        renderPolygon(w, &ground);
     }
 
     // new cars should be rendered behind the old ones

@@ -1,7 +1,7 @@
 #include "Utility.h"
 
 /*
-Author:         Jakub Marcowski
+Author:         Jakub Marcowski, Mateusz Krakowski
 Description:    File containing utility functions.
 */
 
@@ -14,17 +14,42 @@ void applyAirResistance(Car car) {
         true);
 }
 
-void generateGround(b2WorldPtr world, std::vector<Box>* boxes, std::vector<Car> cars) {
-    Box lastGround = boxes->back();
-    const float generateDistance = 700;
-    // if car is far enough to the right, generate a new ground
-    if (lastGround.body->GetPosition().x * Config::PPM + lastGround.width / 2 <
-        cars[0].getBody()->body->GetPosition().x * Config::PPM + generateDistance) {
-        Box ground =
-            createGround(world, lastGround.body->GetPosition().x * Config::PPM + lastGround.width,
-                         50, 500, 100, sf::Color(18, 36, 35));
-        boxes->push_back(ground);
+void generateGround(b2WorldPtr world, std::vector<Polygon>* groundVector, std::vector<Car> cars) {
+    Polygon lastGround = groundVector->back();
+    if (lastGround.vertices[1].x * Config::PPM <
+        cars[0].getBody()->body->GetPosition().x * Config::PPM + MapGenConfig::GENERATE_DISTANCE) {
+        float degree = getNextGroundPartDegree();
+        float angle_in_radians = degree * (M_PI / 180.0f);
+
+        float delta_x = MapGenConfig::GROUND_PART_LENGTH * cos(angle_in_radians);
+        float delta_y = -MapGenConfig::GROUND_PART_LENGTH * sin(angle_in_radians);
+
+        std::vector<b2Vec2> groundVertecies = {
+            b2Vec2(lastGround.vertices[1].x, lastGround.vertices[1].y),
+            b2Vec2(lastGround.vertices[1].x + delta_x, lastGround.vertices[1].y + delta_y),
+            b2Vec2(lastGround.vertices[2].x + delta_x, lastGround.vertices[2].y + delta_y)};
+
+        Polygon ground =
+            createGround(world, MapGenConfig::GROUND_STARTING_X, MapGenConfig::GROUND_STARTING_Y,
+                         groundVertecies, sf::Color(255, 36, 35));
+
+        groundVector->push_back(ground);
     }
+}
+
+float getNextGroundPartDegree() {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::normal_distribution<float> dist(0.0, MapGenConfig::GROUND_DEGREE_DEVIATION);
+
+    float degree = dist(gen);
+    if (degree > MapGenConfig::MAX_GROUND_DEGREE) {
+        degree = MapGenConfig::MAX_GROUND_DEGREE;
+    } else if (degree < -MapGenConfig::MAX_GROUND_DEGREE) {
+        degree = -MapGenConfig::MAX_GROUND_DEGREE;
+    }
+
+    return degree;
 }
 
 Car generateRandomCar(b2WorldPtr world) {
