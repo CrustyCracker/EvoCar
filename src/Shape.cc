@@ -40,25 +40,23 @@ Box createBox(b2WorldPtr world, float x, float y, float width, float height, flo
     return Box{width, height, color, boxBody};
 }
 
-Box createGround(b2WorldPtr world, float x, float y, float width, float height, sf::Color color) {
+Polygon createGround(b2WorldPtr world, float x, float y, const std::vector<b2Vec2>& vertices,
+                     sf::Color color) {
     // Argument validation
-    if (width <= 0.0f) {
-        throw std::invalid_argument("Invalid width parameter");
-    } else if (height <= 0.0f) {
-        throw std::invalid_argument("Invalid height parameter");
+    if (vertices.size() < 3) {
+        throw std::invalid_argument("Invalid number of vertices");
     }
 
     b2BodyDef groundBodyDef;
     groundBodyDef.position.Set(x / Config::PPM, y / Config::PPM);
 
-    b2PolygonShape groundBox;
-    groundBox.SetAsBox(width / 2 / Config::PPM, height / 2 / Config::PPM);
+    b2PolygonShape groundPolygon;
+    groundPolygon.Set(vertices.data(), static_cast<int32>(vertices.size()));
 
     b2Body* groundBody = world->CreateBody(&groundBodyDef);
-    // For a static body, we don't need a custom fixture definition, this will do:
-    groundBody->CreateFixture(&groundBox, 0.0f);
+    groundBody->CreateFixture(&groundPolygon, 0.0f);
 
-    return Box{width, height, color, groundBody};
+    return Polygon{vertices, color, groundBody};
 }
 
 Circle createCircle(b2WorldPtr world, float x, float y, float radius, float density, float friction,

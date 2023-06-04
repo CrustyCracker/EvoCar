@@ -62,33 +62,28 @@ TEST(CreateBoxTest, InvalidFrictionTest) {
 
 TEST(CreateGroundTest, BasicTest) {
     b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
-    float x = 42.0f, y = 42.0f, width = 50.0f, height = 10.0f;
+    float x = 42.0f, y = 42.0f;
+    std::vector<b2Vec2> vertices = {b2Vec2(-25.0f, -5.0f), b2Vec2(25.0f, -5.0f),
+                                    b2Vec2(25.0f, 5.0f), b2Vec2(-25.0f, 5.0f)};
     sf::Color color = sf::Color::Blue;
 
-    ASSERT_NO_THROW(Box ground = createGround(world, x, y, width, height, color));
+    ASSERT_NO_THROW(Polygon ground = createGround(world, x, y, vertices, color));
 
-    Box ground = createGround(world, x, y, width, height, color);
-    ASSERT_EQ(ground.width, width);
-    ASSERT_EQ(ground.height, height);
+    Polygon ground = createGround(world, x, y, vertices, color);
+    ASSERT_EQ(ground.vertices, vertices);
     ASSERT_EQ(ground.color, color);
     ASSERT_EQ(ground.body->GetType(), b2_staticBody);
     ASSERT_EQ(ground.body->GetFixtureList()->GetDensity(), 0.0f);
 }
 
-TEST(CreateGroundTest, InvalidWidthTest) {
+TEST(CreateGroundTest, InvalidVerticesTest) {
     b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
-    float x = 42.0f, y = 42.0f, width = 0.0f, height = 10.0f;
+    float x = 42.0f, y = 42.0f;
+    std::vector<b2Vec2> invalidVertices;  // Empty vertices
+
     sf::Color color = sf::Color::Blue;
 
-    ASSERT_THROW(createGround(world, x, y, width, height, color), std::invalid_argument);
-}
-
-TEST(CreateGroundTest, InvalidHeightTest) {
-    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
-    float x = 42.0f, y = 42.0f, width = 50.0f, height = -10.0f;
-    sf::Color color = sf::Color::Blue;
-
-    ASSERT_THROW(createGround(world, x, y, width, height, color), std::invalid_argument);
+    ASSERT_THROW(createGround(world, x, y, invalidVertices, color), std::invalid_argument);
 }
 
 TEST(CreateCircleTest, BasicTest) {
