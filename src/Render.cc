@@ -132,6 +132,9 @@ void render(sf::RenderWindow &w, sf::Sprite bg, std::vector<Polygon> &groundVect
 
     for (Polygon ground : groundVector) {
         renderPolygon(w, &ground);
+        if (Config::DEBUG) {
+            renderPolygonDebug(w, &ground);
+        }
     }
 
     // new cars should be rendered behind the old ones

@@ -47,12 +47,12 @@ int main() {
     std::vector<Car> cars;
 
     // Generate ground
-    std::vector<b2Vec2> groundVertecies = {b2Vec2(-MapGenConfig::GROUND_PART_LENGTH, 0),
+    std::vector<b2Vec2> groundVertecies = {b2Vec2(0, 0),
                                            b2Vec2(MapGenConfig::GROUND_PART_LENGTH, 0),
                                            b2Vec2(0, -MapGenConfig::GROUND_LEG_LENGTH)};
     Polygon ground =
         createGround(world, MapGenConfig::GROUND_STARTING_X, MapGenConfig::GROUND_STARTING_Y,
-                     groundVertecies, sf::Color(255, 36, 35));
+                     groundVertecies, sf::Color(18, 36, 35));
     groundVector.push_back(ground);
 
     EvolutionaryAlgorithm ea(EvolutionaryAlgorithmConfig::POPULATION_SIZE, Config::SAVE_TO_FILE);

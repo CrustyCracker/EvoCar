@@ -31,7 +31,7 @@ void generateGround(b2WorldPtr world, std::vector<Polygon>* groundVector, std::v
 
         Polygon ground =
             createGround(world, MapGenConfig::GROUND_STARTING_X, MapGenConfig::GROUND_STARTING_Y,
-                         groundVertecies, sf::Color(255, 36, 35));
+                         groundVertecies, sf::Color(18, 36, 35));
 
         groundVector->push_back(ground);
     }
