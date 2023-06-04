@@ -1,7 +1,7 @@
 #include "Render.h"
 
 /*
-Author:         Jakub Marcowski
+Author:         Jakub Marcowski, Mateusz Krakowski
 Description:    This file contains the render function, which is responsible
     for rendering all the shapes in the world.
 */

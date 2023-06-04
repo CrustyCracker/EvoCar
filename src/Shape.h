@@ -1,5 +1,5 @@
 /*
-Author:         Jakub Marcowski
+Author:         Jakub Marcowski, Mateusz Krakowski
 Description:    Header file for functions for creating Box2D objects.
 */
 
@@ -38,9 +38,6 @@ typedef std::shared_ptr<b2World> b2WorldPtr;
 Box createBox(b2WorldPtr world, float x, float y, float width, float height, float density,
               float friction, sf::Color color);
 
-/*
-This function is used to create a static rectangular body, which will be used as a ground.
-*/
 Polygon createGround(b2WorldPtr world, float x, float y, const std::vector<b2Vec2>& vertices,
                      sf::Color color);
 
