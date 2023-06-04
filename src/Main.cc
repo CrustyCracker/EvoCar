@@ -97,7 +97,7 @@ int main() {
         ImPlot::SetNextAxesToFit();
         if (ImPlot::BeginPlot("Velocity")) {
             for (int i = 0; i < cars.size(); ++i) {
-                char i_str[10];
+                char i_str[11];  // 10 digits + null
                 sprintf(i_str, "%d", i);
 
                 if (!paused) {
@@ -148,7 +148,7 @@ int main() {
         handleUserInput(w, paused, pause_check);
 
         // Display FPS in window title
-        w.setTitle("SFML + Box2D, FPS: " + std::to_string((int)ImGui::GetIO().Framerate));
+        w.setTitle("EvoRacer, FPS: " + std::to_string((int)ImGui::GetIO().Framerate));
 
         handleEvents(w, pause_check);
     }
