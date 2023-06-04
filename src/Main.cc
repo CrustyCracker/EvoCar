@@ -66,13 +66,13 @@ int main() {
 
     // Set window icon
     auto icon = sf::Image{};
-    if (icon.loadFromFile("../resources/placeholder_icon.png")) {
+    if (icon.loadFromFile("resources/placeholder_icon.png")) {
         w.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
     }
 
     // Load background image
     sf::Texture background;
-    background.loadFromFile("../resources/background_img.jpg");
+    background.loadFromFile("resources/background_img.jpg");
     sf::Sprite bg(background);
     bg.setScale(sf::Vector2f(Config::WINDOW_WIDTH / bg.getLocalBounds().width,
                              Config::WINDOW_HEIGHT / bg.getLocalBounds().height));
