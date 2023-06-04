@@ -8,10 +8,11 @@ Description:    Header for a file containing utility functions.
 
 #include <random>
 #include <math.h>
+
 #include "imgui.h"
 #include "SFML/Graphics.hpp"
-#include "../config/MapGenConfig.h"
 
+#include "../config/MapGenConfig.h"
 #include "Car.h"
 
 typedef std::shared_ptr<b2World> b2WorldPtr;
