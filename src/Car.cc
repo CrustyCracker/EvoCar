@@ -11,18 +11,18 @@ Car::Car(b2WorldPtr world, float x, float y, Chromosome chromosome, sf::Color bo
     // Create a polygon (octagon)
 
     auto vertices =
-        createVertices(chromosome.bodyLengths, Config::BODY_ANGLES);
+        createVertices(chromosome.bodyLengths, {45.0, 45.0, 45.0, 45.0, 45.0, 45.0, 45.0, 45.0});
 
     body_ =
         createPolygon(world, x, y, vertices, chromosome.bodyDensity, Config::FRICTION, bodyColor);
 
     // Create a circle
     frontWheel_ = createCircle(world, x, y, chromosome.wheelRadius.first,
-                              chromosome.wheelDensity.first, Config::FRICTION, wheelColor);
+                               chromosome.wheelDensity.first, Config::FRICTION, wheelColor);
 
     // Create another circle
     backWheel_ = createCircle(world, x, y, chromosome.wheelRadius.second,
-                             chromosome.wheelDensity.second, Config::FRICTION, wheelColor);
+                              chromosome.wheelDensity.second, Config::FRICTION, wheelColor);
 
     b2DistanceJointDef jointDef2;
     jointDef2.bodyA = body_.body;
@@ -71,7 +71,7 @@ std::vector<float>* Car::getVelX() { return &velX_; }
 
 std::vector<float>* Car::getVelY() { return &velY_; }
 
-sf::Color Car::getBodyColor() { return body.color; }
+sf::Color Car::getBodyColor() { return body_.color; }
 
 b2Vec2 Car::getVelocityVec() { return body_.body->GetLinearVelocity(); }
 
