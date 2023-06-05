@@ -162,7 +162,7 @@ int main() {
         w.setTitle("EvoRacer, FPS: " + std::to_string((int)ImGui::GetIO().Framerate));
 
         handleEvents(w, pause_check);
-        handleUserInput(w, paused, pause_check);
+        handleUserInput(w, paused, pause_check, next_gen);
     }
 
     ImPlot::DestroyContext();

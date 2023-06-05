@@ -5,7 +5,7 @@ Author:         Jakub Marcowski
 Description:    File containing user input functions.
 */
 
-void handleUserInput(sf::RenderWindow &w, bool &paused, bool &pause_check) {
+void handleUserInput(sf::RenderWindow &w, bool &paused, bool &pause_check, bool &next_gen) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) ||
         sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
         // Close the window
