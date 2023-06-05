@@ -53,7 +53,6 @@ void handleEvents(sf::RenderWindow &w, bool &pause_check, bool &nxt_g_check, boo
             // Close window : exit
             if (event.type == sf::Event::Closed) {
                 w.close();
-                ImGui::SFML::Shutdown();
             }
             if (event.type == sf::Event::KeyReleased) {
                 // Allow user to toggle pause again
