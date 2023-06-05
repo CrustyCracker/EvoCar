@@ -14,6 +14,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
 
+add_compile_definitions(ImDrawIdx=unsigned) # Fix for implot (unsigned = unsigned int)
+
 add_subdirectory(dependencies)
 add_subdirectory(src)
 add_subdirectory(test)

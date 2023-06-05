@@ -10,8 +10,8 @@
 #include "../config/MapGenConfig.h"
 #include "Car.h"
 #include "EvolutionaryAlgorithm.h"
-#include "Shape.h"
 #include "Render.h"
+#include "Shape.h"
 #include "UserInput.h"
 #include "Utility.h"
 
@@ -19,6 +19,7 @@
 Author:        Jakub Marcowski, Mateusz Krakowski
 Description:   Main file for the project, contains the main loop.
 */
+
 typedef std::shared_ptr<b2World> b2WorldPtr;
 
 // initialize the world as a shared pointer
@@ -66,15 +67,22 @@ int main() {
     bool next_gen = false;
     int timer = 0;
 
+    // Ensure path correctness no matter
+    // how the program is built
+    std::string file_path = __FILE__;
+    std::string file_path_unix = replaceSubstring(file_path, "\\", "/");
+    std::string icon_path = file_path + std::string("/../../resources/placeholder_icon.png");
+    std::string background_path = file_path + std::string("/../../resources/background_img.jpg");
+
     // Set window icon
     auto icon = sf::Image{};
-    if (icon.loadFromFile("resources/placeholder_icon.png")) {
+    if (icon.loadFromFile(icon_path)) {
         w.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
     }
 
     // Load background image
     sf::Texture background;
-    background.loadFromFile("resources/background_img.jpg");
+    background.loadFromFile(background_path);
     sf::Sprite bg(background);
     bg.setScale(sf::Vector2f(Config::WINDOW_WIDTH / bg.getLocalBounds().width,
                              Config::WINDOW_HEIGHT / bg.getLocalBounds().height));

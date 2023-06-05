@@ -66,8 +66,7 @@ void removeOldGroundParts(std::vector<Polygon>* boxes) {  // New idea:
     }
 }
 
-
-Car generateCar(b2WorldPtr world, Chromosome chromosome){
+Car generateCar(b2WorldPtr world, Chromosome chromosome) {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> rgb_value(50, 200);
@@ -75,9 +74,8 @@ Car generateCar(b2WorldPtr world, Chromosome chromosome){
     sf::Color bodyColor = sf::Color(rgb_value(gen), rgb_value(gen), rgb_value(gen));
     sf::Color wheelColor = sf::Color(rgb_value(gen), rgb_value(gen), rgb_value(gen));
 
-
-    return Car(world, MapGenConfig::CAR_STARTING_X, MapGenConfig::CAR_STARTING_Y, chromosome, bodyColor, wheelColor);
-
+    return Car(world, MapGenConfig::CAR_STARTING_X, MapGenConfig::CAR_STARTING_Y, chromosome,
+               bodyColor, wheelColor);
 }
 ImVec4 SFMLColorToImVec4(sf::Color color) {
     return ImVec4(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f, color.a / 255.0f);
@@ -92,4 +90,17 @@ float getFurthestCarX(std::vector<Car> cars) {
         }
     }
     return furthestCarX;
+}
+
+std::string replaceSubstring(std::string str, const std::string& from, const std::string& to) {
+    size_t index = 0;
+    while (true) {
+        index = str.find(from, index);
+        if (index == std::string::npos) {
+            break;
+        }
+        str.replace(index, from.length(), to);
+        index += to.length();
+    }
+    return str;
 }

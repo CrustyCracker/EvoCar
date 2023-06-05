@@ -10,6 +10,7 @@ void handleUserInput(sf::RenderWindow &w, bool &paused, bool &pause_check, bool 
         sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
         // Close the window
         w.close();
+        ImGui::SFML::Shutdown();
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::P) ||
@@ -33,6 +34,7 @@ void handleEvents(sf::RenderWindow &w, bool &pause_check) {
         // Close window : exit
         if (event.type == sf::Event::Closed) {
             w.close();
+            ImGui::SFML::Shutdown();
         }
         // Allow user to toggle pause again
         if (event.type == sf::Event::KeyReleased) {
