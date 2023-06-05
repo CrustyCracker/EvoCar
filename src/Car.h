@@ -19,12 +19,12 @@ typedef std::shared_ptr<b2World> b2WorldPtr;
 
 class Car {
    private:
-    b2WorldPtr world;
-    Polygon body;
-    Circle frontWheel;
-    Circle backWheel;
-    std::vector<float> velX;
-    std::vector<float> velY;
+    b2WorldPtr world_;
+    Polygon body_;
+    Circle frontWheel_;
+    Circle backWheel_;
+    std::vector<float> velX_;
+    std::vector<float> velY_;
 
     bool isAlive_ = true;
 
