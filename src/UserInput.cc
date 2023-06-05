@@ -10,7 +10,6 @@ void handleUserInput(sf::RenderWindow &w, bool &paused, bool &pause_check, bool 
         sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
         // Close the window
         w.close();
-        ImGui::SFML::Shutdown();
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::P) ||
