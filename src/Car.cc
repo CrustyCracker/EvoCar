@@ -10,19 +10,18 @@ Car::Car(b2WorldPtr world, float x, float y, Chromosome chromosome, sf::Color bo
          sf::Color wheelColor) {
     // Create a polygon (octagon)
 
-    auto vertices =
-        createVertices(chromosome.bodyLengths, Config::BODY_ANGLES);
+    auto vertices = createVertices(chromosome.bodyLengths, Config::BODY_ANGLES);
 
     body_ =
         createPolygon(world, x, y, vertices, chromosome.bodyDensity, Config::FRICTION, bodyColor);
 
     // Create a circle
     frontWheel_ = createCircle(world, x, y, chromosome.wheelRadius.first,
-                              chromosome.wheelDensity.first, Config::FRICTION, wheelColor);
+                               chromosome.wheelDensity.first, Config::FRICTION, wheelColor);
 
     // Create another circle
     backWheel_ = createCircle(world, x, y, chromosome.wheelRadius.second,
-                             chromosome.wheelDensity.second, Config::FRICTION, wheelColor);
+                              chromosome.wheelDensity.second, Config::FRICTION, wheelColor);
 
     b2DistanceJointDef jointDef2;
     jointDef2.bodyA = body_.body;
