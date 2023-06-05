@@ -130,11 +130,20 @@ void render(sf::RenderWindow &w, sf::Sprite bg, std::vector<Polygon> &groundVect
     w.clear();
     w.draw(bg);
 
-    // this still doesn't work as intended, but it's better than before
-    // TODO: what we need to do is take cars' positions into account
     int n = 32;
-    std::vector<Polygon> groundSlice(groundVector.end() - std::min<int>(groundVector.size(), n),
-                                     groundVector.end());
+
+    int groundBeginIndex = 0;
+    int centerIndex = getIndexOfGroundClosestToLocation(groundVector, getFurthestCarX(cars));
+    int groundEndIndex = groundVector.size();
+
+    if (centerIndex - n / 2 > 0) {
+        groundBeginIndex = centerIndex - n / 2;
+    }
+    if (centerIndex + n / 2 < groundEndIndex) {
+        groundEndIndex = centerIndex + n / 2;
+    }
+    std::vector<Polygon> groundSlice(groundVector.begin() + groundBeginIndex,
+                                     groundVector.begin() + groundEndIndex);
 
     for (Polygon ground : groundSlice) {
         renderPolygon(w, &ground);

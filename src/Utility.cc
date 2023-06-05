@@ -79,6 +79,20 @@ float getFurthestCarX(std::vector<Car> cars) {
     return furthestCarX;
 }
 
+int getIndexOfGroundClosestToLocation(std::vector<Polygon> ground, float x) {
+    int index = 0;
+    float closestDistance;
+    for (int i = 0; i < ground.size(); ++i) {
+        float currentDistance = ground[i].vertices[0].x - x;
+        if (currentDistance > 0) {
+            break;
+        }
+        closestDistance = currentDistance;
+        index = i;
+    }
+    return index;
+}
+
 std::string replaceSubstring(std::string str, const std::string& from, const std::string& to) {
     size_t index = 0;
     while (true) {

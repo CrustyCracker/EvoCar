@@ -45,6 +45,9 @@ ImVec4 SFMLColorToImVec4(sf::Color color);
 
 float getFurthestCarX(std::vector<Car> cars);
 
+// TODO: Rename this, I beg you
+int getIndexOfGroundClosestToLocation(std::vector<Polygon> ground, float x);
+
 std::string replaceSubstring(std::string str, const std::string& from, const std::string& to);
 
 void removeCars(b2WorldPtr world, std::vector<Car>* cars);
