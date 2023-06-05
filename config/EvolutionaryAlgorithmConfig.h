@@ -11,7 +11,7 @@ class EvolutionaryAlgorithmConfig {
     static constexpr char SAVE_FILE_NAME[] = "evoRacerOutput.json";
 
     // Evolutionary algorithm parameters
-    static constexpr int POPULATION_SIZE = 18;
+    static constexpr int POPULATION_SIZE = 15;
 
     // Boundries for the chromosomes
     static constexpr float MIN_BODY_LENGTH = 1.0f;

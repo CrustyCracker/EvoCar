@@ -35,7 +35,7 @@ Car::Car(b2WorldPtr world, float x, float y, Chromosome chromosome, sf::Color bo
 
     jointDef2.bodyA = body.body;
     jointDef2.bodyB = backWheel.body;
-    jointDef2.localAnchorA = vertices[2];
+    jointDef2.localAnchorA = vertices[3];
     jointDef2.localAnchorB = b2Vec2(0.0f, 0.0f);
     jointDef2.maxLength = CarConfig::MAX_JOINT_LENGTH;
     jointDef2.collideConnected = false;
