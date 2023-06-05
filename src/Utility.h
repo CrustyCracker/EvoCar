@@ -39,8 +39,6 @@ void generateGround(b2WorldPtr world, std::vector<Polygon>* boxes, std::vector<C
 
 float getNextGroundPartDegree();
 
-void removeOldGroundParts(std::vector<Polygon>* boxes);
-
 Car generateCar(b2WorldPtr world, Chromosome chromosome);
 
 ImVec4 SFMLColorToImVec4(sf::Color color);
@@ -48,5 +46,7 @@ ImVec4 SFMLColorToImVec4(sf::Color color);
 float getFurthestCarX(std::vector<Car> cars);
 
 std::string replaceSubstring(std::string str, const std::string& from, const std::string& to);
+
+void removeCars(b2WorldPtr world, std::vector<Car>* cars);
 
 #endif

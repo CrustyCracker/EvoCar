@@ -130,7 +130,13 @@ void render(sf::RenderWindow &w, sf::Sprite bg, std::vector<Polygon> &groundVect
     w.clear();
     w.draw(bg);
 
-    for (Polygon ground : groundVector) {
+    // this still doesn't work as intended, but it's better than before
+    // TODO: what we need to do is take cars' positions into account
+    int n = 32;
+    std::vector<Polygon> groundSlice(groundVector.end() - std::min<int>(groundVector.size(), n),
+                                     groundVector.end());
+
+    for (Polygon ground : groundSlice) {
         renderPolygon(w, &ground);
         if (Config::DEBUG) {
             renderPolygonDebug(w, &ground);
