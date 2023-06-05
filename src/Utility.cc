@@ -52,20 +52,6 @@ float getNextGroundPartDegree() {
     return degree;
 }
 
-// Note: this doesn't remove ground boxes from
-// the world, it only stops them from rendering
-// off screen (iterating over thousands of ground
-// parts, when only ~30 are visible, is a complete
-// waste of resources)
-void removeOldGroundParts(std::vector<Polygon>* boxes) {  // New idea:
-    // TODO: change this condition to                        instead of calling
-    // one that takes into account whether the               this function to trim
-    // ground boxes are off the screen                       the vector, we could
-    if (boxes->size() > 32) {          //                    iterate over a slice
-        boxes->erase(boxes->begin());  //                    in the render function
-    }
-}
-
 Car generateCar(b2WorldPtr world, Chromosome chromosome) {
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -77,6 +63,7 @@ Car generateCar(b2WorldPtr world, Chromosome chromosome) {
     return Car(world, MapGenConfig::CAR_STARTING_X, MapGenConfig::CAR_STARTING_Y, chromosome,
                bodyColor, wheelColor);
 }
+
 ImVec4 SFMLColorToImVec4(sf::Color color) {
     return ImVec4(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f, color.a / 255.0f);
 }
@@ -92,6 +79,20 @@ float getFurthestCarX(std::vector<Car> cars) {
     return furthestCarX;
 }
 
+int getIndexOfGroundClosestToLocation(std::vector<Polygon> ground, float x) {
+    int index = 0;
+    float closestDistance;
+    for (int i = 0; i < ground.size(); ++i) {
+        float currentDistance = ground[i].vertices[0].x - x;
+        if (currentDistance > 0) {
+            break;
+        }
+        closestDistance = currentDistance;
+        index = i;
+    }
+    return index;
+}
+
 std::string replaceSubstring(std::string str, const std::string& from, const std::string& to) {
     size_t index = 0;
     while (true) {
@@ -103,4 +104,13 @@ std::string replaceSubstring(std::string str, const std::string& from, const std
         index += to.length();
     }
     return str;
+}
+
+void removeCars(b2WorldPtr world, std::vector<Car>* cars) {
+    for (auto car : *cars) {
+        world->DestroyBody(car.getBody()->body);
+        world->DestroyBody(car.getBackWheel()->body);
+        world->DestroyBody(car.getFrontWheel()->body);
+    }
+    cars->clear();
 }

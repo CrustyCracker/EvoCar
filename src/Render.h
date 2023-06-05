@@ -9,6 +9,7 @@ Description:    Header file for render function
 #include "../config/Config.h"
 #include "Car.h"
 #include "Shape.h"
+#include "Utility.h"
 
 void renderBox(sf::RenderWindow &w, Box &box);
 

@@ -62,9 +62,11 @@ int main() {
         cars.push_back(generateCar(world, chromosome));
     }
 
-    bool paused = false;
-    bool pause_check = true;
-    bool next_gen = false;
+    bool paused = false;      // Should we pause the simulation?
+    bool pause_check = true;  // Should we check if the user wants to flip `paused`?
+    bool next_gen = false;    // Should we generate the next generation?
+    bool nxt_g_check = true;  // Should we check if the user wants to flip `next_gen`?
+    bool focus = true;        // Is the window in focus? (used to prevent input when not in focus)
     int timer = 0;
 
     // Ensure path correctness no matter
@@ -99,17 +101,20 @@ int main() {
                 timer = 0;
             }
         }
+
         if (next_gen) {
             next_gen = false;
             for (int i = 0; i < cars.size(); ++i) {
                 ea.setFitness(i, cars[i].getPosX());
             }
             ea.nextGeneration();
-            cars.clear();
+            removeCars(world, &cars);
             for (Chromosome chromosome : ea.getPopulation()) {
                 cars.push_back(generateCar(world, chromosome));
             }
+            timer = 0;
         }
+
         // Render everything
         render(w, bg, groundVector, cars);
 
@@ -122,6 +127,7 @@ int main() {
         ImGui::Begin("Cars' Velocity");
         ImPlot::SetNextAxesToFit();
         if (ImPlot::BeginPlot("Velocity")) {
+            ImPlot::SetupLegend(ImPlotLocation_West, ImPlotLegendFlags_Outside);
             for (int i = 0; i < cars.size(); ++i) {
                 char i_str[11];  // 10 digits + null
                 sprintf(i_str, "%d", i);
@@ -148,7 +154,6 @@ int main() {
         ImGui::PopStyleColor();
 
         generateGround(world, &groundVector, cars);
-        removeOldGroundParts(&groundVector);
 
         ImGui::SFML::Render(w);
 
@@ -175,8 +180,8 @@ int main() {
         // Display FPS in window title
         w.setTitle("EvoRacer, FPS: " + std::to_string((int)ImGui::GetIO().Framerate));
 
-        handleEvents(w, pause_check);
-        handleUserInput(w, paused, pause_check, next_gen);
+        handleEvents(w, pause_check, nxt_g_check, focus);
+        handleUserInput(w, paused, pause_check, next_gen, nxt_g_check, focus);
     }
 
     ImPlot::DestroyContext();
