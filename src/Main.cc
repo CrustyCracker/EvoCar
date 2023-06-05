@@ -92,7 +92,7 @@ int main() {
     while (w.isOpen()) {
         // Update the world, standard arguments
         if (!paused) {
-            world->Step(1 / 60.f, 6, 3);
+            world->Step(1 / 60.0f, 6, 3);
             ++timer;
             if (timer >= Config::GENERATION_TIME) {
                 next_gen = true;

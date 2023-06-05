@@ -11,7 +11,7 @@ Car::Car(b2WorldPtr world, float x, float y, Chromosome chromosome, sf::Color bo
     // Create a polygon (octagon)
 
     auto vertices =
-        createVertices(chromosome.bodyLengths, {45.0, 45.0, 45.0, 45.0, 45.0, 45.0, 45.0, 45.0});
+        createVertices(chromosome.bodyLengths, Config::BODY_ANGLES);
 
     body_ =
         createPolygon(world, x, y, vertices, chromosome.bodyDensity, Config::FRICTION, bodyColor);
@@ -27,7 +27,7 @@ Car::Car(b2WorldPtr world, float x, float y, Chromosome chromosome, sf::Color bo
     b2DistanceJointDef jointDef2;
     jointDef2.bodyA = body_.body;
     jointDef2.bodyB = frontWheel_.body;
-    jointDef2.localAnchorA = vertices[1];
+    jointDef2.localAnchorA = vertices[Config::BACK_WHEEL_POS];
     jointDef2.localAnchorB = b2Vec2(0.0f, 0.0f);
     jointDef2.maxLength = CarConfig::MAX_JOINT_LENGTH;
     jointDef2.collideConnected = false;
@@ -35,7 +35,7 @@ Car::Car(b2WorldPtr world, float x, float y, Chromosome chromosome, sf::Color bo
 
     jointDef2.bodyA = body_.body;
     jointDef2.bodyB = backWheel_.body;
-    jointDef2.localAnchorA = vertices[2];
+    jointDef2.localAnchorA = vertices[Config::FRONT_WHEEL_POS];
     jointDef2.localAnchorB = b2Vec2(0.0f, 0.0f);
     jointDef2.maxLength = CarConfig::MAX_JOINT_LENGTH;
     jointDef2.collideConnected = false;
@@ -44,8 +44,8 @@ Car::Car(b2WorldPtr world, float x, float y, Chromosome chromosome, sf::Color bo
     // Make cars pass through eachother
     // by setting collision filtering
     b2Filter filter;
-    filter.categoryBits = 2;
-    filter.maskBits = 1;
+    filter.categoryBits = Config::CATEGORY_BITS;
+    filter.maskBits = Config::MASK_BITS;
     this->setCollisionFilter(filter);
 
     std::vector<float> v_axis(Config::VELOCITY_ARRAY_SIZE);
