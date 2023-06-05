@@ -11,6 +11,7 @@ Description:    Header for a file containing utility functions.
 
 #include "imgui.h"
 #include "SFML/Graphics.hpp"
+#include "EvolutionaryAlgorithm.h"
 
 #include "../config/MapGenConfig.h"
 #include "Car.h"
@@ -39,7 +40,7 @@ float getNextGroundPartDegree();
 
 void removeOldGroundParts(std::vector<Polygon>* boxes);
 
-Car generateRandomCar(b2WorldPtr world);
+Car generateCar(b2WorldPtr world, Chromosome chromosome);
 
 ImVec4 SFMLColorToImVec4(sf::Color color);
 

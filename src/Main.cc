@@ -57,8 +57,8 @@ int main() {
 
     EvolutionaryAlgorithm ea(EvolutionaryAlgorithmConfig::POPULATION_SIZE, Config::SAVE_TO_FILE);
 
-    for (int i = 0; i < ea.getPopulationSize(); ++i) {
-        cars.push_back(generateRandomCar(world));
+    for (Chromosome chromosome : ea.getPopulation()) {
+        cars.push_back(generateCar(world, chromosome));
     }
 
     bool paused = false;

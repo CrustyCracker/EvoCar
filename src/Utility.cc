@@ -66,11 +66,8 @@ void removeOldGroundParts(std::vector<Polygon>* boxes) {  // New idea:
     }
 }
 
-Car generateRandomCar(b2WorldPtr world) {
-    auto vertices_gen = createVertices(
-        {2.54951f, 2.12132f, 2.12132f, 2.54951f, 2.54951f, 2.12132f, 2.12132f, 2.54951f},
-        {33.7f, 90.0f, 33.7f, 22.6f, 33.7f, 90.0f, 33.7f, 22.6f});
 
+Car generateCar(b2WorldPtr world, Chromosome chromosome){
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> rgb_value(50, 200);
@@ -78,9 +75,10 @@ Car generateRandomCar(b2WorldPtr world) {
     sf::Color bodyColor = sf::Color(rgb_value(gen), rgb_value(gen), rgb_value(gen));
     sf::Color wheelColor = sf::Color(rgb_value(gen), rgb_value(gen), rgb_value(gen));
 
-    return Car(world, 250, 300, vertices_gen, 100.0f, 25.0f, bodyColor, wheelColor);
-}
 
+    return Car(world, MapGenConfig::CAR_STARTING_X, MapGenConfig::CAR_STARTING_Y, chromosome, bodyColor, wheelColor);
+
+}
 ImVec4 SFMLColorToImVec4(sf::Color color) {
     return ImVec4(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f, color.a / 255.0f);
 }

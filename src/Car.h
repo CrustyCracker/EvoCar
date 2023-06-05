@@ -13,6 +13,7 @@ Description:    Header file for the Car class.
 #include "../config/Config.h"
 #include "../config/CarConfig.h"
 #include "Shape.h"
+#include "EvolutionaryAlgorithm.h"
 
 typedef std::shared_ptr<b2World> b2WorldPtr;
 
@@ -25,9 +26,9 @@ class Car {
     std::vector<float> velX;
     std::vector<float> velY;
 
+    bool isAlive_ = true;
    public:
-    Car(b2WorldPtr world, float x, float y, std::vector<b2Vec2> vertices, float density,
-        float wheelRadious, sf::Color bodyColor, sf::Color wheelColor);
+    Car(b2WorldPtr world, float x, float y, Chromosome chormosome, sf::Color bodyColor, sf::Color wheelColor);
 
     Polygon* getBody();
     Circle* getFrontWheel();
