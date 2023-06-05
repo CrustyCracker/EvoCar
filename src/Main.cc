@@ -64,6 +64,7 @@ int main() {
     bool paused = false;
     bool pause_check = true;
     bool next_gen = false;
+    int timer = 0;
 
     // Set window icon
     auto icon = sf::Image{};
@@ -84,10 +85,15 @@ int main() {
         // Update the world, standard arguments
         if (!paused) {
             world->Step(1 / 60.f, 6, 3);
+            ++timer;
+            if (timer >= Config::GENERATION_TIME) {
+                next_gen = true;
+                timer = 0;
+            }
         }
-        else if (next_gen){
+        if (next_gen) {
             next_gen = false;
-            for(int i = 0; i < cars.size(); ++i){
+            for (int i = 0; i < cars.size(); ++i) {
                 ea.setFitness(i, cars[i].getPosX());
             }
             ea.nextGeneration();
@@ -152,8 +158,8 @@ int main() {
 
         if (!paused) {
             for (int i = 0; i < cars.size(); ++i) {
-                cars[i].getFrontWheel()->body->ApplyTorque(-1000 + (i * 10), false);
-                cars[i].getBackWheel()->body->ApplyTorque(-1000 + (i * 10), false);
+                cars[i].getFrontWheel()->body->ApplyTorque(-CarConfig::CAR_TORQUE, false);
+                cars[i].getBackWheel()->body->ApplyTorque(-CarConfig::CAR_TORQUE, false);
                 applyAirResistance(cars[i]);
             }
         }
