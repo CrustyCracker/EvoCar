@@ -20,6 +20,11 @@ void handleUserInput(sf::RenderWindow &w, bool &paused, bool &pause_check) {
             pause_check = false;
         }
     }
+    if(sf:Keyboard::isKeyPressed(sf::Keyboard::N)){
+        next_gen = true;
+    }
+
+    
 }
 
 void handleEvents(sf::RenderWindow &w, bool &pause_check) {

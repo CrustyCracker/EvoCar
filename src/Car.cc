@@ -63,6 +63,8 @@ Circle* Car::getFrontWheel() { return &frontWheel; }
 
 Circle* Car::getBackWheel() { return &backWheel; }
 
+float Car::getPosX() { return body.body->GetPosition().x; }
+
 std::vector<float>* Car::getVelX() { return &velX; }
 
 std::vector<float>* Car::getVelY() { return &velY; }
