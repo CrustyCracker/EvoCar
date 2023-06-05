@@ -29,6 +29,12 @@ class Config {
     static constexpr int VELOCITY_ARRAY_SIZE = 1000;
 
     static constexpr double PI = 3.14159265358979323846;
+    static constexpr auto BODY_ANGLES = {45.0, 45.0, 45.0, 45.0, 45.0, 45.0, 45.0, 45.0};
+    static constexpr int BACK_WHEEL_POS = 1;
+    static constexpr int FRONT_WHEEL_POS = 3;
+    static constexpr int CATEGORY_BITS = 2;
+    static constexpr int MASK_BITS = 1;
+
 };
 
 #endif  // CONFIG_H

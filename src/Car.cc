@@ -11,31 +11,31 @@ Car::Car(b2WorldPtr world, float x, float y, Chromosome chromosome, sf::Color bo
     // Create a polygon (octagon)
 
     auto vertices =
-        createVertices(chromosome.bodyLengths, {45.0, 45.0, 45.0, 45.0, 45.0, 45.0, 45.0, 45.0});
+        createVertices(chromosome.bodyLengths, Config::BODY_ANGLES);
 
-    body =
+    body_ =
         createPolygon(world, x, y, vertices, chromosome.bodyDensity, Config::FRICTION, bodyColor);
 
     // Create a circle
-    frontWheel = createCircle(world, x, y, chromosome.wheelRadius.first,
+    frontWheel_ = createCircle(world, x, y, chromosome.wheelRadius.first,
                               chromosome.wheelDensity.first, Config::FRICTION, wheelColor);
 
     // Create another circle
-    backWheel = createCircle(world, x, y, chromosome.wheelRadius.second,
+    backWheel_ = createCircle(world, x, y, chromosome.wheelRadius.second,
                              chromosome.wheelDensity.second, Config::FRICTION, wheelColor);
 
     b2DistanceJointDef jointDef2;
-    jointDef2.bodyA = body.body;
-    jointDef2.bodyB = frontWheel.body;
-    jointDef2.localAnchorA = vertices[1];
+    jointDef2.bodyA = body_.body;
+    jointDef2.bodyB = frontWheel_.body;
+    jointDef2.localAnchorA = vertices[Config::BACK_WHEEL_POS];
     jointDef2.localAnchorB = b2Vec2(0.0f, 0.0f);
     jointDef2.maxLength = CarConfig::MAX_JOINT_LENGTH;
     jointDef2.collideConnected = false;
     world->CreateJoint(&jointDef2);
 
-    jointDef2.bodyA = body.body;
-    jointDef2.bodyB = backWheel.body;
-    jointDef2.localAnchorA = vertices[3];
+    jointDef2.bodyA = body_.body;
+    jointDef2.bodyB = backWheel_.body;
+    jointDef2.localAnchorA = vertices[Config::FRONT_WHEEL_POS];
     jointDef2.localAnchorB = b2Vec2(0.0f, 0.0f);
     jointDef2.maxLength = CarConfig::MAX_JOINT_LENGTH;
     jointDef2.collideConnected = false;
@@ -44,8 +44,8 @@ Car::Car(b2WorldPtr world, float x, float y, Chromosome chromosome, sf::Color bo
     // Make cars pass through eachother
     // by setting collision filtering
     b2Filter filter;
-    filter.categoryBits = 2;
-    filter.maskBits = 1;
+    filter.categoryBits = Config::CATEGORY_BITS;
+    filter.maskBits = Config::MASK_BITS;
     this->setCollisionFilter(filter);
 
     std::vector<float> v_axis(Config::VELOCITY_ARRAY_SIZE);
@@ -53,34 +53,34 @@ Car::Car(b2WorldPtr world, float x, float y, Chromosome chromosome, sf::Color bo
 
     std::iota(std::begin(v_axis), std::end(v_axis), 1);
 
-    velX = v_axis;
-    velY = v_values;
+    velX_ = v_axis;
+    velY_ = v_values;
 }
 
-Polygon* Car::getBody() { return &body; }
+Polygon* Car::getBody() { return &body_; }
 
-Circle* Car::getFrontWheel() { return &frontWheel; }
+Circle* Car::getFrontWheel() { return &frontWheel_; }
 
-Circle* Car::getBackWheel() { return &backWheel; }
+Circle* Car::getBackWheel() { return &backWheel_; }
 
-float Car::getPosX() { return body.body->GetPosition().x; }
+float Car::getPosX() { return body_.body->GetPosition().x; }
 
-float Car::getPosY() { return body.body->GetPosition().y; }
+float Car::getPosY() { return body_.body->GetPosition().y; }
 
-std::vector<float>* Car::getVelX() { return &velX; }
+std::vector<float>* Car::getVelX() { return &velX_; }
 
-std::vector<float>* Car::getVelY() { return &velY; }
+std::vector<float>* Car::getVelY() { return &velY_; }
 
 sf::Color Car::getBodyColor() { return body.color; }
 
-b2Vec2 Car::getVelocityVec() { return body.body->GetLinearVelocity(); }
+b2Vec2 Car::getVelocityVec() { return body_.body->GetLinearVelocity(); }
 
-float Car::getVelocity() { return body.body->GetLinearVelocity().Length(); }
+float Car::getVelocity() { return body_.body->GetLinearVelocity().Length(); }
 
 void Car::setCollisionFilter(b2Filter filter) {
-    body.body->GetFixtureList()->SetFilterData(filter);
-    frontWheel.body->GetFixtureList()->SetFilterData(filter);
-    backWheel.body->GetFixtureList()->SetFilterData(filter);
+    body_.body->GetFixtureList()->SetFilterData(filter);
+    frontWheel_.body->GetFixtureList()->SetFilterData(filter);
+    backWheel_.body->GetFixtureList()->SetFilterData(filter);
 }
 
 std::vector<b2Vec2> createVertices(std::vector<float> lengths, std::vector<float> angles) {
