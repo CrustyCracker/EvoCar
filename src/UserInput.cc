@@ -5,12 +5,20 @@ Author:         Jakub Marcowski
 Description:    File containing user input functions.
 */
 
-void handleUserInput(sf::RenderWindow &w, bool &paused, bool &pause_check, bool &next_gen) {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) ||
-        sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-        // Close the window
-        w.close();
-    }
+void handleUserInput(sf::RenderWindow &w, bool &paused, bool &pause_check, bool &next_gen,
+                     bool &nxt_g_check, bool &focus) {
+    if (focus) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) ||
+            sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+            // Close the window
+            w.close();
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) ||
+            sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+            // Close the window
+            w.close();
+        }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::P) ||
             sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
