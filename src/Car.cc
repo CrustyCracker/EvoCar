@@ -10,8 +10,7 @@ Car::Car(b2WorldPtr world, float x, float y, Chromosome chromosome, sf::Color bo
          sf::Color wheelColor) {
     // Create a polygon (octagon)
 
-    auto vertices =
-        createVertices(chromosome.bodyLengths, {45.0, 45.0, 45.0, 45.0, 45.0, 45.0, 45.0, 45.0});
+    auto vertices = createVertices(chromosome.bodyLengths);
 
     body_ =
         createPolygon(world, x, y, vertices, chromosome.bodyDensity, Config::FRICTION, bodyColor);
@@ -83,9 +82,13 @@ void Car::setCollisionFilter(b2Filter filter) {
     backWheel_.body->GetFixtureList()->SetFilterData(filter);
 }
 
-std::vector<b2Vec2> createVertices(std::vector<float> lengths, std::vector<float> angles) {
+std::vector<b2Vec2> createVertices(std::vector<float> lengths) {
     std::vector<b2Vec2> vertices;
 
+    std::vector<float> angles;
+    for (int i = 0; i < lengths.size(); i++) {
+        angles.push_back(360.0f / lengths.size());
+    }
     // so that the wheels are set properly (that is - parallel to the ground)
     float angle = ((180.0f + (angles.back() / 2)) / 180.0f) * Config::PI;
 
