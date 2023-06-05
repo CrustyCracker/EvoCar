@@ -11,23 +11,23 @@ class EvolutionaryAlgorithmConfig {
     static constexpr char SAVE_FILE_NAME[] = "evoRacerOutput.json";
 
     // Evolutionary algorithm parameters
-    static constexpr int POPULATION_SIZE = 18;
+    static constexpr int POPULATION_SIZE = 15;
 
     // Boundries for the chromosomes
-    static constexpr float MIN_BODY_LENGTH = 2.0f;
-    static constexpr float MAX_BODY_LENGTH = 10.0f;
+    static constexpr float MIN_BODY_LENGTH = 1.0f;
+    static constexpr float MAX_BODY_LENGTH = 5.0f;
 
     static constexpr float MIN_BODY_DENSITY = 10.0f;
     static constexpr float MAX_BODY_DENSITY = 1000.0f;
 
     static constexpr float MIN_WHEEL_RADIUS = 2.0f;
-    static constexpr float MAX_WHEEL_RADIUS = 10.0f;
+    static constexpr float MAX_WHEEL_RADIUS = 15.0f;
 
     static constexpr float MIN_WHEEL_DENSITY = 10.0f;
     static constexpr float MAX_WHEEL_DENSITY = 1000.0f;
 
     // Population initialization hyperparameters
-    static constexpr float INITIAL_BODY_LENGTH_MEAN = 4.0f;
+    static constexpr float INITIAL_BODY_LENGTH_MEAN = 3.0f;
     static constexpr float INITIAL_BODY_LENGTH_VARIANCE = 1.0f;
 
     static constexpr float INITIAL_BODY_DENSITY_MEAN = 100.0f;
@@ -48,7 +48,7 @@ class EvolutionaryAlgorithmConfig {
     static constexpr float MUTATION_FACTOR_BODY_DENSITY = 20.0f;
 
     static constexpr float MUTATION_RATE_WHEEL_RADIUS = 0.2f;
-    static constexpr float MUTATION_FACTOR_WHEEL_RADIUS = 2.0f;
+    static constexpr float MUTATION_FACTOR_WHEEL_RADIUS = 1.0f;
 
     static constexpr float MUTATION_RATE_WHEEL_DENSITY = 0.1f;
     static constexpr float MUTATION_FACTOR_WHEEL_DENSITY = 20.0f;
