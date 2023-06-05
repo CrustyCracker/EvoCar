@@ -1,4 +1,5 @@
 #include <iostream>
+#include <filesystem>
 
 #include "box2d/box2d.h"
 #include "imgui.h"
@@ -62,29 +63,31 @@ int main() {
         cars.push_back(generateCar(world, chromosome));
     }
 
-    bool paused = false;      // Should we pause the simulation?
-    bool pause_check = true;  // Should we check if the user wants to flip `paused`?
-    bool next_gen = false;    // Should we generate the next generation?
-    bool nxt_g_check = true;  // Should we check if the user wants to flip `next_gen`?
-    bool focus = true;        // Is the window in focus? (used to prevent input when not in focus)
+    bool paused = false;     // Should we pause the simulation?
+    bool pauseCheck = true;  // Should we check if the user wants to flip `paused`?
+    bool nextGen = false;    // Should we generate the next generation?
+    bool nextGCheck = true;  // Should we check if the user wants to flip `nextGen`?
+    bool focus = true;       // Is the window in focus? (used to prevent input when not in focus)
     int timer = 0;
 
-    // Ensure path correctness no matter
-    // how the program is built
-    std::string file_path = __FILE__;
-    std::string file_path_unix = replaceSubstring(file_path, "\\", "/");
-    std::string icon_path = file_path + std::string("/../../resources/placeholder_icon.png");
-    std::string background_path = file_path + std::string("/../../resources/background_img.jpg");
+    std::filesystem::path filePath = std::filesystem::path(__FILE__);
+    std::filesystem::path dirPath = filePath.parent_path();
+
+    std::cout << "Directory Path: " << dirPath << std::endl;
+
+    // Append the relative paths
+    std::string iconPath = (dirPath / "../resources/placeholder_icon.png").string();
+    std::string backgroundPath = (dirPath / "../resources/background_img.jpg").string();
 
     // Set window icon
     auto icon = sf::Image{};
-    if (icon.loadFromFile(icon_path)) {
+    if (icon.loadFromFile(iconPath)) {
         w.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
     }
 
     // Load background image
     sf::Texture background;
-    background.loadFromFile(background_path);
+    background.loadFromFile(backgroundPath);
     sf::Sprite bg(background);
     bg.setScale(sf::Vector2f(Config::WINDOW_WIDTH / bg.getLocalBounds().width,
                              Config::WINDOW_HEIGHT / bg.getLocalBounds().height));
@@ -97,13 +100,13 @@ int main() {
             world->Step(1 / 60.0f, 6, 3);
             ++timer;
             if (timer >= Config::GENERATION_TIME) {
-                next_gen = true;
+                nextGen = true;
                 timer = 0;
             }
         }
 
-        if (next_gen) {
-            next_gen = false;
+        if (nextGen) {
+            nextGen = false;
             for (int i = 0; i < cars.size(); ++i) {
                 ea.setFitness(i, cars[i].getPosX());
             }
@@ -180,8 +183,8 @@ int main() {
         // Display FPS in window title
         w.setTitle("EvoRacer, FPS: " + std::to_string((int)ImGui::GetIO().Framerate));
 
-        handleEvents(w, pause_check, nxt_g_check, focus);
-        handleUserInput(w, paused, pause_check, next_gen, nxt_g_check, focus);
+        handleEvents(w, pauseCheck, nextGCheck, focus);
+        handleUserInput(w, paused, pauseCheck, nextGen, nextGCheck, focus);
     }
 
     ImPlot::DestroyContext();
