@@ -1,5 +1,5 @@
 /*
-Author:         Jakub Marcowski
+Author:         Jakub Marcowski, Mateusz Krakowski
 Description:    Header for a file containing utility functions.
 */
 
@@ -8,10 +8,12 @@ Description:    Header for a file containing utility functions.
 
 #include <random>
 #include <math.h>
+
 #include "imgui.h"
 #include "SFML/Graphics.hpp"
-#include "../config/MapGenConfig.h"
+#include "EvolutionaryAlgorithm.h"
 
+#include "../config/MapGenConfig.h"
 #include "Car.h"
 
 typedef std::shared_ptr<b2World> b2WorldPtr;
@@ -36,8 +38,12 @@ void generateGround(b2WorldPtr world, std::vector<Polygon>* boxes, std::vector<C
 
 float getNextGroundPartDegree();
 
-Car generateRandomCar(b2WorldPtr world);
+void removeOldGroundParts(std::vector<Polygon>* boxes);
+
+Car generateCar(b2WorldPtr world, Chromosome chromosome);
 
 ImVec4 SFMLColorToImVec4(sf::Color color);
+
+float getFurthestCarX(std::vector<Car> cars);
 
 #endif

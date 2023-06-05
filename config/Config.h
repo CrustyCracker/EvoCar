@@ -12,6 +12,7 @@ class Config {
     static constexpr int WINDOW_HEIGHT = 720;
     static constexpr bool SAVE_TO_FILE = false;
 
+    static constexpr int GENERATION_TIME = 3000;  // in frames, about 60 frames per second
     // Pixels per meter. Box2D uses metric units, so we need PPM for conversion pourposes
     static constexpr float PPM = 30.0F;
 

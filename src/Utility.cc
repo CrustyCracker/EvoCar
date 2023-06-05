@@ -17,7 +17,7 @@ void applyAirResistance(Car car) {
 void generateGround(b2WorldPtr world, std::vector<Polygon>* groundVector, std::vector<Car> cars) {
     Polygon lastGround = groundVector->back();
     if (lastGround.vertices[1].x * Config::PPM <
-        cars[0].getBody()->body->GetPosition().x * Config::PPM + MapGenConfig::GENERATE_DISTANCE) {
+        getFurthestCarX(cars) * Config::PPM + MapGenConfig::GENERATE_DISTANCE) {
         float degree = getNextGroundPartDegree();
         float angle_in_radians = degree * (M_PI / 180.0f);
 
@@ -31,7 +31,7 @@ void generateGround(b2WorldPtr world, std::vector<Polygon>* groundVector, std::v
 
         Polygon ground =
             createGround(world, MapGenConfig::GROUND_STARTING_X, MapGenConfig::GROUND_STARTING_Y,
-                         groundVertecies, sf::Color(255, 36, 35));
+                         groundVertecies, sf::Color(18, 36, 35));
 
         groundVector->push_back(ground);
     }
@@ -52,11 +52,22 @@ float getNextGroundPartDegree() {
     return degree;
 }
 
-Car generateRandomCar(b2WorldPtr world) {
-    auto vertices_gen = createVertices(
-        {2.54951f, 2.12132f, 2.12132f, 2.54951f, 2.54951f, 2.12132f, 2.12132f, 2.54951f},
-        {33.7f, 90.0f, 33.7f, 22.6f, 33.7f, 90.0f, 33.7f, 22.6f});
+// Note: this doesn't remove ground boxes from
+// the world, it only stops them from rendering
+// off screen (iterating over thousands of ground
+// parts, when only ~30 are visible, is a complete
+// waste of resources)
+void removeOldGroundParts(std::vector<Polygon>* boxes) {  // New idea:
+    // TODO: change this condition to                        instead of calling
+    // one that takes into account whether the               this function to trim
+    // ground boxes are off the screen                       the vector, we could
+    if (boxes->size() > 32) {          //                    iterate over a slice
+        boxes->erase(boxes->begin());  //                    in the render function
+    }
+}
 
+
+Car generateCar(b2WorldPtr world, Chromosome chromosome){
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> rgb_value(50, 200);
@@ -64,9 +75,21 @@ Car generateRandomCar(b2WorldPtr world) {
     sf::Color bodyColor = sf::Color(rgb_value(gen), rgb_value(gen), rgb_value(gen));
     sf::Color wheelColor = sf::Color(rgb_value(gen), rgb_value(gen), rgb_value(gen));
 
-    return Car(world, 250, 300, vertices_gen, 100.0f, 25.0f, bodyColor, wheelColor);
-}
 
+    return Car(world, MapGenConfig::CAR_STARTING_X, MapGenConfig::CAR_STARTING_Y, chromosome, bodyColor, wheelColor);
+
+}
 ImVec4 SFMLColorToImVec4(sf::Color color) {
     return ImVec4(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f, color.a / 255.0f);
+}
+
+float getFurthestCarX(std::vector<Car> cars) {
+    float furthestCarX = 0;
+    for (auto car : cars) {
+        float currentCarX = car.getBody()->body->GetPosition().x;
+        if (currentCarX > furthestCarX) {
+            furthestCarX = currentCarX;
+        }
+    }
+    return furthestCarX;
 }

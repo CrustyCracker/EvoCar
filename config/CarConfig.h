@@ -12,5 +12,7 @@ class CarConfig {
 
     // Number of vertices in a car's body polygon
     static constexpr int CAR_VERTICES = 8;
+    // Car speed is dependent on the car's torque
+    static constexpr float CAR_TORQUE = 2000.0f;
 };
 #endif  // CARCONFIG_H

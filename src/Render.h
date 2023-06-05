@@ -1,5 +1,5 @@
 /*
-Author:         Jakub Marcowski
+Author:         Jakub Marcowski, Mateusz Krakowski
 Description:    Header file for render function
 */
 

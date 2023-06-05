@@ -9,7 +9,7 @@ Description:    Header for a file containing user input functions.
 #include "imgui-SFML.h"
 #include "SFML/Graphics.hpp"
 
-void handleUserInput(sf::RenderWindow &w, bool &paused, bool &pause_check);
+void handleUserInput(sf::RenderWindow &w, bool &paused, bool &pause_check, bool &next_gen);
 
 void handleEvents(sf::RenderWindow &w, bool &pause_check);
 

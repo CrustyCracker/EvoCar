@@ -6,16 +6,23 @@ Description:    Creates a car with a polygon (car's body)
     and two circles (front and back wheels).
 */
 
-Car::Car(b2WorldPtr world, float x, float y, std::vector<b2Vec2> vertices, float density,
-         float wheelRadious, sf::Color bodyColor, sf::Color wheelColor) {
+Car::Car(b2WorldPtr world, float x, float y, Chromosome chromosome, sf::Color bodyColor,
+         sf::Color wheelColor) {
     // Create a polygon (octagon)
-    body = createPolygon(world, x, y, vertices, density, Config::FRICTION, bodyColor);
+
+    auto vertices =
+        createVertices(chromosome.bodyLengths, {45.0, 45.0, 45.0, 45.0, 45.0, 45.0, 45.0, 45.0});
+
+    body =
+        createPolygon(world, x, y, vertices, chromosome.bodyDensity, Config::FRICTION, bodyColor);
 
     // Create a circle
-    frontWheel = createCircle(world, x, y, wheelRadious, density, Config::FRICTION, wheelColor);
+    frontWheel = createCircle(world, x, y, chromosome.wheelRadius.first,
+                              chromosome.wheelDensity.first, Config::FRICTION, wheelColor);
 
     // Create another circle
-    backWheel = createCircle(world, x, y, wheelRadious, density, Config::FRICTION, wheelColor);
+    backWheel = createCircle(world, x, y, chromosome.wheelRadius.second,
+                             chromosome.wheelDensity.second, Config::FRICTION, wheelColor);
 
     b2DistanceJointDef jointDef2;
     jointDef2.bodyA = body.body;
@@ -55,6 +62,10 @@ Polygon* Car::getBody() { return &body; }
 Circle* Car::getFrontWheel() { return &frontWheel; }
 
 Circle* Car::getBackWheel() { return &backWheel; }
+
+float Car::getPosX() { return body.body->GetPosition().x; }
+
+float Car::getPosY() { return body.body->GetPosition().y; }
 
 std::vector<float>* Car::getVelX() { return &velX; }
 

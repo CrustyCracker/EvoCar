@@ -1,7 +1,7 @@
 #include "Render.h"
 
 /*
-Author:         Jakub Marcowski
+Author:         Jakub Marcowski, Mateusz Krakowski
 Description:    This file contains the render function, which is responsible
     for rendering all the shapes in the world.
 */
@@ -132,6 +132,9 @@ void render(sf::RenderWindow &w, sf::Sprite bg, std::vector<Polygon> &groundVect
 
     for (Polygon ground : groundVector) {
         renderPolygon(w, &ground);
+        if (Config::DEBUG) {
+            renderPolygonDebug(w, &ground);
+        }
     }
 
     // new cars should be rendered behind the old ones

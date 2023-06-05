@@ -10,7 +10,6 @@
 #include "../config/MapGenConfig.h"
 #include "Car.h"
 #include "EvolutionaryAlgorithm.h"
-
 #include "Shape.h"
 #include "Render.h"
 #include "UserInput.h"
@@ -48,32 +47,34 @@ int main() {
     std::vector<Car> cars;
 
     // Generate ground
-    std::vector<b2Vec2> groundVertecies = {b2Vec2(-MapGenConfig::GROUND_PART_LENGTH, 0),
+    std::vector<b2Vec2> groundVertecies = {b2Vec2(0, 0),
                                            b2Vec2(MapGenConfig::GROUND_PART_LENGTH, 0),
                                            b2Vec2(0, -MapGenConfig::GROUND_LEG_LENGTH)};
     Polygon ground =
         createGround(world, MapGenConfig::GROUND_STARTING_X, MapGenConfig::GROUND_STARTING_Y,
-                     groundVertecies, sf::Color(255, 36, 35));
+                     groundVertecies, sf::Color(18, 36, 35));
     groundVector.push_back(ground);
 
     EvolutionaryAlgorithm ea(EvolutionaryAlgorithmConfig::POPULATION_SIZE, Config::SAVE_TO_FILE);
 
-    for (int i = 0; i < ea.getPopulationSize(); ++i) {
-        cars.push_back(generateRandomCar(world));
+    for (Chromosome chromosome : ea.getPopulation()) {
+        cars.push_back(generateCar(world, chromosome));
     }
 
     bool paused = false;
     bool pause_check = true;
+    bool next_gen = false;
+    int timer = 0;
 
     // Set window icon
     auto icon = sf::Image{};
-    if (icon.loadFromFile("../resources/placeholder_icon.png")) {
+    if (icon.loadFromFile("resources/placeholder_icon.png")) {
         w.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
     }
 
     // Load background image
     sf::Texture background;
-    background.loadFromFile("../resources/background_img.jpg");
+    background.loadFromFile("resources/background_img.jpg");
     sf::Sprite bg(background);
     bg.setScale(sf::Vector2f(Config::WINDOW_WIDTH / bg.getLocalBounds().width,
                              Config::WINDOW_HEIGHT / bg.getLocalBounds().height));
@@ -84,6 +85,22 @@ int main() {
         // Update the world, standard arguments
         if (!paused) {
             world->Step(1 / 60.f, 6, 3);
+            ++timer;
+            if (timer >= Config::GENERATION_TIME) {
+                next_gen = true;
+                timer = 0;
+            }
+        }
+        if (next_gen) {
+            next_gen = false;
+            for (int i = 0; i < cars.size(); ++i) {
+                ea.setFitness(i, cars[i].getPosX());
+            }
+            ea.nextGeneration();
+            cars.clear();
+            for (Chromosome chromosome : ea.getPopulation()) {
+                cars.push_back(generateCar(world, chromosome));
+            }
         }
         // Render everything
         render(w, bg, groundVector, cars);
@@ -98,7 +115,7 @@ int main() {
         ImPlot::SetNextAxesToFit();
         if (ImPlot::BeginPlot("Velocity")) {
             for (int i = 0; i < cars.size(); ++i) {
-                char i_str[10];
+                char i_str[11];  // 10 digits + null
                 sprintf(i_str, "%d", i);
 
                 if (!paused) {
@@ -123,6 +140,7 @@ int main() {
         ImGui::PopStyleColor();
 
         generateGround(world, &groundVector, cars);
+        removeOldGroundParts(&groundVector);
 
         ImGui::SFML::Render(w);
 
@@ -130,8 +148,7 @@ int main() {
 
         // Attach camera to the car's body
         sf::View cameraView =
-            sf::View(sf::Vector2f(cars[0].getBody()->body->GetPosition().x * Config::PPM,
-                                  0.5 * Config::WINDOW_HEIGHT),
+            sf::View(sf::Vector2f(getFurthestCarX(cars) * Config::PPM, 0.5 * Config::WINDOW_HEIGHT),
                      sf::Vector2f(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT));
         w.setView(cameraView);
 
@@ -141,24 +158,18 @@ int main() {
 
         if (!paused) {
             for (int i = 0; i < cars.size(); ++i) {
-                cars[i].getFrontWheel()->body->ApplyTorque(-1000 + (i * 10), false);
-                cars[i].getBackWheel()->body->ApplyTorque(-1000 + (i * 10), false);
+                cars[i].getFrontWheel()->body->ApplyTorque(-CarConfig::CAR_TORQUE, false);
+                cars[i].getBackWheel()->body->ApplyTorque(-CarConfig::CAR_TORQUE, false);
+                applyAirResistance(cars[i]);
             }
         }
 
-        for (Car car : cars) {
-            applyAirResistance(car);
-        }
-
-        handleUserInput(w, paused, pause_check);
-
         // Display FPS in window title
-        w.setTitle("SFML + Box2D, FPS: " + std::to_string((int)ImGui::GetIO().Framerate));
+        w.setTitle("EvoRacer, FPS: " + std::to_string((int)ImGui::GetIO().Framerate));
 
         handleEvents(w, pause_check);
+        handleUserInput(w, paused, pause_check, next_gen);
     }
-
-    ImGui::SFML::Shutdown();
 
     ImPlot::DestroyContext();
     ImGui::DestroyContext();

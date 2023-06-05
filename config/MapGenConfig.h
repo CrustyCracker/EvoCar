@@ -8,11 +8,14 @@ Description: This file contains all the constant values used in the map generati
 
 class MapGenConfig {
    public:
-    static constexpr int GENERATE_DISTANCE = 200;
-    static constexpr int GROUND_STARTING_X = 0;
-    static constexpr int GROUND_STARTING_Y = 200;
-    static constexpr int GROUND_LEG_LENGTH = 4;
-    static constexpr int GROUND_PART_LENGTH = 1;
+    static constexpr float GENERATE_DISTANCE = 200.0;
+    static constexpr float GROUND_STARTING_X = 0.0;
+    static constexpr float GROUND_STARTING_Y = 200.0;
+    static constexpr float GROUND_LEG_LENGTH = 4.0;
+    static constexpr float GROUND_PART_LENGTH = 1.5;
+
+    static constexpr float CAR_STARTING_X = 250.0;
+    static constexpr float CAR_STARTING_Y = 500.0;
 
     // Change the mapgen behaviour here
     static constexpr float GROUND_DEGREE_DEVIATION = 12.0f;
