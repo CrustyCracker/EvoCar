@@ -10,12 +10,12 @@ class MapGenConfig {
    public:
     static constexpr float GENERATE_DISTANCE = 200.0;
     static constexpr float GROUND_STARTING_X = 0.0;
-    static constexpr float GROUND_STARTING_Y = 200.0;
+    static constexpr float GROUND_STARTING_Y = 360.0;
     static constexpr float GROUND_LEG_LENGTH = 4.0;
     static constexpr float GROUND_PART_LENGTH = 1.5;
 
     static constexpr float CAR_STARTING_X = 250.0;
-    static constexpr float CAR_STARTING_Y = 500.0;
+    static constexpr float CAR_STARTING_Y = 650.0;
 
     // Change the mapgen behaviour here
     static constexpr float GROUND_DEGREE_DEVIATION = 12.0f;

@@ -21,7 +21,7 @@ class EvolutionaryAlgorithmConfig {
     static constexpr float MAX_BODY_DENSITY = 1000.0f;
 
     static constexpr float MIN_WHEEL_RADIUS = 2.0f;
-    static constexpr float MAX_WHEEL_RADIUS = 15.0f;
+    static constexpr float MAX_WHEEL_RADIUS = 40.0f;
 
     static constexpr float MIN_WHEEL_DENSITY = 10.0f;
     static constexpr float MAX_WHEEL_DENSITY = 1000.0f;
@@ -47,8 +47,8 @@ class EvolutionaryAlgorithmConfig {
     static constexpr float MUTATION_RATE_BODY_DENSITY = 0.2f;
     static constexpr float MUTATION_FACTOR_BODY_DENSITY = 20.0f;
 
-    static constexpr float MUTATION_RATE_WHEEL_RADIUS = 0.2f;
-    static constexpr float MUTATION_FACTOR_WHEEL_RADIUS = 1.0f;
+    static constexpr float MUTATION_RATE_WHEEL_RADIUS = 0.3f;
+    static constexpr float MUTATION_FACTOR_WHEEL_RADIUS = 2.0f;
 
     static constexpr float MUTATION_RATE_WHEEL_DENSITY = 0.1f;
     static constexpr float MUTATION_FACTOR_WHEEL_DENSITY = 20.0f;
