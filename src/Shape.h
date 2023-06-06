@@ -1,7 +1,10 @@
-/*
-Author:         Jakub Marcowski, Mateusz Krakowski
-Description:    Header file for functions for creating Box2D objects.
-*/
+/**
+ * @brief Header file for functions for creating Box2D objects.
+ *
+ * @file Shape.h
+ * @authors Jakub Marcowski, Mateusz Krakowski
+ * @date 2023-06-06
+ */
 
 #ifndef SHAPE_H
 #define SHAPE_H

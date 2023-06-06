@@ -2,7 +2,7 @@
  * @brief Header for a file containing utility functions.
  *
  * @file Utility.h
- * @author Jakub Marcowski, Mateusz Krakowski
+ * @authors Jakub Marcowski, Mateusz Krakowski
  * @date 2023-06-06
  */
 

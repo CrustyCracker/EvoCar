@@ -1,9 +1,12 @@
-#include "UserInput.h"
+/**
+ * @brief File containing user input functions.
+ *
+ * @file UserInput.cc
+ * @authors Jakub Marcowski
+ * @date 2023-06-06
+ */
 
-/*
-Author:         Jakub Marcowski
-Description:    File containing user input functions.
-*/
+#include "UserInput.h"
 
 void handleUserInput(sf::RenderWindow &w, bool &paused, bool &pause_check, bool &next_gen,
                      bool &nxt_g_check, bool &focus) {

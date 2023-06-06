@@ -1,9 +1,12 @@
-#include "Utility.h"
+/**
+ * @brief File containing utility functions.
+ *
+ * @file Utility.cc
+ * @authors Jakub Marcowski, Mateusz Krakowski
+ * @date 2023-06-06
+ */
 
-/*
-Author:         Jakub Marcowski, Mateusz Krakowski
-Description:    File containing utility functions.
-*/
+#include "Utility.h"
 
 void applyAirResistance(Car car) {
     // F = V^2 * k

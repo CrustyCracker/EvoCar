@@ -1,10 +1,13 @@
-#include "Car.h"
+/**
+ * @brief Creates a car with a polygon (car's body)
+ * and two circles (front and back wheels).
+ *
+ * @file Car.h
+ * @authors Jakub Marcowski, Mateusz Krakowski
+ * @date 2023-06-06
+ */
 
-/*
-Author:         Jakub Marcowski, Mateusz Krakowski
-Description:    Creates a car with a polygon (car's body)
-    and two circles (front and back wheels).
-*/
+#include "Car.h"
 
 Car::Car(b2WorldPtr world, float x, float y, Chromosome chromosome, sf::Color bodyColor,
          sf::Color wheelColor) {

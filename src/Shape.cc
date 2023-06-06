@@ -1,9 +1,12 @@
-#include "Shape.h"
+/**
+ * @brief This file contains functions for creating Box2D objects.
+ *
+ * @file Shape.cc
+ * @authors Jakub Marcowski, Mateusz Krakowski
+ * @date 2023-06-06
+ */
 
-/*
-Author:         Jakub Marcowski, Mateusz Krakowski
-Description:    This file contains functions for creating Box2D objects.
-*/
+#include "Shape.h"
 
 Box createBox(b2WorldPtr world, float x, float y, float width, float height, float density,
               float friction, sf::Color color) {

@@ -1,7 +1,10 @@
-/*
-Author:         Jakub Marcowski, Mateusz Krakowski
-Description:    Header file for the Car class.
-*/
+/**
+ * @brief Header file for the Car class.
+ *
+ * @file Car.h
+ * @authors Jakub Marcowski, Mateusz Krakowski
+ * @date 2023-06-06
+ */
 
 #ifndef CAR_H
 #define CAR_H

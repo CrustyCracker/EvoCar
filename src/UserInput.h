@@ -1,7 +1,10 @@
-/*
-Author:         Jakub Marcowski
-Description:    Header for a file containing user input functions.
-*/
+/**
+ * @brief Header for a file containing user input functions.
+ *
+ * @file UserInput.h
+ * @authors Jakub Marcowski
+ * @date 2023-06-06
+ */
 
 #ifndef USER_INPUT_H
 #define USER_INPUT_H

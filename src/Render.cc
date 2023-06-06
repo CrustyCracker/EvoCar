@@ -1,10 +1,13 @@
-#include "Render.h"
+/**
+ * @brief This file contains the render function, which
+ * is responsible for rendering all the shapes in the world.
+ *
+ * @file Render.cc
+ * @authors Jakub Marcowski, Mateusz Krakowski
+ * @date 2023-06-06
+ */
 
-/*
-Author:         Jakub Marcowski, Mateusz Krakowski
-Description:    This file contains the render function, which is responsible
-    for rendering all the shapes in the world.
-*/
+#include "Render.h"
 
 void renderBox(sf::RenderWindow &w, Box &box) {
     sf::RectangleShape rect;

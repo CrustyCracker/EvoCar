@@ -1,10 +1,13 @@
-#include "EvolutionaryAlgorithm.h"
+/**
+ * @brief Implementation file for EvolutionaryAlgorithm
+ * class, Algorithm used for evolving the cars.
+ *
+ * @file EvolutionaryAlgorithm.cc
+ * @author Mateusz Krakowski
+ * @date 2023-06-06
+ */
 
-/*
-Author:         Mateusz Krakowski
-Description:    Implementation file for EvolutionaryAlgorithm class, Algorithm used for evolving the
-                cars.
-*/
+#include "EvolutionaryAlgorithm.h"
 
 EvolutionaryAlgorithm::EvolutionaryAlgorithm(int populationSize, bool saveToFile) {
     populationSize_ = populationSize;

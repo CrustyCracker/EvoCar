@@ -1,7 +1,10 @@
-/*
-Author:         Jakub Marcowski, Mateusz Krakowski
-Description:    Header file for render function
-*/
+/**
+ * @brief Header file for render function.
+ *
+ * @file Render.h
+ * @authors Jakub Marcowski, Mateusz Krakowski
+ * @date 2023-06-06
+ */
 
 #ifndef RENDER_H
 #define RENDER_H

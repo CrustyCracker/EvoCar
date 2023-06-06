@@ -1,3 +1,11 @@
+/**
+ * @brief Main file for the project, contains the main loop.
+ *
+ * @file Main.cc
+ * @authors Jakub Marcowski, Mateusz Krakowski
+ * @date 2023-06-06
+ */
+
 #include <filesystem>
 #include <string>
 
@@ -15,11 +23,6 @@
 #include "Shape.h"
 #include "UserInput.h"
 #include "Utility.h"
-
-/*
-Author:        Jakub Marcowski, Mateusz Krakowski
-Description:   Main file for the project, contains the main loop.
-*/
 
 typedef std::shared_ptr<b2World> b2WorldPtr;
 

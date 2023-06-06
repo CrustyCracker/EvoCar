@@ -1,7 +1,10 @@
-/*
-Author:         Mateusz Krakowski
-Description:    Header file for EvolutionaryAlgorithm class.
-*/
+/**
+ * @brief Header file for EvolutionaryAlgorithm class.
+ *
+ * @file EvolutionaryAlgorithm.h
+ * @author Mateusz Krakowski
+ * @date 2023-06-06
+ */
 
 #ifndef GENOME_H
 #define GENOME_H
