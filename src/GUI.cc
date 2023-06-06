@@ -63,3 +63,10 @@ void renderPositionPlot(std::vector<Car>& cars, bool paused) {
     }
     ImGui::End();
 }
+
+void printEAInfo(EvolutionaryAlgorithm& ea) {
+    ImGui::Begin("EA Info");
+    ImGui::Text("Generation: %d", ea.getGeneration());
+    ImGui::Text("Population size: %d", ea.getPopulationSize());
+    ImGui::End();
+}

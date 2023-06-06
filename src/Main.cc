@@ -114,6 +114,10 @@ int main() {
         ImGui::SetNextWindowPos(ImVec2(10, 360), ImGuiCond_FirstUseEver);
         renderPositionPlot(cars, paused);
 
+        ImGui::SetNextWindowSize(ImVec2(175, 75), ImGuiCond_FirstUseEver);
+        ImGui::SetNextWindowPos(ImVec2(1095, 10), ImGuiCond_FirstUseEver);
+        printEAInfo(ea);
+
         ImGui::PopStyleColor();
 
         generateGround(world, &groundVector, cars);

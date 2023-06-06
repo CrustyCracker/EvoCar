@@ -15,6 +15,7 @@
 #include "implot.h"
 
 #include "Car.h"
+#include "EvolutionaryAlgorithm.h"
 #include "Utility.h"
 
 /**
@@ -26,10 +27,17 @@ void renderVelocityPlot(std::vector<Car>& cars, bool paused);
 
 /**
  * @brief Renders position plot.
- * 
+ *
  * @param cars Vector of cars.
  * @param paused Whether or not simulation is paused.
  */
 void renderPositionPlot(std::vector<Car>& cars, bool paused);
+
+/**
+ * @brief Renders Evolutionary Algorithm's inner state.
+ *
+ * @param ea Evolutionary Algorithm object.
+ */
+void printEAInfo(EvolutionaryAlgorithm& ea);
 
 #endif  // GUI_H
