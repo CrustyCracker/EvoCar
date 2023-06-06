@@ -23,8 +23,8 @@ void EvolutionaryAlgorithm::initializePopulation() {
     // add variation and mean
     for (int i = 0; i < populationSize_; ++i) {
         Chromosome chrom;
-        // TODO: change the 8
-        for (int p = 0; p < 8; ++p) {
+
+        for (int p = 0; p < CarConfig::CAR_VERTICES; ++p) {
             float length = dist(gen) * EvolutionaryAlgorithmConfig::INITIAL_BODY_LENGTH_VARIANCE +
                            EvolutionaryAlgorithmConfig::INITIAL_BODY_LENGTH_MEAN;
             length = std::max(length, EvolutionaryAlgorithmConfig::MIN_BODY_LENGTH);

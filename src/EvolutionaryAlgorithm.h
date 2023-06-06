@@ -17,6 +17,7 @@
 
 #include "../config/Config.h"
 #include "../config/EvolutionaryAlgorithmConfig.h"
+#include "../config/CarConfig.h"
 
 struct Chromosome {
     std::vector<float> bodyLengths;
