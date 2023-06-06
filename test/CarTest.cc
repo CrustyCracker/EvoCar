@@ -23,4 +23,11 @@ TEST(CreateCarTest, BasicTest) {
     EXPECT_EQ(car.getPosX(), x);
     EXPECT_EQ(car.getPosY(), y);
     EXPECT_EQ(car.getBodyColor(), bodyColor);
+    EXPECT_NO_THROW(car.getBody());
+    EXPECT_NO_THROW(car.getFrontWheel());
+    EXPECT_NO_THROW(car.getBackWheel());
+    EXPECT_NO_THROW(car.getVelX());
+    EXPECT_NO_THROW(car.getVelY());
+    EXPECT_NO_THROW(car.getVelocityVec());
+    EXPECT_NO_THROW(car.getVelocity());
 }
