@@ -11,12 +11,15 @@
 
 class CarConfig {
    public:
-    static constexpr float MAX_JOINT_LENGTH = 0.01f;
 
+       // Car speed is dependent on the car's torque
+    static constexpr float CAR_TORQUE = 2000.0f;
+    
+     
+    static constexpr float MAX_JOINT_LENGTH = 0.01f;
     // Number of vertices in a car's body polygon
     static constexpr int CAR_VERTICES = 8;
-    // Car speed is dependent on the car's torque
-    static constexpr float CAR_TORQUE = 2000.0f;
+
 };
 
 #endif  // CARCONFIG_H

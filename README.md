@@ -40,11 +40,11 @@ Potrzebne będą:
 
 ## Jak zbudować projekt
 wykonaj skrypt `sh fresh_build.sh` (z tego katalogu)
-## Jak stowrzyć raport z pokrycia testami
+## Możliwości programu
 - Upwenij się że pobrałeś wszystkie paczki
 - `sh fresh_build.sh` (z tego katalogu)
 -  Plik wykonawczy: `/build/EvoRacer`
--  Testy: `/build/test/Test`
+-  Testy: `/build/Test`
 ## Test Coverage
 Ostatni test coverage znajdue się w katalogu CodeCoverageReport, plik index.html
 Aby stowrzyć raport z pokrycia testami należy:
