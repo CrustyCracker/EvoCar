@@ -108,8 +108,11 @@ int main() {
 
         ImGui::SetNextWindowSize(ImVec2(340, 340), ImGuiCond_FirstUseEver);
         ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
-
         renderVelocityPlot(cars, paused);
+
+        ImGui::SetNextWindowSize(ImVec2(340, 340), ImGuiCond_FirstUseEver);
+        ImGui::SetNextWindowPos(ImVec2(10, 360), ImGuiCond_FirstUseEver);
+        renderPositionPlot(cars, paused);
 
         ImGui::PopStyleColor();
 

@@ -28,6 +28,8 @@ class Car {
     Circle backWheel_;
     std::vector<float> velX_;
     std::vector<float> velY_;
+    std::vector<float> posX_;
+    std::vector<float> posY_;
 
    public:
     Car(const b2WorldPtr& world, float x, float y, const Chromosome& chromosome,
@@ -40,6 +42,8 @@ class Car {
     float getPosY() const;
     std::vector<float>* getVelX();
     std::vector<float>* getVelY();
+    std::vector<float>* getPosXVec();
+    std::vector<float>* getPosYVec();
     sf::Color getBodyColor() const;
     b2Vec2 getVelocityVec() const;
     float getVelocity() const;

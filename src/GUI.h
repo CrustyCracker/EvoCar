@@ -24,4 +24,12 @@
  */
 void renderVelocityPlot(std::vector<Car>& cars, bool paused);
 
+/**
+ * @brief Renders position plot.
+ * 
+ * @param cars Vector of cars.
+ * @param paused Whether or not simulation is paused.
+ */
+void renderPositionPlot(std::vector<Car>& cars, bool paused);
+
 #endif  // GUI_H

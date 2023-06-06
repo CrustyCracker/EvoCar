@@ -57,6 +57,9 @@ Car::Car(const b2WorldPtr& world, float x, float y, const Chromosome& chromosome
 
     velX_ = v_axis;
     velY_ = v_values;
+
+    posX_ = v_axis;
+    posY_ = v_values;
 }
 
 Polygon* Car::getBody() { return &body_; }
@@ -72,6 +75,10 @@ float Car::getPosY() const { return body_.body->GetPosition().y; }
 std::vector<float>* Car::getVelX() { return &velX_; }
 
 std::vector<float>* Car::getVelY() { return &velY_; }
+
+std::vector<float>* Car::getPosXVec() { return &posX_; }
+
+std::vector<float>* Car::getPosYVec() { return &posY_; }
 
 sf::Color Car::getBodyColor() const { return body_.color; }
 
