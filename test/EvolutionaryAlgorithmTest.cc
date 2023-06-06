@@ -43,3 +43,13 @@ TEST(EvolutionaryAlgorithmTest, NextGenerationTest) {
 
     ASSERT_EQ(evo.getGeneration(), 50);
 }
+
+TEST(EvolutionaryAlgorithmTest, SaveToJsonTest) {
+    EvolutionaryAlgorithm evo(2, true);
+    evo.nextGeneration();
+    for (int i = 0; i < 5; ++i) {
+        evo.nextGeneration();
+    }
+
+    ASSERT_EQ(evo.getGeneration(), 6);
+}
