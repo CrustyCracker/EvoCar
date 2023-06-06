@@ -11,7 +11,7 @@
 
 class MapGenConfig {
    public:
-    static constexpr float GENERATE_DISTANCE = 200.0;
+    static constexpr float GENERATE_DISTANCE = 666.0;
     static constexpr float GROUND_STARTING_X = 0.0;
     static constexpr float GROUND_STARTING_Y = 360.0;
     static constexpr float GROUND_LEG_LENGTH = 4.0;
