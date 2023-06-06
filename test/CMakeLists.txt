@@ -3,6 +3,7 @@ add_executable(
   ShapeTest.cc
   EvolutionaryAlgorithmTest.cc
   CarTest.cc
+  UtilityTest.cc
 )
 
 IF(WIN32)
@@ -13,6 +14,7 @@ target_link_libraries(Test GTest::gtest_main sfml-graphics ImGui-SFML::ImGui-SFM
 add_test(NAME ShapeTest COMMAND Test)
 add_test(NAME EvolutionaryAlgorithmTest COMMAND Test)
 add_test(NAME CarTest COMMAND Test)
+add_test(NAME UtilityTest COMMAND Test)
 
 include(GoogleTest)
 gtest_discover_tests(Test)
