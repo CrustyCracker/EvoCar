@@ -125,7 +125,7 @@ void setIcon(sf::RenderWindow& window) {
 
 std::vector<sf::Texture*> loadBGTextures() {
     std::vector<sf::Texture*> textures;
-    for (int i = 0; i < 5; ++i) {
+    for (int i = 0; i < MapGenConfig::SPRITES_COUNT; ++i) {
         std::string BGPath =
             (getRootDir() / ("../resources/background_img_" + std::to_string(i) + ".png")).string();
         sf::Texture* texture = new sf::Texture();
@@ -149,7 +149,7 @@ sf::Sprite loadBGSprite(sf::Texture* texture, std::vector<Car> cars) {
 
 std::vector<sf::Sprite> loadBGSprites(std::vector<sf::Texture*> textures, std::vector<Car> cars) {
     std::vector<sf::Sprite> sprites;
-    for (int i = 0; i < 5; ++i) {
+    for (int i = 0; i < MapGenConfig::SPRITES_COUNT; ++i) {
         sprites.push_back(loadBGSprite(textures[i], cars));
     }
     return sprites;

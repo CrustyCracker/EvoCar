@@ -135,17 +135,16 @@ void render(sf::RenderWindow &w, std::vector<sf::Sprite> BGs, std::vector<Polygo
         w.draw(BG);
     }
 
-    int n = 32;
 
     int groundBeginIndex = 0;
     int centerIndex = getIndexOfGroundClosestToLocation(groundVector, getFurthestCarX(cars));
     int groundEndIndex = groundVector.size();
 
-    if (centerIndex - n / 2 > 0) {
-        groundBeginIndex = centerIndex - n / 2;
+    if (centerIndex - Config::GROUND_PARTS_REDNERED / 2 > 0) {
+        groundBeginIndex = centerIndex - Config::GROUND_PARTS_REDNERED / 2;
     }
-    if (centerIndex + n / 2 < groundEndIndex) {
-        groundEndIndex = centerIndex + n / 2;
+    if (centerIndex + Config::GROUND_PARTS_REDNERED / 2 < groundEndIndex) {
+        groundEndIndex = centerIndex + Config::GROUND_PARTS_REDNERED / 2;
     }
     std::vector<Polygon> groundSlice(groundVector.begin() + groundBeginIndex,
                                      groundVector.begin() + groundEndIndex);
