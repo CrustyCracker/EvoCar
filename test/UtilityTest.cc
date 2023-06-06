@@ -11,6 +11,7 @@
 #include "../src/Utility.h"
 #include "../src/Car.h"
 #include "../src/EvolutionaryAlgorithm.h"
+#include "../config/MapGenConfig.h"
 
 TEST(UtilityTest, applyAirResistanceTest) {
     b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITATIONAL_ACCELERATION));
@@ -38,21 +39,25 @@ TEST(UtilityTest, generateGroundTest) {
     Car car = Car(world, x, y, chromosome, bodyColor, wheelColor);
     cars.push_back(car);
 
-    std::vector<Polygon> groundVector = {createGround(std::move(world), MapGenConfig::GROUND_STARTING_X,
+    std::vector<b2Vec2> groundVertecies = {
+        b2Vec2(MapGenConfig::GROUND_STARTING_X, MapGenConfig::GROUND_STARTING_Y),
+        b2Vec2(MapGenConfig::GROUND_STARTING_X + MapGenConfig::GROUND_LEG_LENGTH,
+               MapGenConfig::GROUND_STARTING_Y),
+        b2Vec2(MapGenConfig::GROUND_STARTING_X + MapGenConfig::GROUND_LEG_LENGTH,
+               MapGenConfig::GROUND_STARTING_Y + MapGenConfig::GROUND_PART_LENGTH)};
+
+    std::vector<Polygon> groundVector = {createGround(world, MapGenConfig::GROUND_STARTING_X,
                                                       MapGenConfig::GROUND_STARTING_Y,
-                                                      MapGenConfig::GROUND_STARTING_VERTICES,
-                                                      sf::Color(18, 36, 35))};
+                                                      groundVertecies, sf::Color(18, 36, 35))};
 
     EXPECT_NO_THROW(generateGround(world, &groundVector, cars));
 
     EXPECT_EQ(groundVector.size(), 2);
 }
 
-TEST(UtilityTest, getNextGroundPartDegreeTest) {
-    EXPECT_NO_THROW(getNextGroundPartDegree());
-}
+TEST(UtilityTest, getNextGroundPartDegreeTest) { EXPECT_NO_THROW(getNextGroundPartDegree()); }
 
-TEST(UtilityTest, generateCarTest){
+TEST(UtilityTest, generateCarTest) {
     b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITATIONAL_ACCELERATION));
     float x = 0.0f, y = 0.0f;
     sf::Color bodyColor = sf::Color::Red;
@@ -81,7 +86,7 @@ TEST(UtilityTest, getFurthestCarXTest) {
     EXPECT_EQ(getFurthestCarX(cars), x);
 }
 
-TEST(UtilityTest, SFMLColorToImVec4){
+TEST(UtilityTest, SFMLColorToImVec4) {
     sf::Color color = sf::Color::Red;
     ImVec4 imVec4 = SFMLColorToImVec4(color);
 
@@ -91,17 +96,27 @@ TEST(UtilityTest, SFMLColorToImVec4){
     EXPECT_EQ(imVec4.w, 1.0f);
 }
 
-TEST(UtilityTest, getIndexOfGroundClosestToLocationTest){
-    std::vector<Polygon> groundVector = {createGround(std::move(world), MapGenConfig::GROUND_STARTING_X,
-                                                      MapGenConfig::GROUND_STARTING_Y,
-                                                      MapGenConfig::GROUND_STARTING_VERTICES,
-                                                      sf::Color(18, 36, 35))};
+TEST(UtilityTest, getIndexOfGroundClosestToLocationTest) {
+    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITATIONAL_ACCELERATION));
+    std::vector<b2Vec2> groundVertecies = {
+        b2Vec2(MapGenConfig::GROUND_STARTING_X, MapGenConfig::GROUND_STARTING_Y),
+        b2Vec2(MapGenConfig::GROUND_STARTING_X + MapGenConfig::GROUND_LEG_LENGTH,
+               MapGenConfig::GROUND_STARTING_Y),
+        b2Vec2(MapGenConfig::GROUND_STARTING_X + MapGenConfig::GROUND_LEG_LENGTH,
+               MapGenConfig::GROUND_STARTING_Y + MapGenConfig::GROUND_PART_LENGTH)};
+
+    Polygon ground =
+        createGround(world, MapGenConfig::GROUND_STARTING_X, MapGenConfig::GROUND_STARTING_Y,
+                     groundVertecies, sf::Color(18, 36, 35));
+
+    std::vector<Polygon> groundVector;
+    groundVector.push_back(ground);
 
     EXPECT_NO_THROW(getIndexOfGroundClosestToLocation(groundVector, 0.0f));
     EXPECT_EQ(getIndexOfGroundClosestToLocation(groundVector, 0.0f), 0);
 }
 
-TEST(UtilityTest, removeCarsTest){
+TEST(UtilityTest, removeCarsTest) {
     b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITATIONAL_ACCELERATION));
     float x = 0.0f, y = 0.0f;
     sf::Color bodyColor = sf::Color::Red;
@@ -114,27 +129,13 @@ TEST(UtilityTest, removeCarsTest){
     Car car = Car(world, x, y, chromosome, bodyColor, wheelColor);
     cars.push_back(car);
 
-    EXPECT_NO_THROW(removeCars(cars));
+    EXPECT_NO_THROW(removeCars(world, &cars));
     EXPECT_EQ(cars.size(), 0);
 }
 
-TEST(UtilityTest, getRootDirTest){
-    EXPECT_NO_THROW(getRootDir());
-}
+TEST(UtilityTest, getRootDirTest) { EXPECT_NO_THROW(getRootDir()); }
 
-TEST(UtilityTest, setIconTest){
+TEST(UtilityTest, setIconTest) {
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
     EXPECT_NO_THROW(setIcon(window));
-}
-
-TEST(UtilityTest, loadBGSpritesTEST){
-    EXPECT_NO_THROW(loadBGSprites());
-}
-
-TEST(UtilityTest, loadBGSpriteTest){
-    EXPECT_NO_THROW(loadBGSprite());
-}
-
-TEST(UtilityTest, loadFontTest){
-    EXPECT_NO_THROW(loadFont());
 }

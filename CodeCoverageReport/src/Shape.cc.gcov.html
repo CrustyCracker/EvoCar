@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-06-06 15:03:00</td>
+            <td class="headerValue">2023-06-06 16:20:57</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">4</td>
@@ -70,119 +70,119 @@
 <a name="8"><span class="lineNum">       8 </span>            : </a>
 <a name="9"><span class="lineNum">       9 </span>            : #include &quot;Shape.h&quot;</a>
 <a name="10"><span class="lineNum">      10 </span>            : </a>
-<a name="11"><span class="lineNum">      11 </span><span class="lineCov">         20 : Box createBox(b2WorldPtr world, float x, float y, float width, float height, float density,</span></a>
+<a name="11"><span class="lineNum">      11 </span><span class="lineCov">         30 : Box createBox(const b2WorldPtr&amp; world, float x, float y, float width, float height, float density,</span></a>
 <a name="12"><span class="lineNum">      12 </span>            :               float friction, sf::Color color) {</a>
 <a name="13"><span class="lineNum">      13 </span>            :     // Argument validation</a>
-<a name="14"><span class="lineNum">      14 </span><span class="lineCov">         20 :     if (width &lt;= 0) {</span></a>
-<a name="15"><span class="lineNum">      15 </span><span class="lineCov">          4 :         throw std::invalid_argument(&quot;Invalid width parameter&quot;);</span></a>
-<a name="16"><span class="lineNum">      16 </span><span class="lineCov">         16 :     } else if (height &lt;= 0.0f) {</span></a>
-<a name="17"><span class="lineNum">      17 </span><span class="lineCov">          4 :         throw std::invalid_argument(&quot;Invalid height parameter&quot;);</span></a>
-<a name="18"><span class="lineNum">      18 </span><span class="lineCov">         12 :     } else if (density &lt;= 0.0f) {</span></a>
-<a name="19"><span class="lineNum">      19 </span><span class="lineCov">          4 :         throw std::invalid_argument(&quot;Invalid density parameter&quot;);</span></a>
-<a name="20"><span class="lineNum">      20 </span><span class="lineCov">          8 :     } else if (friction &lt;= 0.0f) {</span></a>
-<a name="21"><span class="lineNum">      21 </span><span class="lineCov">          4 :         throw std::invalid_argument(&quot;Invalid friction parameter&quot;);</span></a>
+<a name="14"><span class="lineNum">      14 </span><span class="lineCov">         30 :     if (width &lt;= 0) {</span></a>
+<a name="15"><span class="lineNum">      15 </span><span class="lineCov">          6 :         throw std::invalid_argument(&quot;Invalid width parameter&quot;);</span></a>
+<a name="16"><span class="lineNum">      16 </span><span class="lineCov">         24 :     } else if (height &lt;= 0.0f) {</span></a>
+<a name="17"><span class="lineNum">      17 </span><span class="lineCov">          6 :         throw std::invalid_argument(&quot;Invalid height parameter&quot;);</span></a>
+<a name="18"><span class="lineNum">      18 </span><span class="lineCov">         18 :     } else if (density &lt;= 0.0f) {</span></a>
+<a name="19"><span class="lineNum">      19 </span><span class="lineCov">          6 :         throw std::invalid_argument(&quot;Invalid density parameter&quot;);</span></a>
+<a name="20"><span class="lineNum">      20 </span><span class="lineCov">         12 :     } else if (friction &lt;= 0.0f) {</span></a>
+<a name="21"><span class="lineNum">      21 </span><span class="lineCov">          6 :         throw std::invalid_argument(&quot;Invalid friction parameter&quot;);</span></a>
 <a name="22"><span class="lineNum">      22 </span>            :     }</a>
 <a name="23"><span class="lineNum">      23 </span>            :     // Body definition</a>
-<a name="24"><span class="lineNum">      24 </span><span class="lineCov">          4 :     b2BodyDef boxBodyDef;</span></a>
-<a name="25"><span class="lineNum">      25 </span><span class="lineCov">          4 :     boxBodyDef.position.Set(x / Config::PPM, y / Config::PPM);</span></a>
-<a name="26"><span class="lineNum">      26 </span><span class="lineCov">          4 :     boxBodyDef.type = b2_dynamicBody;</span></a>
+<a name="24"><span class="lineNum">      24 </span><span class="lineCov">          6 :     b2BodyDef boxBodyDef;</span></a>
+<a name="25"><span class="lineNum">      25 </span><span class="lineCov">          6 :     boxBodyDef.position.Set(x / Config::PPM, y / Config::PPM);</span></a>
+<a name="26"><span class="lineNum">      26 </span><span class="lineCov">          6 :     boxBodyDef.type = b2_dynamicBody;</span></a>
 <a name="27"><span class="lineNum">      27 </span>            : </a>
 <a name="28"><span class="lineNum">      28 </span>            :     // Shape definition</a>
-<a name="29"><span class="lineNum">      29 </span><span class="lineCov">          4 :     b2PolygonShape boxShape;</span></a>
-<a name="30"><span class="lineNum">      30 </span><span class="lineCov">          4 :     boxShape.SetAsBox(width / 2 / Config::PPM, height / 2 / Config::PPM);</span></a>
+<a name="29"><span class="lineNum">      29 </span><span class="lineCov">          6 :     b2PolygonShape boxShape;</span></a>
+<a name="30"><span class="lineNum">      30 </span><span class="lineCov">          6 :     boxShape.SetAsBox(width / 2 / Config::PPM, height / 2 / Config::PPM);</span></a>
 <a name="31"><span class="lineNum">      31 </span>            : </a>
 <a name="32"><span class="lineNum">      32 </span>            :     // Fixture definition</a>
-<a name="33"><span class="lineNum">      33 </span><span class="lineCov">          4 :     b2FixtureDef fixtureDef;</span></a>
-<a name="34"><span class="lineNum">      34 </span><span class="lineCov">          4 :     fixtureDef.density = density;</span></a>
-<a name="35"><span class="lineNum">      35 </span><span class="lineCov">          4 :     fixtureDef.friction = friction;</span></a>
-<a name="36"><span class="lineNum">      36 </span><span class="lineCov">          4 :     fixtureDef.shape = &amp;boxShape;</span></a>
+<a name="33"><span class="lineNum">      33 </span><span class="lineCov">          6 :     b2FixtureDef fixtureDef;</span></a>
+<a name="34"><span class="lineNum">      34 </span><span class="lineCov">          6 :     fixtureDef.density = density;</span></a>
+<a name="35"><span class="lineNum">      35 </span><span class="lineCov">          6 :     fixtureDef.friction = friction;</span></a>
+<a name="36"><span class="lineNum">      36 </span><span class="lineCov">          6 :     fixtureDef.shape = &amp;boxShape;</span></a>
 <a name="37"><span class="lineNum">      37 </span>            : </a>
 <a name="38"><span class="lineNum">      38 </span>            :     // Now we have a body for our Box object</a>
-<a name="39"><span class="lineNum">      39 </span><span class="lineCov">          4 :     b2Body* boxBody = world-&gt;CreateBody(&amp;boxBodyDef);</span></a>
+<a name="39"><span class="lineNum">      39 </span><span class="lineCov">          6 :     b2Body* boxBody = world-&gt;CreateBody(&amp;boxBodyDef);</span></a>
 <a name="40"><span class="lineNum">      40 </span>            :     // Lastly, assign the fixture</a>
-<a name="41"><span class="lineNum">      41 </span><span class="lineCov">          4 :     boxBody-&gt;CreateFixture(&amp;fixtureDef);</span></a>
+<a name="41"><span class="lineNum">      41 </span><span class="lineCov">          6 :     boxBody-&gt;CreateFixture(&amp;fixtureDef);</span></a>
 <a name="42"><span class="lineNum">      42 </span>            : </a>
-<a name="43"><span class="lineNum">      43 </span><span class="lineCov">          4 :     return Box{width, height, color, boxBody};</span></a>
-<a name="44"><span class="lineNum">      44 </span><span class="lineCov">          4 : }</span></a>
+<a name="43"><span class="lineNum">      43 </span><span class="lineCov">          6 :     return Box{width, height, color, boxBody};</span></a>
+<a name="44"><span class="lineNum">      44 </span><span class="lineCov">          6 : }</span></a>
 <a name="45"><span class="lineNum">      45 </span>            : </a>
-<a name="46"><span class="lineNum">      46 </span><span class="lineCov">         12 : Polygon createGround(b2WorldPtr world, float x, float y, const std::vector&lt;b2Vec2&gt;&amp; vertices,</span></a>
+<a name="46"><span class="lineNum">      46 </span><span class="lineCov">         36 : Polygon createGround(const b2WorldPtr&amp; world, float x, float y, const std::vector&lt;b2Vec2&gt;&amp; vertices,</span></a>
 <a name="47"><span class="lineNum">      47 </span>            :                      sf::Color color) {</a>
 <a name="48"><span class="lineNum">      48 </span>            :     // Argument validation</a>
-<a name="49"><span class="lineNum">      49 </span><span class="lineCov">         12 :     if (vertices.size() &lt; 3) {</span></a>
-<a name="50"><span class="lineNum">      50 </span><span class="lineCov">          4 :         throw std::invalid_argument(&quot;Invalid number of vertices&quot;);</span></a>
+<a name="49"><span class="lineNum">      49 </span><span class="lineCov">         36 :     if (vertices.size() &lt; 3) {</span></a>
+<a name="50"><span class="lineNum">      50 </span><span class="lineCov">          6 :         throw std::invalid_argument(&quot;Invalid number of vertices&quot;);</span></a>
 <a name="51"><span class="lineNum">      51 </span>            :     }</a>
 <a name="52"><span class="lineNum">      52 </span>            : </a>
-<a name="53"><span class="lineNum">      53 </span><span class="lineCov">          8 :     b2BodyDef groundBodyDef;</span></a>
-<a name="54"><span class="lineNum">      54 </span><span class="lineCov">          8 :     groundBodyDef.position.Set(x / Config::PPM, y / Config::PPM);</span></a>
+<a name="53"><span class="lineNum">      53 </span><span class="lineCov">         30 :     b2BodyDef groundBodyDef;</span></a>
+<a name="54"><span class="lineNum">      54 </span><span class="lineCov">         30 :     groundBodyDef.position.Set(x / Config::PPM, y / Config::PPM);</span></a>
 <a name="55"><span class="lineNum">      55 </span>            : </a>
-<a name="56"><span class="lineNum">      56 </span><span class="lineCov">          8 :     b2PolygonShape groundPolygon;</span></a>
-<a name="57"><span class="lineNum">      57 </span><span class="lineCov">          8 :     groundPolygon.Set(vertices.data(), static_cast&lt;int32&gt;(vertices.size()));</span></a>
+<a name="56"><span class="lineNum">      56 </span><span class="lineCov">         30 :     b2PolygonShape groundPolygon;</span></a>
+<a name="57"><span class="lineNum">      57 </span><span class="lineCov">         30 :     groundPolygon.Set(vertices.data(), static_cast&lt;int32&gt;(vertices.size()));</span></a>
 <a name="58"><span class="lineNum">      58 </span>            : </a>
-<a name="59"><span class="lineNum">      59 </span><span class="lineCov">          8 :     b2Body* groundBody = world-&gt;CreateBody(&amp;groundBodyDef);</span></a>
-<a name="60"><span class="lineNum">      60 </span><span class="lineCov">          8 :     groundBody-&gt;CreateFixture(&amp;groundPolygon, 0.0f);</span></a>
+<a name="59"><span class="lineNum">      59 </span><span class="lineCov">         30 :     b2Body* groundBody = world-&gt;CreateBody(&amp;groundBodyDef);</span></a>
+<a name="60"><span class="lineNum">      60 </span><span class="lineCov">         30 :     groundBody-&gt;CreateFixture(&amp;groundPolygon, 0.0f);</span></a>
 <a name="61"><span class="lineNum">      61 </span>            : </a>
-<a name="62"><span class="lineNum">      62 </span><span class="lineCov">         16 :     return Polygon{vertices, color, groundBody};</span></a>
-<a name="63"><span class="lineNum">      63 </span><span class="lineCov">          8 : }</span></a>
+<a name="62"><span class="lineNum">      62 </span><span class="lineCov">         60 :     return Polygon{vertices, color, groundBody};</span></a>
+<a name="63"><span class="lineNum">      63 </span><span class="lineCov">         30 : }</span></a>
 <a name="64"><span class="lineNum">      64 </span>            : </a>
-<a name="65"><span class="lineNum">      65 </span><span class="lineCov">         24 : Circle createCircle(b2WorldPtr world, float x, float y, float radius, float density, float friction,</span></a>
-<a name="66"><span class="lineNum">      66 </span>            :                     sf::Color color) {</a>
+<a name="65"><span class="lineNum">      65 </span><span class="lineCov">         96 : Circle createCircle(const b2WorldPtr&amp; world, float x, float y, float radius, float density,</span></a>
+<a name="66"><span class="lineNum">      66 </span>            :                     float friction, sf::Color color) {</a>
 <a name="67"><span class="lineNum">      67 </span>            :     // Argument validation</a>
-<a name="68"><span class="lineNum">      68 </span><span class="lineCov">         24 :     if (radius &lt;= 0.0f) {</span></a>
-<a name="69"><span class="lineNum">      69 </span><span class="lineCov">          4 :         throw std::invalid_argument(&quot;Invalid width parameter&quot;);</span></a>
-<a name="70"><span class="lineNum">      70 </span><span class="lineCov">         20 :     } else if (density &lt;= 0.0f) {</span></a>
-<a name="71"><span class="lineNum">      71 </span><span class="lineCov">          4 :         throw std::invalid_argument(&quot;Invalid density parameter&quot;);</span></a>
-<a name="72"><span class="lineNum">      72 </span><span class="lineCov">         16 :     } else if (friction &lt;= 0.0f) {</span></a>
-<a name="73"><span class="lineNum">      73 </span><span class="lineCov">          4 :         throw std::invalid_argument(&quot;Invalid friction parameter&quot;);</span></a>
+<a name="68"><span class="lineNum">      68 </span><span class="lineCov">         96 :     if (radius &lt;= 0.0f) {</span></a>
+<a name="69"><span class="lineNum">      69 </span><span class="lineCov">          6 :         throw std::invalid_argument(&quot;Invalid width parameter&quot;);</span></a>
+<a name="70"><span class="lineNum">      70 </span><span class="lineCov">         90 :     } else if (density &lt;= 0.0f) {</span></a>
+<a name="71"><span class="lineNum">      71 </span><span class="lineCov">          6 :         throw std::invalid_argument(&quot;Invalid density parameter&quot;);</span></a>
+<a name="72"><span class="lineNum">      72 </span><span class="lineCov">         84 :     } else if (friction &lt;= 0.0f) {</span></a>
+<a name="73"><span class="lineNum">      73 </span><span class="lineCov">          6 :         throw std::invalid_argument(&quot;Invalid friction parameter&quot;);</span></a>
 <a name="74"><span class="lineNum">      74 </span>            :     }</a>
 <a name="75"><span class="lineNum">      75 </span>            : </a>
-<a name="76"><span class="lineNum">      76 </span><span class="lineCov">         12 :     b2BodyDef boxBodyDef;</span></a>
-<a name="77"><span class="lineNum">      77 </span><span class="lineCov">         12 :     boxBodyDef.position.Set(x / Config::PPM, y / Config::PPM);</span></a>
-<a name="78"><span class="lineNum">      78 </span><span class="lineCov">         12 :     boxBodyDef.type = b2_dynamicBody;</span></a>
+<a name="76"><span class="lineNum">      76 </span><span class="lineCov">         78 :     b2BodyDef boxBodyDef;</span></a>
+<a name="77"><span class="lineNum">      77 </span><span class="lineCov">         78 :     boxBodyDef.position.Set(x / Config::PPM, y / Config::PPM);</span></a>
+<a name="78"><span class="lineNum">      78 </span><span class="lineCov">         78 :     boxBodyDef.type = b2_dynamicBody;</span></a>
 <a name="79"><span class="lineNum">      79 </span>            : </a>
-<a name="80"><span class="lineNum">      80 </span><span class="lineCov">         12 :     b2CircleShape circleShape;</span></a>
-<a name="81"><span class="lineNum">      81 </span><span class="lineCov">         12 :     circleShape.m_radius = radius / Config::PPM;</span></a>
+<a name="80"><span class="lineNum">      80 </span><span class="lineCov">         78 :     b2CircleShape circleShape;</span></a>
+<a name="81"><span class="lineNum">      81 </span><span class="lineCov">         78 :     circleShape.m_radius = radius / Config::PPM;</span></a>
 <a name="82"><span class="lineNum">      82 </span>            : </a>
-<a name="83"><span class="lineNum">      83 </span><span class="lineCov">         12 :     b2FixtureDef fixtureDef;</span></a>
-<a name="84"><span class="lineNum">      84 </span><span class="lineCov">         12 :     fixtureDef.density = density;</span></a>
-<a name="85"><span class="lineNum">      85 </span><span class="lineCov">         12 :     fixtureDef.friction = friction;</span></a>
-<a name="86"><span class="lineNum">      86 </span><span class="lineCov">         12 :     fixtureDef.shape = &amp;circleShape;</span></a>
+<a name="83"><span class="lineNum">      83 </span><span class="lineCov">         78 :     b2FixtureDef fixtureDef;</span></a>
+<a name="84"><span class="lineNum">      84 </span><span class="lineCov">         78 :     fixtureDef.density = density;</span></a>
+<a name="85"><span class="lineNum">      85 </span><span class="lineCov">         78 :     fixtureDef.friction = friction;</span></a>
+<a name="86"><span class="lineNum">      86 </span><span class="lineCov">         78 :     fixtureDef.shape = &amp;circleShape;</span></a>
 <a name="87"><span class="lineNum">      87 </span>            : </a>
-<a name="88"><span class="lineNum">      88 </span><span class="lineCov">         12 :     b2Body* boxBody = world-&gt;CreateBody(&amp;boxBodyDef);</span></a>
+<a name="88"><span class="lineNum">      88 </span><span class="lineCov">         78 :     b2Body* boxBody = world-&gt;CreateBody(&amp;boxBodyDef);</span></a>
 <a name="89"><span class="lineNum">      89 </span>            : </a>
-<a name="90"><span class="lineNum">      90 </span><span class="lineCov">         12 :     boxBody-&gt;CreateFixture(&amp;fixtureDef);</span></a>
+<a name="90"><span class="lineNum">      90 </span><span class="lineCov">         78 :     boxBody-&gt;CreateFixture(&amp;fixtureDef);</span></a>
 <a name="91"><span class="lineNum">      91 </span>            : </a>
-<a name="92"><span class="lineNum">      92 </span><span class="lineCov">         12 :     return Circle{radius, color, boxBody};</span></a>
-<a name="93"><span class="lineNum">      93 </span><span class="lineCov">         12 : }</span></a>
+<a name="92"><span class="lineNum">      92 </span><span class="lineCov">         78 :     return Circle{radius, color, boxBody};</span></a>
+<a name="93"><span class="lineNum">      93 </span><span class="lineCov">         78 : }</span></a>
 <a name="94"><span class="lineNum">      94 </span>            : </a>
-<a name="95"><span class="lineNum">      95 </span><span class="lineCov">         24 : Polygon createPolygon(b2WorldPtr world, float x, float y, std::vector&lt;b2Vec2&gt; vertices,</span></a>
+<a name="95"><span class="lineNum">      95 </span><span class="lineCov">         66 : Polygon createPolygon(const b2WorldPtr&amp; world, float x, float y, std::vector&lt;b2Vec2&gt; vertices,</span></a>
 <a name="96"><span class="lineNum">      96 </span>            :                       float density, float friction, sf::Color color) {</a>
 <a name="97"><span class="lineNum">      97 </span>            :     // Argument validation</a>
-<a name="98"><span class="lineNum">      98 </span><span class="lineCov">         24 :     if (vertices.size() &lt; 3 || vertices.size() &gt; CarConfig::CAR_VERTICES) {</span></a>
-<a name="99"><span class="lineNum">      99 </span><span class="lineCov">          8 :         throw std::invalid_argument(&quot;Invalid vertices size&quot;);</span></a>
-<a name="100"><span class="lineNum">     100 </span><span class="lineCov">         16 :     } else if (density &lt;= 0.0f) {</span></a>
-<a name="101"><span class="lineNum">     101 </span><span class="lineCov">          4 :         throw std::invalid_argument(&quot;Invalid density parameter&quot;);</span></a>
-<a name="102"><span class="lineNum">     102 </span><span class="lineCov">         12 :     } else if (friction &lt;= 0.0f) {</span></a>
-<a name="103"><span class="lineNum">     103 </span><span class="lineCov">          4 :         throw std::invalid_argument(&quot;Invalid friction parameter&quot;);</span></a>
+<a name="98"><span class="lineNum">      98 </span><span class="lineCov">         66 :     if (vertices.size() &lt; 3 || vertices.size() &gt; CarConfig::CAR_VERTICES) {</span></a>
+<a name="99"><span class="lineNum">      99 </span><span class="lineCov">         12 :         throw std::invalid_argument(&quot;Invalid vertices size&quot;);</span></a>
+<a name="100"><span class="lineNum">     100 </span><span class="lineCov">         54 :     } else if (density &lt;= 0.0f) {</span></a>
+<a name="101"><span class="lineNum">     101 </span><span class="lineCov">          6 :         throw std::invalid_argument(&quot;Invalid density parameter&quot;);</span></a>
+<a name="102"><span class="lineNum">     102 </span><span class="lineCov">         48 :     } else if (friction &lt;= 0.0f) {</span></a>
+<a name="103"><span class="lineNum">     103 </span><span class="lineCov">          6 :         throw std::invalid_argument(&quot;Invalid friction parameter&quot;);</span></a>
 <a name="104"><span class="lineNum">     104 </span>            :     }</a>
-<a name="105"><span class="lineNum">     105 </span><span class="lineCov">          8 :     b2BodyDef boxBodyDef;</span></a>
-<a name="106"><span class="lineNum">     106 </span><span class="lineCov">          8 :     boxBodyDef.position.Set(x / Config::PPM, y / Config::PPM);</span></a>
-<a name="107"><span class="lineNum">     107 </span><span class="lineCov">          8 :     boxBodyDef.type = b2_dynamicBody;</span></a>
+<a name="105"><span class="lineNum">     105 </span><span class="lineCov">         42 :     b2BodyDef boxBodyDef;</span></a>
+<a name="106"><span class="lineNum">     106 </span><span class="lineCov">         42 :     boxBodyDef.position.Set(x / Config::PPM, y / Config::PPM);</span></a>
+<a name="107"><span class="lineNum">     107 </span><span class="lineCov">         42 :     boxBodyDef.type = b2_dynamicBody;</span></a>
 <a name="108"><span class="lineNum">     108 </span>            : </a>
-<a name="109"><span class="lineNum">     109 </span><span class="lineCov">          8 :     b2PolygonShape boxShape;</span></a>
-<a name="110"><span class="lineNum">     110 </span><span class="lineCov">          8 :     boxShape.Set(vertices.data(), vertices.size());</span></a>
+<a name="109"><span class="lineNum">     109 </span><span class="lineCov">         42 :     b2PolygonShape boxShape;</span></a>
+<a name="110"><span class="lineNum">     110 </span><span class="lineCov">         42 :     boxShape.Set(vertices.data(), vertices.size());</span></a>
 <a name="111"><span class="lineNum">     111 </span>            : </a>
-<a name="112"><span class="lineNum">     112 </span><span class="lineCov">          8 :     b2FixtureDef fixtureDef;</span></a>
-<a name="113"><span class="lineNum">     113 </span><span class="lineCov">          8 :     fixtureDef.density = density;</span></a>
-<a name="114"><span class="lineNum">     114 </span><span class="lineCov">          8 :     fixtureDef.friction = friction;</span></a>
-<a name="115"><span class="lineNum">     115 </span><span class="lineCov">          8 :     fixtureDef.shape = &amp;boxShape;</span></a>
+<a name="112"><span class="lineNum">     112 </span><span class="lineCov">         42 :     b2FixtureDef fixtureDef;</span></a>
+<a name="113"><span class="lineNum">     113 </span><span class="lineCov">         42 :     fixtureDef.density = density;</span></a>
+<a name="114"><span class="lineNum">     114 </span><span class="lineCov">         42 :     fixtureDef.friction = friction;</span></a>
+<a name="115"><span class="lineNum">     115 </span><span class="lineCov">         42 :     fixtureDef.shape = &amp;boxShape;</span></a>
 <a name="116"><span class="lineNum">     116 </span>            : </a>
-<a name="117"><span class="lineNum">     117 </span><span class="lineCov">          8 :     b2Body* boxBody = world-&gt;CreateBody(&amp;boxBodyDef);</span></a>
+<a name="117"><span class="lineNum">     117 </span><span class="lineCov">         42 :     b2Body* boxBody = world-&gt;CreateBody(&amp;boxBodyDef);</span></a>
 <a name="118"><span class="lineNum">     118 </span>            : </a>
-<a name="119"><span class="lineNum">     119 </span><span class="lineCov">          8 :     boxBody-&gt;CreateFixture(&amp;fixtureDef);</span></a>
+<a name="119"><span class="lineNum">     119 </span><span class="lineCov">         42 :     boxBody-&gt;CreateFixture(&amp;fixtureDef);</span></a>
 <a name="120"><span class="lineNum">     120 </span>            : </a>
 <a name="121"><span class="lineNum">     121 </span>            :     // create a Polygon object with a shared pointer to the b2Body</a>
-<a name="122"><span class="lineNum">     122 </span><span class="lineCov">         16 :     return Polygon{vertices, color, boxBody};</span></a>
-<a name="123"><span class="lineNum">     123 </span><span class="lineCov">          8 : }</span></a>
+<a name="122"><span class="lineNum">     122 </span><span class="lineCov">         84 :     return Polygon{vertices, color, boxBody};</span></a>
+<a name="123"><span class="lineNum">     123 </span><span class="lineCov">         42 : }</span></a>
 </pre>
       </td>
     </tr>
