@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
 
-find_library(box2d REQIRED)
-
 project(EvoRacer
     LANGUAGES CXX
     VERSION 0.1.0
@@ -13,6 +11,7 @@ set(CMAKE_CXX_COMPILER ${CPP_COMPILER})
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/build")
 
 add_compile_definitions(ImDrawIdx=unsigned) # Fix for implot (unsigned = unsigned int)
 

@@ -23,7 +23,7 @@ void EvolutionaryAlgorithm::initializePopulation() {
     // add variation and mean
     for (int i = 0; i < populationSize_; ++i) {
         Chromosome chrom;
-        // MKTODO czange the 8
+        // TODO: change the 8
         for (int p = 0; p < 8; ++p) {
             float length = dist(gen) * EvolutionaryAlgorithmConfig::INITIAL_BODY_LENGTH_VARIANCE +
                            EvolutionaryAlgorithmConfig::INITIAL_BODY_LENGTH_MEAN;

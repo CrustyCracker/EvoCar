@@ -24,7 +24,7 @@
 typedef std::shared_ptr<b2World> b2WorldPtr;
 
 // initialize the world as a shared pointer
-b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
+b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITATIONAL_ACCELERATION));
 
 int main() {
     sf::ContextSettings settings;
@@ -47,12 +47,11 @@ int main() {
     std::vector<Car> cars;
 
     // Generate ground
-    std::vector<b2Vec2> groundVertecies = {b2Vec2(0, 0),
-                                           b2Vec2(MapGenConfig::GROUND_PART_LENGTH, 0),
-                                           b2Vec2(0, -MapGenConfig::GROUND_LEG_LENGTH)};
+    std::vector<b2Vec2> groundVertices = {b2Vec2(0, 0), b2Vec2(MapGenConfig::GROUND_PART_LENGTH, 0),
+                                          b2Vec2(0, -MapGenConfig::GROUND_LEG_LENGTH)};
     Polygon ground =
         createGround(world, MapGenConfig::GROUND_STARTING_X, MapGenConfig::GROUND_STARTING_Y,
-                     groundVertecies, sf::Color(18, 36, 35));
+                     groundVertices, sf::Color(18, 36, 35));
     groundVector.push_back(ground);
 
     EvolutionaryAlgorithm ea(EvolutionaryAlgorithmConfig::POPULATION_SIZE, Config::SAVE_TO_FILE);

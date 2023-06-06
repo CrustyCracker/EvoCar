@@ -12,7 +12,7 @@
 void renderBox(sf::RenderWindow &w, Box &box) {
     sf::RectangleShape rect;
 
-    // For the correct Y coordinate of our drawable rect, we must substract from
+    // For the correct Y coordinate of our drawable rect, we must subtract from
     // Config::WINDOW_HEIGHT because SFML uses OpenGL coordinate system where X is
     // right, Y is down while Box2D uses traditional X is right, Y is up
     rect.setPosition(box.body->GetPosition().x * Config::PPM,
@@ -106,7 +106,6 @@ void renderPolygonDebug(sf::RenderWindow &w, Polygon *polygon) {
 
     // Draw the polygon's vertices
     for (int i = 0; i < polygon->vertices.size(); ++i) {
-        sf::CircleShape circ;
         circ.setRadius(2);
         circ.setOrigin(2, 2);
         circ.setPosition(polygon->body->GetWorldPoint(polygon->vertices[i]).x * Config::PPM,
@@ -135,16 +134,15 @@ void render(sf::RenderWindow &w, std::vector<sf::Sprite> BGs, std::vector<Polygo
         w.draw(BG);
     }
 
-
     int groundBeginIndex = 0;
     int centerIndex = getIndexOfGroundClosestToLocation(groundVector, getFurthestCarX(cars));
     int groundEndIndex = groundVector.size();
 
-    if (centerIndex - Config::GROUND_PARTS_REDNERED / 2 > 0) {
-        groundBeginIndex = centerIndex - Config::GROUND_PARTS_REDNERED / 2;
+    if (centerIndex - Config::GROUND_PARTS_RENDERED / 2 > 0) {
+        groundBeginIndex = centerIndex - Config::GROUND_PARTS_RENDERED / 2;
     }
-    if (centerIndex + Config::GROUND_PARTS_REDNERED / 2 < groundEndIndex) {
-        groundEndIndex = centerIndex + Config::GROUND_PARTS_REDNERED / 2;
+    if (centerIndex + Config::GROUND_PARTS_RENDERED / 2 < groundEndIndex) {
+        groundEndIndex = centerIndex + Config::GROUND_PARTS_RENDERED / 2;
     }
     std::vector<Polygon> groundSlice(groundVector.begin() + groundBeginIndex,
                                      groundVector.begin() + groundEndIndex);

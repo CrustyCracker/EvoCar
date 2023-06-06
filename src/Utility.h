@@ -10,7 +10,7 @@
 #define UTILITY_H
 
 #include <filesystem>
-#include <math.h>
+#include <cmath>
 #include <random>
 #include <vector>
 

@@ -10,7 +10,7 @@
 #include "../src/Shape.h"
 
 TEST(CreateBoxTest, BasicTest) {
-    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
+    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITATIONAL_ACCELERATION));
     float x = 0.0f, y = 0.0f, width = 10.0f, height = 20.0f, density = 1.0f, friction = 0.5f;
     sf::Color color = sf::Color::Red;
 
@@ -27,7 +27,7 @@ TEST(CreateBoxTest, BasicTest) {
 
 TEST(CreateBoxTest, InvalidWidthTest) {
     // Test with invalid input (negative width and height)
-    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
+    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITATIONAL_ACCELERATION));
     float x = 0.0f, y = 0.0f, width = -10.0f, height = 10.0f, density = 1.0f, friction = 0.5f;
     sf::Color color = sf::Color::Red;
 
@@ -37,7 +37,7 @@ TEST(CreateBoxTest, InvalidWidthTest) {
 
 TEST(CreateBoxTest, InvalidHeightTest) {
     // Test with invalid input (negative width and height)
-    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
+    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITATIONAL_ACCELERATION));
     float x = 0.0f, y = 0.0f, width = 10.0f, height = 0.0f, density = 1.0f, friction = 0.5f;
     sf::Color color = sf::Color::Red;
 
@@ -47,7 +47,7 @@ TEST(CreateBoxTest, InvalidHeightTest) {
 
 TEST(CreateBoxTest, InvalidDensityTest) {
     // Test with invalid input (negative width and height)
-    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
+    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITATIONAL_ACCELERATION));
     float x = 1.0f, y = 1.0f, width = 10.0f, height = 1.0f, density = -1.0f, friction = 0.5f;
     sf::Color color = sf::Color::Red;
 
@@ -57,7 +57,7 @@ TEST(CreateBoxTest, InvalidDensityTest) {
 
 TEST(CreateBoxTest, InvalidFrictionTest) {
     // Test with invalid input (negative width and height)
-    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
+    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITATIONAL_ACCELERATION));
     float x = 1.0f, y = 1.0f, width = 10.0f, height = 5.0f, density = 2.0f, friction = 0.0f;
     sf::Color color = sf::Color::Red;
 
@@ -66,7 +66,7 @@ TEST(CreateBoxTest, InvalidFrictionTest) {
 }
 
 TEST(CreateGroundTest, BasicTest) {
-    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
+    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITATIONAL_ACCELERATION));
     float x = 42.0f, y = 42.0f;
     std::vector<b2Vec2> vertices = {b2Vec2(-25.0f, -5.0f), b2Vec2(25.0f, -5.0f),
                                     b2Vec2(25.0f, 5.0f), b2Vec2(-25.0f, 5.0f)};
@@ -82,7 +82,7 @@ TEST(CreateGroundTest, BasicTest) {
 }
 
 TEST(CreateGroundTest, InvalidVerticesTest) {
-    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
+    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITATIONAL_ACCELERATION));
     float x = 42.0f, y = 42.0f;
     std::vector<b2Vec2> invalidVertices;  // Empty vertices
 
@@ -92,7 +92,7 @@ TEST(CreateGroundTest, InvalidVerticesTest) {
 }
 
 TEST(CreateCircleTest, BasicTest) {
-    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
+    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITATIONAL_ACCELERATION));
     float x = 10.0f, y = 20.0f, radius = 2.0f, density = 1.0f, friction = 0.5f;
     sf::Color color(255, 255, 0);
 
@@ -107,7 +107,7 @@ TEST(CreateCircleTest, BasicTest) {
 }
 
 TEST(CreateCircleTest, InvalidRadiusTest) {
-    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
+    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITATIONAL_ACCELERATION));
     float x = 10.0f, y = 20.0f, radius = 0.0f, density = 1.0f, friction = 0.5f;
     sf::Color color(255, 255, 0);
 
@@ -116,7 +116,7 @@ TEST(CreateCircleTest, InvalidRadiusTest) {
 }
 
 TEST(CreateCircleTest, InvalidDensityTest) {
-    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
+    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITATIONAL_ACCELERATION));
     float x = 10.0f, y = 20.0f, radius = 2.0f, density = -1.0f, friction = 0.5f;
     sf::Color color(255, 255, 0);
 
@@ -125,7 +125,7 @@ TEST(CreateCircleTest, InvalidDensityTest) {
 }
 
 TEST(CreateCircleTest, InvalidFrictionTest) {
-    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
+    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITATIONAL_ACCELERATION));
     float x = 10.0f, y = 20.0f, radius = 2.0f, density = 1.0f, friction = -0.5f;
     sf::Color color(255, 255, 0);
 
@@ -134,7 +134,7 @@ TEST(CreateCircleTest, InvalidFrictionTest) {
 }
 
 TEST(CreatePolygonTest, BasicTest) {
-    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
+    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITATIONAL_ACCELERATION));
     float x = 0.0f, y = 0.0f, density = 1.0f, friction = 0.5f;
     std::vector<b2Vec2> vertices = {b2Vec2(-1.0f, -1.0f), b2Vec2(1.0f, -1.0f), b2Vec2(0.0f, 1.0f)};
     sf::Color color = sf::Color::Red;
@@ -156,7 +156,7 @@ TEST(CreatePolygonTest, BasicTest) {
 }
 
 TEST(CreatePolygonTest, EmptyVerticesTest) {
-    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
+    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITATIONAL_ACCELERATION));
     float x = 0.0f, y = 0.0f, density = 1.0f, friction = 0.5f;
     std::vector<b2Vec2> vertices = {};
     sf::Color color = sf::Color::Red;
@@ -165,7 +165,7 @@ TEST(CreatePolygonTest, EmptyVerticesTest) {
 }
 
 TEST(CreatePolygonTest, TooMuchVerticesTest) {
-    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
+    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITATIONAL_ACCELERATION));
     float x = 0.0f, y = 0.0f, density = 1.0f, friction = 0.5f;
     std::vector<b2Vec2> vertices = {b2Vec2(-1.0f, -1.0f), b2Vec2(1.0f, -1.0f), b2Vec2(0.0f, 1.0f),
                                     b2Vec2(-1.0f, -1.0f), b2Vec2(1.0f, -1.0f), b2Vec2(0.0f, 1.0f),
@@ -176,7 +176,7 @@ TEST(CreatePolygonTest, TooMuchVerticesTest) {
 }
 
 TEST(CreatePolygonTest, InvalidDensityTest) {
-    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
+    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITATIONAL_ACCELERATION));
     float x = 0.0f, y = 0.0f, density = 0.0f, friction = 0.5f;
     std::vector<b2Vec2> vertices = {b2Vec2(-1.0f, -1.0f), b2Vec2(1.0f, -1.0f), b2Vec2(0.0f, 1.0f),
                                     b2Vec2(-1.0f, -1.0f), b2Vec2(1.0f, -1.0f), b2Vec2(0.0f, 1.0f),
@@ -187,7 +187,7 @@ TEST(CreatePolygonTest, InvalidDensityTest) {
 }
 
 TEST(CreatePolygonTest, InvalidFrictionTest) {
-    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITIATIONAL_ACCELERATION));
+    b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITATIONAL_ACCELERATION));
     float x = 0.0f, y = 0.0f, density = 1.0f, friction = -0.5f;
     std::vector<b2Vec2> vertices = {b2Vec2(-1.0f, -1.0f), b2Vec2(1.0f, -1.0f), b2Vec2(0.0f, 1.0f),
                                     b2Vec2(-1.0f, -1.0f), b2Vec2(1.0f, -1.0f), b2Vec2(0.0f, 1.0f),

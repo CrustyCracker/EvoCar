@@ -43,7 +43,7 @@ Car::Car(b2WorldPtr world, float x, float y, Chromosome chromosome, sf::Color bo
     jointDef2.collideConnected = false;
     world->CreateJoint(&jointDef2);
 
-    // Make cars pass through eachother
+    // Make cars pass through each-other
     // by setting collision filtering
     b2Filter filter;
     filter.categoryBits = Config::CATEGORY_BITS;

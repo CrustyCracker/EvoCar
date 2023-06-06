@@ -32,7 +32,7 @@ class Car {
     bool isAlive_ = true;
 
    public:
-    Car(b2WorldPtr world, float x, float y, Chromosome chormosome, sf::Color bodyColor,
+    Car(b2WorldPtr world, float x, float y, Chromosome chromosome, sf::Color bodyColor,
         sf::Color wheelColor);
 
     Polygon* getBody();
