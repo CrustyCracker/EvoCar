@@ -14,6 +14,7 @@
 #include <random>
 #include <vector>
 
+#include "box2d/box2d.h"
 #include "imgui.h"
 #include "SFML/Graphics.hpp"
 #include "EvolutionaryAlgorithm.h"
@@ -30,7 +31,6 @@ typedef std::shared_ptr<b2World> b2WorldPtr;
 /**
  * @brief Simplified air drag.
  * @param car Car to apply air resistance to.
- * @return void
  */
 void applyAirResistance(Car car);
 
@@ -42,7 +42,7 @@ Car generateCar(b2WorldPtr world, Chromosome chromosome);
 
 ImVec4 SFMLColorToImVec4(sf::Color color);
 
-float getFurthestCarX(const std::vector<Car>& cars);
+b2Vec2 getFurthestCarPos(const std::vector<Car>& cars);
 
 // TODO: Rename this, I beg you
 int getIndexOfGroundClosestToLocation(std::vector<Polygon> ground, float x);

@@ -29,7 +29,7 @@ void applyAirResistance(Car car) {
 void generateGround(b2WorldPtr world, std::vector<Polygon>* groundVector, std::vector<Car> cars) {
     Polygon lastGround = groundVector->back();
     if (lastGround.vertices[1].x * Config::PPM <
-        getFurthestCarX(std::move(cars)) * Config::PPM + MapGenConfig::GENERATE_DISTANCE) {
+        getFurthestCarPos(std::move(cars)).x * Config::PPM + MapGenConfig::GENERATE_DISTANCE) {
         float degree = getNextGroundPartDegree();
         float angle_in_radians = degree * (M_PI / 180.0f);
 
@@ -84,15 +84,18 @@ ImVec4 SFMLColorToImVec4(sf::Color color) {
     return {color.r / 255.0f, color.g / 255.0f, color.b / 255.0f, color.a / 255.0f};
 }
 
-float getFurthestCarX(const std::vector<Car>& cars) {
+b2Vec2 getFurthestCarPos(const std::vector<Car>& cars) {
     float furthestCarX = 0;
+    float furthestCarY = 0;
     for (auto car : cars) {
         float currentCarX = car.getBody()->body->GetPosition().x;
+        float currentCarY = car.getBody()->body->GetPosition().y;
         if (currentCarX > furthestCarX) {
             furthestCarX = currentCarX;
+            furthestCarY = currentCarY;
         }
     }
-    return furthestCarX;
+    return b2Vec2(furthestCarX, furthestCarY);
 }
 
 int getIndexOfGroundClosestToLocation(std::vector<Polygon> ground, float x) {
@@ -147,9 +150,9 @@ sf::Sprite loadBGSprite(sf::Texture* texture, std::vector<Car> cars) {
     sprite.setScale(sf::Vector2f(Config::WINDOW_WIDTH / sprite.getLocalBounds().width,
                                  Config::WINDOW_HEIGHT / sprite.getLocalBounds().height));
     sprite.setTextureRect(sf::IntRect(0, 0, 256 * Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT));
-    sprite.setPosition(
-        sf::Vector2f(getFurthestCarX(std::move(cars)) * Config::PPM, 0.5 * Config::WINDOW_HEIGHT) -
-        sf::Vector2f(Config::WINDOW_WIDTH / 2, Config::WINDOW_HEIGHT / 2));
+    sprite.setPosition(sf::Vector2f(getFurthestCarPos(std::move(cars)).x * Config::PPM,
+                                    0.5 * Config::WINDOW_HEIGHT) -
+                       sf::Vector2f(Config::WINDOW_WIDTH / 2, Config::WINDOW_HEIGHT / 2));
     return sprite;
 }
 
