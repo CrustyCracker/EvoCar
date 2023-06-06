@@ -45,7 +45,7 @@ class EvolutionaryAlgorithm {
    public:
     /**
      * @brief Construct a new Evolutionary Algorithm:: Evolutionary Algorithm object
-     * 
+     *
      * @param populationSize  The size of the population
      * @param saveToFile    Whether to save the population to a file
      */

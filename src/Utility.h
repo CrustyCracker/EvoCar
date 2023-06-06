@@ -44,8 +44,8 @@ void generateGround(const b2WorldPtr& world, std::vector<Polygon>* groundVector,
                     const std::vector<Car>& cars);
 
 /**
- * @brief Get the angle of the next ground part. 
- * @return float 
+ * @brief Get the angle of the next ground part.
+ * @return float
  */
 float getNextGroundPartDegree();
 
@@ -88,40 +88,40 @@ void removeCars(const b2WorldPtr& world, std::vector<Car>* cars);
 
 /**
  * @brief Get the Root Dir object
- * 
+ *
  * @return std::filesystem::path to the root directory
  */
 std::filesystem::path getRootDir();
 
 /**
  * @brief Sets the icon of the window.
- * 
- * @param window 
+ *
+ * @param window
  */
 void setIcon(sf::RenderWindow& window);
 
 /**
  * @brief Loads the textures for the background and returns them in a vector.
- * 
- * @return std::vector<sf::Texture*> 
+ *
+ * @return std::vector<sf::Texture*>
  */
 std::vector<sf::Texture*> loadBGTextures();
 
 /**
  * @brief Loads the sprite for the background.
- * 
- * @param texture 
- * @param cars 
- * @return sf::Sprite 
+ *
+ * @param texture
+ * @param cars
+ * @return sf::Sprite
  */
 sf::Sprite loadBGSprite(sf::Texture* texture, const std::vector<Car>& cars);
 
 /**
  * @brief Loads the sprites for the background.
- * 
- * @param textures 
- * @param cars 
- * @return std::vector<sf::Sprite> 
+ *
+ * @param textures
+ * @param cars
+ * @return std::vector<sf::Sprite>
  */
 std::vector<sf::Sprite> loadBGSprites(std::vector<sf::Texture*> textures,
                                       const std::vector<Car>& cars);

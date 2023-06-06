@@ -65,7 +65,7 @@ Box createBox(const b2WorldPtr& world, float x, float y, float width, float heig
 
 /**
  * @brief Create a Ground object
- * 
+ *
  * @param world 2dWorld.
  * @param x X coordinate of the polygon.
  * @param y Y coordinate of the polygon.
@@ -78,7 +78,7 @@ Polygon createGround(const b2WorldPtr& world, float x, float y, const std::vecto
 
 /**
  * @brief Create a Circle object
- * 
+ *
  * @param world 2dWorld
  * @param x X coordinate of the circle.
  * @param y Y coordinate of the circle.
@@ -86,14 +86,14 @@ Polygon createGround(const b2WorldPtr& world, float x, float y, const std::vecto
  * @param density density of the circle.
  * @param friction friction of the circle.
  * @param color color of the circle.
- * @return Circle 
+ * @return Circle
  */
 Circle createCircle(const b2WorldPtr& world, float x, float y, float radius, float density,
                     float friction, sf::Color color);
 
 /**
  * @brief Create a Polygon object
- * 
+ *
  * @param world 2dWorld.
  * @param x X coordinate of the polygon.
  * @param y Y coordinate of the polygon.
@@ -101,7 +101,7 @@ Circle createCircle(const b2WorldPtr& world, float x, float y, float radius, flo
  * @param density density of the polygon.
  * @param friction friction of the polygon.
  * @param color color of the polygon.
- * @return Polygon 
+ * @return Polygon
  */
 Polygon createPolygon(const b2WorldPtr& world, float x, float y, std::vector<b2Vec2> vertices,
                       float density, float friction, sf::Color color);
