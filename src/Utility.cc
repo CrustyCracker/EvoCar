@@ -97,7 +97,7 @@ b2Vec2 getFurthestCarPos(const std::vector<Car>& cars) {
     return {furthestCarX, furthestCarY};
 }
 
-int getIndexOfGroundClosestToLocation(std::vector<Polygon> ground, float x) {
+int getIdxOfGrndClstToLoc(std::vector<Polygon> ground, float x) {
     int index = 0;
     for (int i = 0; i < ground.size(); ++i) {
         if (ground[i].vertices[0].x - x > 0) {

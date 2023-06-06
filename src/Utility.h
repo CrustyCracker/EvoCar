@@ -41,13 +41,39 @@ float getNextGroundPartDegree();
 
 Car generateCar(const b2WorldPtr& world, const Chromosome& chromosome);
 
+/**
+ * @brief Transforms a SFML color into an ImGUI color.
+ *
+ * @param color SFML color.
+ * @return ImVec4 ImGUI color.
+ */
 ImVec4 SFMLColorToImVec4(sf::Color color);
 
+/**
+ * @brief Returns the b2Vec2 position of the car
+ * that is the furthest from the starting point.
+ *
+ * @param cars Vector of cars.
+ * @return b2Vec2 Position of the furthest car.
+ */
 b2Vec2 getFurthestCarPos(const std::vector<Car>& cars);
 
-// TODO: Rename this, I beg you
-int getIndexOfGroundClosestToLocation(std::vector<Polygon> ground, float x);
+/**
+ * @brief "Get Index Of Ground Closest To Location"
+ * - returns the index of the ground element that is the closest to the given
+ * location.
+ *
+ * @param cars Vector of cars.
+ * @return int Index of the ground element.
+ */
+int getIdxOfGrndClstToLoc(std::vector<Polygon> ground, float x);
 
+/**
+ * @brief Deletes all cars from the world and the Car vector.
+ *
+ * @param world A shared pointer to the box2d world.
+ * @param cars A vector of cars.
+ */
 void removeCars(const b2WorldPtr& world, std::vector<Car>* cars);
 
 std::filesystem::path getRootDir();
@@ -61,4 +87,4 @@ sf::Sprite loadBGSprite(sf::Texture* texture, const std::vector<Car>& cars);
 std::vector<sf::Sprite> loadBGSprites(std::vector<sf::Texture*> textures,
                                       const std::vector<Car>& cars);
 
-#endif
+#endif  // UTILITY_H

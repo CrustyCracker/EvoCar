@@ -117,3 +117,4 @@ FetchContent_MakeAvailable(googletest)
 
 set(imgui_SOURCE_DIR "${imgui_SOURCE_DIR}" CACHE INTERNAL "")
 set(imgui-sfml_SOURCE_DIR "${imgui-sfml_SOURCE_DIR}" CACHE INTERNAL "")
+set(implot_SOURCE_DIR "${implot_SOURCE_DIR}" CACHE INTERNAL "")

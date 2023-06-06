@@ -104,7 +104,7 @@ void render(sf::RenderWindow &w, const std::vector<sf::Sprite> &BGs,
     }
 
     int groundBeginIndex = 0;
-    int centerIndex = getIndexOfGroundClosestToLocation(groundVector, getFurthestCarPos(cars).x);
+    int centerIndex = getIdxOfGrndClstToLoc(groundVector, getFurthestCarPos(cars).x);
     int groundEndIndex = groundVector.size();
 
     if (centerIndex - Config::GROUND_PARTS_RENDERED / 2 > 0) {

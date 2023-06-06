@@ -5,7 +5,8 @@ add_library(EvoRacerLib
   Render.cc Render.h
   EvolutionaryAlgorithm.cc EvolutionaryAlgorithm.h
   Utility.cc Utility.h
-  UserInput.cc UserInput.h)
+  UserInput.cc UserInput.h
+  GUI.cc GUI.h)
 
 IF(WIN32)
   add_dependencies(EvoRacerLib box2d)
@@ -14,3 +15,4 @@ ENDIF()
 target_link_libraries(EvoRacerLib sfml-graphics ImGui-SFML::ImGui-SFML box2d nlohmann_json::nlohmann_json)
 target_include_directories(EvoRacerLib PRIVATE ${imgui_SOURCE_DIR})
 target_include_directories(EvoRacerLib PRIVATE ${imgui-sfml_SOURCE_DIR})
+target_include_directories(EvoRacerLib PRIVATE ${implot_SOURCE_DIR})

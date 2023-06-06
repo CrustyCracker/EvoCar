@@ -97,7 +97,7 @@ TEST(UtilityTest, SFMLColorToImVec4) {
     EXPECT_EQ(imVec4.w, 1.0f);
 }
 
-TEST(UtilityTest, getIndexOfGroundClosestToLocationTest) {
+TEST(UtilityTest, getIdxOfGrndClstToLocTest) {
     b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITATIONAL_ACCELERATION));
     std::vector<b2Vec2> groundVertecies = {
         b2Vec2(MapGenConfig::GROUND_STARTING_X, MapGenConfig::GROUND_STARTING_Y),
@@ -113,8 +113,8 @@ TEST(UtilityTest, getIndexOfGroundClosestToLocationTest) {
     std::vector<Polygon> groundVector;
     groundVector.push_back(ground);
 
-    EXPECT_NO_THROW(getIndexOfGroundClosestToLocation(groundVector, 0.0f));
-    EXPECT_EQ(getIndexOfGroundClosestToLocation(groundVector, 0.0f), 0);
+    EXPECT_NO_THROW(getIdxOfGrndClstToLoc(groundVector, 0.0f));
+    EXPECT_EQ(getIdxOfGrndClstToLoc(groundVector, 0.0f), 0);
 }
 
 TEST(UtilityTest, removeCarsTest) {
