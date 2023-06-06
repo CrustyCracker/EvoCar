@@ -2,7 +2,7 @@
  * @brief Creates a car with a polygon (car's body)
  * and two circles (front and back wheels).
  *
- * @file Car.h
+ * @file Car.cc
  * @authors Jakub Marcowski, Mateusz Krakowski
  * @date 2023-06-06
  */

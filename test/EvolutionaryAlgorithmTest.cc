@@ -1,9 +1,14 @@
+/**
+ * @brief This file contains tests for functions from src/EvolutionaryAlgorithm.h.
+ *
+ * @file EvolutionaryAlgorithmTest.cc
+ * @author Mateusz Krakowski
+ * @date 2023-06-06
+ */
+
 #include <gtest/gtest.h>
 #include "../src/EvolutionaryAlgorithm.h"
-/*
-Author: Mateusz Krakowski
-Description: This file contains tests for functions from src/EvolutionaryAlgorithm.h.
-*/
+
 TEST(EvolutionaryAlgorithmTest, MutationTest) {
     EvolutionaryAlgorithm evo(10);
     // mutate the population 50 times just to test it

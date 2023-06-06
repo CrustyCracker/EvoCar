@@ -128,10 +128,12 @@ void renderCar(sf::RenderWindow &w, Car car) {
     }
 }
 
-void render(sf::RenderWindow &w, sf::Sprite bg, std::vector<Polygon> &groundVector,
+void render(sf::RenderWindow &w, std::vector<sf::Sprite> BGs, std::vector<Polygon> &groundVector,
             std::vector<Car> &cars) {
     w.clear();
-    w.draw(bg);
+    for (sf::Sprite BG : BGs) {
+        w.draw(BG);
+    }
 
     int n = 32;
 

@@ -9,6 +9,8 @@
 #ifndef RENDER_H
 #define RENDER_H
 
+#include <vector>
+
 #include "../config/Config.h"
 #include "Car.h"
 #include "Shape.h"
@@ -26,7 +28,7 @@ void renderPolygonDebug(sf::RenderWindow &w, Polygon *polygon);
 
 void renderCar(sf::RenderWindow &w, Car car);
 
-void render(sf::RenderWindow &w, sf::Sprite bg, std::vector<Polygon> &ground,
+void render(sf::RenderWindow &w, std::vector<sf::Sprite> BGs, std::vector<Polygon> &ground,
             std::vector<Car> &cars);
 
 #endif

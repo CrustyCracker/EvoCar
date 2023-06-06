@@ -17,12 +17,6 @@ void handleUserInput(sf::RenderWindow &w, bool &paused, bool &pause_check, bool 
             w.close();
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) ||
-            sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-            // Close the window
-            w.close();
-        }
-
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::P) ||
             sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
             // Pause the simulation

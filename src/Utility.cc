@@ -91,13 +91,10 @@ float getFurthestCarX(std::vector<Car> cars) {
 
 int getIndexOfGroundClosestToLocation(std::vector<Polygon> ground, float x) {
     int index = 0;
-    float closestDistance;
     for (int i = 0; i < ground.size(); ++i) {
-        float currentDistance = ground[i].vertices[0].x - x;
-        if (currentDistance > 0) {
+        if (ground[i].vertices[0].x - x > 0) {
             break;
         }
-        closestDistance = currentDistance;
         index = i;
     }
     return index;
@@ -110,4 +107,50 @@ void removeCars(b2WorldPtr world, std::vector<Car>* cars) {
         world->DestroyBody(car.getFrontWheel()->body);
     }
     cars->clear();
+}
+
+std::filesystem::path getRootDir() {
+    std::filesystem::path filePath = std::filesystem::path(__FILE__);
+    std::filesystem::path dirPath = filePath.parent_path();
+    return dirPath;
+}
+
+void setIcon(sf::RenderWindow& window) {
+    std::string iconPath = (getRootDir() / "../resources/evoracer_icon.png").string();
+    auto icon = sf::Image{};
+    if (icon.loadFromFile(iconPath)) {
+        window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+    }
+}
+
+std::vector<sf::Texture*> loadBGTextures() {
+    std::vector<sf::Texture*> textures;
+    for (int i = 0; i < 5; ++i) {
+        std::string BGPath =
+            (getRootDir() / ("../resources/background_img_" + std::to_string(i) + ".png")).string();
+        sf::Texture* texture = new sf::Texture();
+        texture->loadFromFile(BGPath);
+        texture->setRepeated(true);
+        textures.push_back(texture);
+    }
+    return textures;
+}
+
+sf::Sprite loadBGSprite(sf::Texture* texture, std::vector<Car> cars) {
+    sf::Sprite sprite(*texture);
+    sprite.setScale(sf::Vector2f(Config::WINDOW_WIDTH / sprite.getLocalBounds().width,
+                                 Config::WINDOW_HEIGHT / sprite.getLocalBounds().height));
+    sprite.setTextureRect(sf::IntRect(0, 0, 256 * Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT));
+    sprite.setPosition(
+        sf::Vector2f(getFurthestCarX(cars) * Config::PPM, 0.5 * Config::WINDOW_HEIGHT) -
+        sf::Vector2f(Config::WINDOW_WIDTH / 2, Config::WINDOW_HEIGHT / 2));
+    return sprite;
+}
+
+std::vector<sf::Sprite> loadBGSprites(std::vector<sf::Texture*> textures, std::vector<Car> cars) {
+    std::vector<sf::Sprite> sprites;
+    for (int i = 0; i < 5; ++i) {
+        sprites.push_back(loadBGSprite(textures[i], cars));
+    }
+    return sprites;
 }

@@ -1,15 +1,22 @@
+/**
+ * @brief This file contains all the constant values used in the program.
+ *
+ * @file Config.h
+ * @authors Jakub Marcowski, Mateusz Krakowski
+ * @date 2023-06-06
+ */
+
 #ifndef CONFIG_H
 #define CONFIG_H
-
-/*
-Author: Mateusz Krakowski, Jakub Marcowski
-Description: This file contains all the constant values used in the program.
-*/
 
 class Config {
    public:
     static constexpr int WINDOW_WIDTH = 1280;
     static constexpr int WINDOW_HEIGHT = 720;
+
+    // 60 for real time, 120 for fast forward - anything else is undefined behaviour
+    static constexpr int MAX_FPS = 60;
+
     static constexpr bool SAVE_TO_FILE = false;
 
     static constexpr int GENERATION_TIME = 3000;  // in frames, about 60 frames per second

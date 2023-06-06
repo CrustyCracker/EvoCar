@@ -6,9 +6,6 @@
  * @date 2023-06-06
  */
 
-#include <filesystem>
-#include <string>
-
 #include "box2d/box2d.h"
 #include "imgui.h"
 #include "imgui-SFML.h"
@@ -34,15 +31,13 @@ int main() {
     settings.antialiasingLevel = 8;
 
     // Setup SFML window
-    sf::RenderWindow w(sf::VideoMode(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT), "SFML + Box2D",
+    sf::RenderWindow w(sf::VideoMode(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT), "EvoRacer",
                        sf::Style::Default, settings);
-    w.setFramerateLimit(60);
+    w.setFramerateLimit(Config::MAX_FPS);
 
-    ImGui::CreateContext();
-    ImPlot::CreateContext();
-
-    // Initialize ImGui-SFML
+    // Initialize ImGui and all its friends
     ImGui::SFML::Init(w);
+    ImPlot::CreateContext();
 
     // Change imgui.ini location
     ImGui::GetIO().IniFilename = "./imgui.ini";
@@ -73,25 +68,11 @@ int main() {
     bool focus = true;       // Is the window in focus? (used to prevent input when not in focus)
     int timer = 0;
 
-    std::filesystem::path filePath = std::filesystem::path(__FILE__);
-    std::filesystem::path dirPath = filePath.parent_path();
-
-    // Append the relative paths
-    std::string iconPath = (dirPath / "../resources/placeholder_icon.png").string();
-    std::string backgroundPath = (dirPath / "../resources/background_img.jpg").string();
-
     // Set window icon
-    auto icon = sf::Image{};
-    if (icon.loadFromFile(iconPath)) {
-        w.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-    }
+    setIcon(w);
 
-    // Load background image
-    sf::Texture background;
-    background.loadFromFile(backgroundPath);
-    sf::Sprite bg(background);
-    bg.setScale(sf::Vector2f(Config::WINDOW_WIDTH / bg.getLocalBounds().width,
-                             Config::WINDOW_HEIGHT / bg.getLocalBounds().height));
+    auto textures = loadBGTextures();
+    auto sprites = loadBGSprites(textures, cars);
 
     sf::Clock deltaClock;
     /** PROGRAM LOOP **/
@@ -102,7 +83,6 @@ int main() {
             ++timer;
             if (timer >= Config::GENERATION_TIME) {
                 nextGen = true;
-                timer = 0;
             }
         }
 
@@ -120,7 +100,7 @@ int main() {
         }
 
         // Render everything
-        render(w, bg, groundVector, cars);
+        render(w, sprites, groundVector, cars);
 
         ImGui::SFML::Update(w, deltaClock.restart());
 
@@ -169,9 +149,12 @@ int main() {
                      sf::Vector2f(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT));
         w.setView(cameraView);
 
-        // Move background sprite with camera
-        bg.setPosition(cameraView.getCenter() -
-                       sf::Vector2f(Config::WINDOW_WIDTH / 2, Config::WINDOW_HEIGHT / 2));
+        // If the camera moves, shift backgrounds accordingly to create a parallax effect
+        for (int i = 0; i < 5; ++i) {
+            sprites[i].setPosition(
+                cameraView.getCenter().x * (1.0 - 0.2 * i) - Config::WINDOW_WIDTH * (1.4 - 0.1 * i),
+                0);
+        }
 
         if (!paused) {
             for (int i = 0; i < cars.size(); ++i) {
@@ -189,7 +172,7 @@ int main() {
     }
 
     ImPlot::DestroyContext();
-    ImGui::DestroyContext();
+    ImGui::SFML::Shutdown();
 
     return 0;
 }

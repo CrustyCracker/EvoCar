@@ -1,10 +1,13 @@
+/**
+ * @brief This file contains all the constant values for the car class.
+ *
+ * @file CarConfig.h
+ * @author Mateusz Krakowski
+ * @date 2023-06-06
+ */
+
 #ifndef CARCONFIG_H
 #define CARCONFIG_H
-
-/*
-Author: Mateusz Krakowski,
-Description: This file contains all the constant values for the car class.
-*/
 
 class CarConfig {
    public:

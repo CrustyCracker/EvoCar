@@ -9,13 +9,16 @@
 #ifndef UTILITY_H
 #define UTILITY_H
 
-#include <random>
+#include <filesystem>
 #include <math.h>
+#include <random>
+#include <vector>
 
 #include "imgui.h"
 #include "SFML/Graphics.hpp"
 #include "EvolutionaryAlgorithm.h"
 
+#include "../config/Config.h"
 #include "../config/MapGenConfig.h"
 #include "Car.h"
 
@@ -45,5 +48,15 @@ float getFurthestCarX(std::vector<Car> cars);
 int getIndexOfGroundClosestToLocation(std::vector<Polygon> ground, float x);
 
 void removeCars(b2WorldPtr world, std::vector<Car>* cars);
+
+std::filesystem::path getRootDir();
+
+void setIcon(sf::RenderWindow& window);
+
+std::vector<sf::Texture*> loadBGTextures();
+
+sf::Sprite loadBGSprite(sf::Texture* texture, std::vector<Car> cars);
+
+std::vector<sf::Sprite> loadBGSprites(std::vector<sf::Texture*> textures, std::vector<Car> cars);
 
 #endif

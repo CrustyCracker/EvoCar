@@ -1,10 +1,13 @@
+/**
+ * @brief This file contains all the constant values used in the evolutionary algorithm.
+ *
+ * @file EvolutionaryAlgorithmConfig.h
+ * @author Mateusz Krakowski
+ * @date 2023-06-06
+ */
+
 #ifndef EVOLUTIONARY_ALGORITHM_CONFIG_H
 #define EVOLUTIONARY_ALGORITHM_CONFIG_H
-
-/*
-Author: Mateusz Krakowski
-Description: This file contains all the constant values used in the evolutionary algorithm.
-*/
 
 class EvolutionaryAlgorithmConfig {
    public:

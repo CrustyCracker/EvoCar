@@ -1,10 +1,13 @@
+/**
+ * @brief This file contains all the constant values used in the map generation algorithm.
+ *
+ * @file MapGenConfig.h
+ * @author Mateusz Krakowski
+ * @date 2023-06-06
+ */
+
 #ifndef MAPGENCONFIG_H
 #define MAPGENCONFIG_H
-
-/*
-Author: Mateusz Krakowski,
-Description: This file contains all the constant values used in the map generation algorithm.
-*/
 
 class MapGenConfig {
    public:
