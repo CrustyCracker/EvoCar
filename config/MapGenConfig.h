@@ -16,6 +16,7 @@ class MapGenConfig {
     static constexpr float GROUND_STARTING_Y = 360.0;
     static constexpr float GROUND_LEG_LENGTH = 4.0;
     static constexpr float GROUND_PART_LENGTH = 1.5;
+    static constexpr int BG_SPRITES_COUNT = 5;
 
     static constexpr float CAR_STARTING_X = 250.0;
     static constexpr float CAR_STARTING_Y = 650.0;
@@ -24,7 +25,7 @@ class MapGenConfig {
     static constexpr float GROUND_DEGREE_DEVIATION = 12.0f;
     static constexpr float MAX_GROUND_DEGREE = 50.0f;
 
-    static constexpr int BG_SPRITES_COUNT = 5;
+
 };
 
 #endif  // MAPGENCONFIG_H
