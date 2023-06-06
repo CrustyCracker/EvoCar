@@ -19,6 +19,7 @@ class Config {
     
     static constexpr int GROUND_PARTS_RENDERED = 32;
 
+    // Exporting to file
     static constexpr bool SAVE_TO_FILE = true;
     static constexpr char SAVE_FILE_NAME[] = "evoRacerOutput.json";
 
