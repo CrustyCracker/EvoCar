@@ -127,10 +127,10 @@ void renderCar(sf::RenderWindow &w, Car car) {
     }
 }
 
-void render(sf::RenderWindow &w, std::vector<sf::Sprite> BGs, std::vector<Polygon> &groundVector,
-            std::vector<Car> &cars) {
+void render(sf::RenderWindow &w, const std::vector<sf::Sprite> &BGs,
+            std::vector<Polygon> &groundVector, std::vector<Car> &cars) {
     w.clear();
-    for (sf::Sprite BG : BGs) {
+    for (const sf::Sprite &BG : BGs) {
         w.draw(BG);
     }
 

@@ -151,6 +151,7 @@ Chromosome EvolutionaryAlgorithm::tournament() {
 
     std::vector<Chromosome> candidates;
 
+    candidates.reserve(EvolutionaryAlgorithmConfig::TOURNAMENT_SIZE);
     for (int i = 0; i < EvolutionaryAlgorithmConfig::TOURNAMENT_SIZE; ++i) {
         candidates.push_back(population_[uniform_dist(gen)]);
     }
@@ -168,6 +169,7 @@ Chromosome EvolutionaryAlgorithm::tournament() {
 void EvolutionaryAlgorithm::tournamentSelection() {
     std::vector<Chromosome> tournament_winners;
 
+    tournament_winners.reserve(populationSize_);
     for (int i = 0; i < populationSize_; ++i) {
         tournament_winners.push_back(tournament());
     }

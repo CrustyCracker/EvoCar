@@ -56,7 +56,7 @@ int main() {
 
     EvolutionaryAlgorithm ea(EvolutionaryAlgorithmConfig::POPULATION_SIZE, Config::SAVE_TO_FILE);
 
-    for (Chromosome chromosome : ea.getPopulation()) {
+    for (const Chromosome& chromosome : ea.getPopulation()) {
         cars.push_back(generateCar(world, chromosome));
     }
 
@@ -92,7 +92,7 @@ int main() {
             }
             ea.nextGeneration();
             removeCars(world, &cars);
-            for (Chromosome chromosome : ea.getPopulation()) {
+            for (const Chromosome& chromosome : ea.getPopulation()) {
                 cars.push_back(generateCar(world, chromosome));
             }
             timer = 0;
@@ -156,10 +156,10 @@ int main() {
         }
 
         if (!paused) {
-            for (int i = 0; i < cars.size(); ++i) {
-                cars[i].getFrontWheel()->body->ApplyTorque(-CarConfig::CAR_TORQUE, false);
-                cars[i].getBackWheel()->body->ApplyTorque(-CarConfig::CAR_TORQUE, false);
-                applyAirResistance(cars[i]);
+            for (auto& car : cars) {
+                car.getFrontWheel()->body->ApplyTorque(-CarConfig::CAR_TORQUE, false);
+                car.getBackWheel()->body->ApplyTorque(-CarConfig::CAR_TORQUE, false);
+                applyAirResistance(car);
             }
         }
 

@@ -55,7 +55,7 @@ class EvolutionaryAlgorithmConfig {
     static constexpr float MUTATION_FACTOR_WHEEL_DENSITY = 20.0f;
 
     // Selection hyper parameters
-    static constexpr int TOURNAMENT_SIZE = 3;  // Has to be equal or lesser than POPULATION_SIZE
+    static constexpr int TOURNAMENT_SIZE = 3;  // Has to be equal to or lesser than POPULATION_SIZE
 };
 
 #endif  // EVOLUTIONARY_ALGORITHM_CONFIG_H

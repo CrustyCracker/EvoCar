@@ -37,7 +37,7 @@ void handleUserInput(sf::RenderWindow &w, bool &paused, bool &pause_check, bool 
 
 void handleEvents(sf::RenderWindow &w, bool &pause_check, bool &nxt_g_check, bool &focus) {
     // Process events
-    sf::Event event;
+    sf::Event event{};
     while (w.pollEvent(event)) {
         if (event.type == sf::Event::GainedFocus) {
             focus = true;

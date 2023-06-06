@@ -42,12 +42,12 @@ Car generateCar(b2WorldPtr world, Chromosome chromosome);
 
 ImVec4 SFMLColorToImVec4(sf::Color color);
 
-float getFurthestCarX(std::vector<Car> cars);
+float getFurthestCarX(const std::vector<Car>& cars);
 
 // TODO: Rename this, I beg you
 int getIndexOfGroundClosestToLocation(std::vector<Polygon> ground, float x);
 
-void removeCars(b2WorldPtr world, std::vector<Car>* cars);
+void removeCars(const b2WorldPtr& world, std::vector<Car>* cars);
 
 std::filesystem::path getRootDir();
 
@@ -57,6 +57,7 @@ std::vector<sf::Texture*> loadBGTextures();
 
 sf::Sprite loadBGSprite(sf::Texture* texture, std::vector<Car> cars);
 
-std::vector<sf::Sprite> loadBGSprites(std::vector<sf::Texture*> textures, std::vector<Car> cars);
+std::vector<sf::Sprite> loadBGSprites(std::vector<sf::Texture*> textures,
+                                      const std::vector<Car>& cars);
 
 #endif

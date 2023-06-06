@@ -36,14 +36,14 @@ class EvolutionaryAlgorithm {
     void initializePopulation();
 
    public:
-    EvolutionaryAlgorithm(int populationSize, bool saveToFile = false);
+    explicit EvolutionaryAlgorithm(int populationSize, bool saveToFile = false);
     std::vector<Chromosome> getPopulation() { return population_; }
     void mutate();
     void tournamentSelection();
     void nextGeneration();
     void setFitness(int index, float fitness) { population_[index].fitness = fitness; }
-    int getGeneration() { return generation_; }
-    int getPopulationSize() { return populationSize_; }
+    int getGeneration() const { return generation_; }
+    int getPopulationSize() const { return populationSize_; }
     int exportPopulation();
 };
 

@@ -8,7 +8,7 @@
 
 #include "Shape.h"
 
-Box createBox(b2WorldPtr world, float x, float y, float width, float height, float density,
+Box createBox(const b2WorldPtr& world, float x, float y, float width, float height, float density,
               float friction, sf::Color color) {
     // Argument validation
     if (width <= 0) {
@@ -43,7 +43,7 @@ Box createBox(b2WorldPtr world, float x, float y, float width, float height, flo
     return Box{width, height, color, boxBody};
 }
 
-Polygon createGround(b2WorldPtr world, float x, float y, const std::vector<b2Vec2>& vertices,
+Polygon createGround(const b2WorldPtr& world, float x, float y, const std::vector<b2Vec2>& vertices,
                      sf::Color color) {
     // Argument validation
     if (vertices.size() < 3) {
@@ -62,8 +62,8 @@ Polygon createGround(b2WorldPtr world, float x, float y, const std::vector<b2Vec
     return Polygon{vertices, color, groundBody};
 }
 
-Circle createCircle(b2WorldPtr world, float x, float y, float radius, float density, float friction,
-                    sf::Color color) {
+Circle createCircle(const b2WorldPtr& world, float x, float y, float radius, float density,
+                    float friction, sf::Color color) {
     // Argument validation
     if (radius <= 0.0f) {
         throw std::invalid_argument("Invalid width parameter");
@@ -92,7 +92,7 @@ Circle createCircle(b2WorldPtr world, float x, float y, float radius, float dens
     return Circle{radius, color, boxBody};
 }
 
-Polygon createPolygon(b2WorldPtr world, float x, float y, std::vector<b2Vec2> vertices,
+Polygon createPolygon(const b2WorldPtr& world, float x, float y, std::vector<b2Vec2> vertices,
                       float density, float friction, sf::Color color) {
     // Argument validation
     if (vertices.size() < 3 || vertices.size() > CarConfig::CAR_VERTICES) {
