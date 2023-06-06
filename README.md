@@ -19,6 +19,12 @@ Mateusz Łukasz Krakowski
 `./build/test/Test`
 
 test coverage: `sh test_coverage.sh` (plik index.html w CodeCoverageReport)
+
+## Możliwości programu
+Przyciski:
+- 'Q' - wyjście z programu
+- 'P' - pauza
+- 'N' - następna generacja
 ## Użyte paczki
 najlepiej użyć skryptu `sh install_packages.sh` (z tego katalogu)
 
@@ -40,7 +46,7 @@ Potrzebne będą:
 
 ## Jak zbudować projekt
 wykonaj skrypt `sh fresh_build.sh` (z tego katalogu)
-## Możliwości programu
+## Program
 - Upwenij się że pobrałeś wszystkie paczki
 - `sh fresh_build.sh` (z tego katalogu)
 -  Plik wykonawczy: `/build/EvoRacer`
