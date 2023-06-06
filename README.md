@@ -12,11 +12,17 @@ Mateusz Łukasz Krakowski
 ## TLDR
 `sh install_packages.sh`
 
-`sh fresh_build.sh`
+`mkdir build`
 
-`./build/EvoRacer`
+`cd build`
 
-`./build/test/Test`
+`cmake ..`
+
+`make`
+
+`./EvoRacer`
+
+`./Test`
 
 test coverage: `sh test_coverage.sh` (plik index.html w CodeCoverageReport)
 
@@ -48,9 +54,12 @@ Potrzebne będą:
 wykonaj skrypt `sh fresh_build.sh` (z tego katalogu)
 ## Program
 - Upwenij się że pobrałeś wszystkie paczki
-- `sh fresh_build.sh` (z tego katalogu)
--  Plik wykonawczy: `/build/EvoRacer`
--  Testy: `/build/Test`
+- `mkdir build`
+- `cd build`
+- `cmake ..`
+- `make`
+-  Plik wykonawczy: `./EvoRacer`
+-  Testy: `./Test`
 ## Test Coverage
 Ostatni test coverage znajdue się w katalogu CodeCoverageReport, plik index.html
 Aby stowrzyć raport z pokrycia testami należy:
