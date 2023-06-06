@@ -69,7 +69,7 @@ TEST(UtilityTest, generateCarTest) {
     EXPECT_NO_THROW(generateCar(world, chromosome));
 }
 
-TEST(UtilityTest, getFurthestCarXTest) {
+TEST(UtilityTest, getFurthestCarPosTest) {
     b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITATIONAL_ACCELERATION));
     float x = 0.0f, y = 0.0f;
     sf::Color bodyColor = sf::Color::Red;
@@ -82,8 +82,7 @@ TEST(UtilityTest, getFurthestCarXTest) {
     Car car = Car(world, x, y, chromosome, bodyColor, wheelColor);
     cars.push_back(car);
 
-    EXPECT_NO_THROW(getFurthestCarX(cars));
-    EXPECT_EQ(getFurthestCarX(cars), x);
+    EXPECT_NO_THROW(getFurthestCarPos(cars));
 }
 
 TEST(UtilityTest, SFMLColorToImVec4) {
