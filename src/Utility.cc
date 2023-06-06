@@ -6,6 +6,13 @@ Description:    File containing utility functions.
 */
 
 void applyAirResistance(Car car) {
+    // F = V^2 * k
+    // k ≈ 1/2 * ρ * A * C_d ≈ 3.4
+    // ρ = 1.293 kg/m^3
+    // A = ? (let's assume 5 m^2)
+    // C_d = ? (let's assume 1.05)
+    //
+    // F = 3.4 * V^2
     car.getBody()->body->ApplyForceToCenter(
         b2Vec2(-1.84 * car.getBody()->body->GetLinearVelocity().x *
                    abs(car.getBody()->body->GetLinearVelocity().x),
@@ -91,19 +98,6 @@ int getIndexOfGroundClosestToLocation(std::vector<Polygon> ground, float x) {
         index = i;
     }
     return index;
-}
-
-std::string replaceSubstring(std::string str, const std::string& from, const std::string& to) {
-    size_t index = 0;
-    while (true) {
-        index = str.find(from, index);
-        if (index == std::string::npos) {
-            break;
-        }
-        str.replace(index, from.length(), to);
-        index += to.length();
-    }
-    return str;
 }
 
 void removeCars(b2WorldPtr world, std::vector<Car>* cars) {

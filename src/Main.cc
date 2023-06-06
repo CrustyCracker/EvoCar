@@ -1,5 +1,5 @@
-#include <iostream>
 #include <filesystem>
+#include <string>
 
 #include "box2d/box2d.h"
 #include "imgui.h"
@@ -72,8 +72,6 @@ int main() {
 
     std::filesystem::path filePath = std::filesystem::path(__FILE__);
     std::filesystem::path dirPath = filePath.parent_path();
-
-    std::cout << "Directory Path: " << dirPath << std::endl;
 
     // Append the relative paths
     std::string iconPath = (dirPath / "../resources/placeholder_icon.png").string();
