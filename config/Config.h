@@ -18,7 +18,8 @@ class Config {
     static constexpr int MAX_FPS = 60;
     static constexpr int GROUND_PARTS_REDNERED = 32;
 
-    static constexpr bool SAVE_TO_FILE = false;
+    static constexpr bool SAVE_TO_FILE = true;
+    static constexpr char SAVE_FILE_NAME[] = "evoRacerOutput.json";
 
     static constexpr int GENERATION_TIME = 3000;  // in frames, about 60 frames per second
     // Pixels per meter. Box2D uses metric units, so we need PPM for conversion pourposes

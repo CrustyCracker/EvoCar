@@ -15,6 +15,7 @@
 #include <random>
 #include <vector>
 
+#include "../config/Config.h"
 #include "../config/EvolutionaryAlgorithmConfig.h"
 
 struct Chromosome {
