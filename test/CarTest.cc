@@ -20,9 +20,9 @@ TEST(CreateCarTest, BasicTest) {
 
     EvolutionaryAlgorithm ea = EvolutionaryAlgorithm(EvolutionaryAlgorithmConfig::POPULATION_SIZE);
     Chromosome chromosome = ea.getPopulation()[0];
-    Car car = createCar(world, x, y, chromosome, bodyColor, wheelColor);
+    Car car = Car(world, x, y, chromosome, bodyColor, wheelColor);
 
     EXPECT_EQ(car.getPosX(), x);
     EXPECT_EQ(car.getPosY(), y);
-    EXPECT_EQ(car.getBodyColor, bodyColor);
+    EXPECT_EQ(car.getBodyColor(), bodyColor);
 }

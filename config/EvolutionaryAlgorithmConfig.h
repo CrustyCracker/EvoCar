@@ -11,8 +11,6 @@
 
 class EvolutionaryAlgorithmConfig {
    public:
-    static constexpr char SAVE_FILE_NAME[] = "evoRacerOutput.json";
-
     // Evolutionary algorithm parameters
     static constexpr int POPULATION_SIZE = 15;
 

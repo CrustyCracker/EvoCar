@@ -206,7 +206,7 @@ int EvolutionaryAlgorithm::exportPopulation() {
 
     std::string jsonString = jsonData.dump(4);
 
-    std::ofstream outputFile(EvolutionaryAlgorithmConfig::SAVE_FILE_NAME, std::ios::app);
+    std::ofstream outputFile(Config::SAVE_FILE_NAME, std::ios::app);
     if (!outputFile.is_open()) {
         return 1;
     }
