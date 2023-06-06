@@ -16,7 +16,7 @@ class EvolutionaryAlgorithmConfig {
     // Evolutionary algorithm parameters
     static constexpr int POPULATION_SIZE = 15;
 
-    // Boundries for the chromosomes
+    // Boundaries for the chromosomes
     static constexpr float MIN_BODY_LENGTH = 1.0f;
     static constexpr float MAX_BODY_LENGTH = 5.0f;
 
@@ -29,7 +29,7 @@ class EvolutionaryAlgorithmConfig {
     static constexpr float MIN_WHEEL_DENSITY = 10.0f;
     static constexpr float MAX_WHEEL_DENSITY = 1000.0f;
 
-    // Population initialization hyperparameters
+    // Population initialization hyper parameters
     static constexpr float INITIAL_BODY_LENGTH_MEAN = 3.0f;
     static constexpr float INITIAL_BODY_LENGTH_VARIANCE = 1.0f;
 
@@ -42,7 +42,7 @@ class EvolutionaryAlgorithmConfig {
     static constexpr float INITIAL_WHEEL_DENSITY_MEAN = 100.0f;
     static constexpr float INITIAL_WHEEL_DENSITY_VARIANCE = 100.0f;
 
-    // Mutation hyperparameters
+    // Mutation hyper parameters
 
     static constexpr float MUTATION_RATE_BODY_LENGTHS = 0.1f;
     static constexpr float MUTATION_FACTOR_BODY_LENGTHS = 0.5f;
@@ -56,8 +56,8 @@ class EvolutionaryAlgorithmConfig {
     static constexpr float MUTATION_RATE_WHEEL_DENSITY = 0.1f;
     static constexpr float MUTATION_FACTOR_WHEEL_DENSITY = 20.0f;
 
-    // Selection hyperparameters
-    static constexpr float TOURNAMENT_SIZE = 3;  // Has to be equal or greater than POPULATION_SIZE
+    // Selection hyper parameters
+    static constexpr int TOURNAMENT_SIZE = 3;  // Has to be equal or lesser than POPULATION_SIZE
 };
 
 #endif  // EVOLUTIONARY_ALGORITHM_CONFIG_H

@@ -34,14 +34,14 @@ void generateGround(b2WorldPtr world, std::vector<Polygon>* groundVector, std::v
         float delta_x = MapGenConfig::GROUND_PART_LENGTH * cos(angle_in_radians);
         float delta_y = -MapGenConfig::GROUND_PART_LENGTH * sin(angle_in_radians);
 
-        std::vector<b2Vec2> groundVertecies = {
+        std::vector<b2Vec2> groundVertices = {
             b2Vec2(lastGround.vertices[1].x, lastGround.vertices[1].y),
             b2Vec2(lastGround.vertices[1].x + delta_x, lastGround.vertices[1].y + delta_y),
             b2Vec2(lastGround.vertices[2].x + delta_x, lastGround.vertices[2].y + delta_y)};
 
         Polygon ground =
             createGround(world, MapGenConfig::GROUND_STARTING_X, MapGenConfig::GROUND_STARTING_Y,
-                         groundVertecies, sf::Color(18, 36, 35));
+                         groundVertices, sf::Color(18, 36, 35));
 
         groundVector->push_back(ground);
     }
@@ -125,7 +125,7 @@ void setIcon(sf::RenderWindow& window) {
 
 std::vector<sf::Texture*> loadBGTextures() {
     std::vector<sf::Texture*> textures;
-    for (int i = 0; i < MapGenConfig::SPRITES_COUNT; ++i) {
+    for (int i = 0; i < MapGenConfig::BG_SPRITES_COUNT; ++i) {
         std::string BGPath =
             (getRootDir() / ("../resources/background_img_" + std::to_string(i) + ".png")).string();
         sf::Texture* texture = new sf::Texture();
@@ -149,7 +149,7 @@ sf::Sprite loadBGSprite(sf::Texture* texture, std::vector<Car> cars) {
 
 std::vector<sf::Sprite> loadBGSprites(std::vector<sf::Texture*> textures, std::vector<Car> cars) {
     std::vector<sf::Sprite> sprites;
-    for (int i = 0; i < MapGenConfig::SPRITES_COUNT; ++i) {
+    for (int i = 0; i < MapGenConfig::BG_SPRITES_COUNT; ++i) {
         sprites.push_back(loadBGSprite(textures[i], cars));
     }
     return sprites;

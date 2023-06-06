@@ -23,8 +23,8 @@ class MapGenConfig {
     // Change the mapgen behaviour here
     static constexpr float GROUND_DEGREE_DEVIATION = 12.0f;
     static constexpr float MAX_GROUND_DEGREE = 50.0f;
-    
-    static constexpr int SPRITES_COUNT = 5;
+
+    static constexpr int BG_SPRITES_COUNT = 5;
 };
 
 #endif  // MAPGENCONFIG_H
