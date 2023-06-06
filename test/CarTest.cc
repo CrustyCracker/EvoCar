@@ -19,4 +19,11 @@ TEST(CreateCarTest, BasicTest) {
     EXPECT_EQ(car.getPosX(), x);
     EXPECT_EQ(car.getPosY(), y);
     EXPECT_EQ(car.getBodyColor(), bodyColor);
+    EXPECT_NE(car.getBody(), nullptr);
+    EXPECT_NE(car.getFrontWheel(), nullptr);
+    EXPECT_NE(car.getBackWheel(), nullptr);
+    EXPECT_NE(car.getVelX(), nullptr);
+    EXPECT_NE(car.getVelY(), nullptr);
+    EXPECT_NE(car.getVelocityVec(), nullptr);
+    EXPECT_NE(car.getVelocity(), nullptr);
 }
