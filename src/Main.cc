@@ -144,7 +144,8 @@ int main() {
 
         // Attach camera to the car's body
         sf::View cameraView =
-            sf::View(sf::Vector2f(getFurthestCarX(cars) * Config::PPM, 0.5 * Config::WINDOW_HEIGHT),
+            sf::View(sf::Vector2f(getFurthestCarPos(cars).x * Config::PPM,
+                                  Config::WINDOW_HEIGHT - getFurthestCarPos(cars).y * Config::PPM),
                      sf::Vector2f(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT));
         w.setView(cameraView);
 
@@ -152,7 +153,7 @@ int main() {
         for (int i = 0; i < 5; ++i) {
             sprites[i].setPosition(
                 cameraView.getCenter().x * (1.0 - 0.2 * i) - Config::WINDOW_WIDTH * (1.4 - 0.1 * i),
-                0);
+                cameraView.getCenter().y - Config::WINDOW_HEIGHT / 2.0);
         }
 
         if (!paused) {
