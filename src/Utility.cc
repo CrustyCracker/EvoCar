@@ -8,8 +8,6 @@
 
 #include "Utility.h"
 
-#include <utility>
-
 void applyAirResistance(Car car) {
     // F = V^2 * k
     // k ≈ 1/2 * ρ * A * C_d ≈ 3.4
@@ -26,10 +24,11 @@ void applyAirResistance(Car car) {
         true);
 }
 
-void generateGround(b2WorldPtr world, std::vector<Polygon>* groundVector, std::vector<Car> cars) {
+void generateGround(const b2WorldPtr& world, std::vector<Polygon>* groundVector,
+                    const std::vector<Car>& cars) {
     Polygon lastGround = groundVector->back();
     if (lastGround.vertices[1].x * Config::PPM <
-        getFurthestCarPos(std::move(cars)).x * Config::PPM + MapGenConfig::GENERATE_DISTANCE) {
+        getFurthestCarPos(cars).x * Config::PPM + MapGenConfig::GENERATE_DISTANCE) {
         float degree = getNextGroundPartDegree();
         float angle_in_radians = degree * (M_PI / 180.0f);
 
@@ -42,8 +41,8 @@ void generateGround(b2WorldPtr world, std::vector<Polygon>* groundVector, std::v
             b2Vec2(lastGround.vertices[2].x + delta_x, lastGround.vertices[2].y + delta_y)};
 
         Polygon ground =
-            createGround(std::move(world), MapGenConfig::GROUND_STARTING_X,
-                         MapGenConfig::GROUND_STARTING_Y, groundVertices, sf::Color(18, 36, 35));
+            createGround(world, MapGenConfig::GROUND_STARTING_X, MapGenConfig::GROUND_STARTING_Y,
+                         groundVertices, sf::Color(18, 36, 35));
 
         groundVector->push_back(ground);
     }
@@ -64,7 +63,7 @@ float getNextGroundPartDegree() {
     return degree;
 }
 
-Car generateCar(b2WorldPtr world, Chromosome chromosome) {
+Car generateCar(const b2WorldPtr& world, const Chromosome& chromosome) {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> rgb_value(50, 200);
@@ -72,10 +71,10 @@ Car generateCar(b2WorldPtr world, Chromosome chromosome) {
     sf::Color bodyColor = sf::Color(rgb_value(gen), rgb_value(gen), rgb_value(gen));
     sf::Color wheelColor = sf::Color(rgb_value(gen), rgb_value(gen), rgb_value(gen));
 
-    return {std::move(world),
+    return {world,
             MapGenConfig::CAR_STARTING_X,
             MapGenConfig::CAR_STARTING_Y,
-            std::move(chromosome),
+            chromosome,
             bodyColor,
             wheelColor};
 }
@@ -95,7 +94,7 @@ b2Vec2 getFurthestCarPos(const std::vector<Car>& cars) {
             furthestCarY = currentCarY;
         }
     }
-    return b2Vec2(furthestCarX, furthestCarY);
+    return {furthestCarX, furthestCarY};
 }
 
 int getIndexOfGroundClosestToLocation(std::vector<Polygon> ground, float x) {
@@ -145,14 +144,14 @@ std::vector<sf::Texture*> loadBGTextures() {
     return textures;
 }
 
-sf::Sprite loadBGSprite(sf::Texture* texture, std::vector<Car> cars) {
+sf::Sprite loadBGSprite(sf::Texture* texture, const std::vector<Car>& cars) {
     sf::Sprite sprite(*texture);
     sprite.setScale(sf::Vector2f(Config::WINDOW_WIDTH / sprite.getLocalBounds().width,
                                  Config::WINDOW_HEIGHT / sprite.getLocalBounds().height));
     sprite.setTextureRect(sf::IntRect(0, 0, 256 * Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT));
-    sprite.setPosition(sf::Vector2f(getFurthestCarPos(std::move(cars)).x * Config::PPM,
-                                    0.5 * Config::WINDOW_HEIGHT) -
-                       sf::Vector2f(Config::WINDOW_WIDTH / 2, Config::WINDOW_HEIGHT / 2));
+    sprite.setPosition(
+        sf::Vector2f(getFurthestCarPos(cars).x * Config::PPM, 0.5 * Config::WINDOW_HEIGHT) -
+        sf::Vector2f(Config::WINDOW_WIDTH / 2.0f, Config::WINDOW_HEIGHT / 2.0f));
     return sprite;
 }
 

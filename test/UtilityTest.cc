@@ -8,10 +8,10 @@
 
 #include <gtest/gtest.h>
 
-#include "../src/Utility.h"
+#include "../config/MapGenConfig.h"
 #include "../src/Car.h"
 #include "../src/EvolutionaryAlgorithm.h"
-#include "../config/MapGenConfig.h"
+#include "../src/Utility.h"
 
 TEST(UtilityTest, applyAirResistanceTest) {
     b2WorldPtr world = std::make_shared<b2World>(b2Vec2(0.0f, Config::GRAVITATIONAL_ACCELERATION));
@@ -83,6 +83,8 @@ TEST(UtilityTest, getFurthestCarPosTest) {
     cars.push_back(car);
 
     EXPECT_NO_THROW(getFurthestCarPos(cars));
+    EXPECT_EQ(getFurthestCarPos(cars).x, x);
+    EXPECT_EQ(getFurthestCarPos(cars).y, y);
 }
 
 TEST(UtilityTest, SFMLColorToImVec4) {

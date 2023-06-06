@@ -34,11 +34,12 @@ typedef std::shared_ptr<b2World> b2WorldPtr;
  */
 void applyAirResistance(Car car);
 
-void generateGround(b2WorldPtr world, std::vector<Polygon>* boxes, std::vector<Car> cars);
+void generateGround(const b2WorldPtr& world, std::vector<Polygon>* boxes,
+                    const std::vector<Car>& cars);
 
 float getNextGroundPartDegree();
 
-Car generateCar(b2WorldPtr world, Chromosome chromosome);
+Car generateCar(const b2WorldPtr& world, const Chromosome& chromosome);
 
 ImVec4 SFMLColorToImVec4(sf::Color color);
 
@@ -55,7 +56,7 @@ void setIcon(sf::RenderWindow& window);
 
 std::vector<sf::Texture*> loadBGTextures();
 
-sf::Sprite loadBGSprite(sf::Texture* texture, std::vector<Car> cars);
+sf::Sprite loadBGSprite(sf::Texture* texture, const std::vector<Car>& cars);
 
 std::vector<sf::Sprite> loadBGSprites(std::vector<sf::Texture*> textures,
                                       const std::vector<Car>& cars);

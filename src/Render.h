@@ -16,8 +16,6 @@
 #include "Shape.h"
 #include "Utility.h"
 
-void renderBox(sf::RenderWindow &w, Box &box);
-
 void renderCircle(sf::RenderWindow &w, Circle *circle);
 
 void renderCircleDebug(sf::RenderWindow &w, Circle *circle);

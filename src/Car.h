@@ -29,8 +29,6 @@ class Car {
     std::vector<float> velX_;
     std::vector<float> velY_;
 
-    bool isAlive_ = true;
-
    public:
     Car(const b2WorldPtr& world, float x, float y, const Chromosome& chromosome,
         sf::Color bodyColor, sf::Color wheelColor);
