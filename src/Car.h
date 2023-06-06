@@ -32,20 +32,20 @@ class Car {
     bool isAlive_ = true;
 
    public:
-    Car(b2WorldPtr world, float x, float y, Chromosome chromosome, sf::Color bodyColor,
-        sf::Color wheelColor);
+    Car(const b2WorldPtr& world, float x, float y, const Chromosome& chromosome,
+        sf::Color bodyColor, sf::Color wheelColor);
 
     Polygon* getBody();
     Circle* getFrontWheel();
     Circle* getBackWheel();
-    float getPosX();
-    float getPosY();
+    float getPosX() const;
+    float getPosY() const;
     std::vector<float>* getVelX();
     std::vector<float>* getVelY();
-    sf::Color getBodyColor();
-    b2Vec2 getVelocityVec();
-    float getVelocity();
-    void setCollisionFilter(b2Filter filter);
+    sf::Color getBodyColor() const;
+    b2Vec2 getVelocityVec() const;
+    float getVelocity() const;
+    void setCollisionFilter(b2Filter filter) const;
 };
 
 std::vector<b2Vec2> createVertices(std::vector<float> lengths);

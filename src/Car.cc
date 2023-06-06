@@ -9,8 +9,8 @@
 
 #include "Car.h"
 
-Car::Car(b2WorldPtr world, float x, float y, Chromosome chromosome, sf::Color bodyColor,
-         sf::Color wheelColor) {
+Car::Car(const b2WorldPtr& world, float x, float y, const Chromosome& chromosome,
+         sf::Color bodyColor, sf::Color wheelColor) {
     // Create a polygon (octagon)
 
     auto vertices = createVertices(chromosome.bodyLengths);
@@ -65,21 +65,21 @@ Circle* Car::getFrontWheel() { return &frontWheel_; }
 
 Circle* Car::getBackWheel() { return &backWheel_; }
 
-float Car::getPosX() { return body_.body->GetPosition().x; }
+float Car::getPosX() const { return body_.body->GetPosition().x; }
 
-float Car::getPosY() { return body_.body->GetPosition().y; }
+float Car::getPosY() const { return body_.body->GetPosition().y; }
 
 std::vector<float>* Car::getVelX() { return &velX_; }
 
 std::vector<float>* Car::getVelY() { return &velY_; }
 
-sf::Color Car::getBodyColor() { return body_.color; }
+sf::Color Car::getBodyColor() const { return body_.color; }
 
-b2Vec2 Car::getVelocityVec() { return body_.body->GetLinearVelocity(); }
+b2Vec2 Car::getVelocityVec() const { return body_.body->GetLinearVelocity(); }
 
-float Car::getVelocity() { return body_.body->GetLinearVelocity().Length(); }
+float Car::getVelocity() const { return body_.body->GetLinearVelocity().Length(); }
 
-void Car::setCollisionFilter(b2Filter filter) {
+void Car::setCollisionFilter(b2Filter filter) const {
     body_.body->GetFixtureList()->SetFilterData(filter);
     frontWheel_.body->GetFixtureList()->SetFilterData(filter);
     backWheel_.body->GetFixtureList()->SetFilterData(filter);
@@ -89,6 +89,7 @@ std::vector<b2Vec2> createVertices(std::vector<float> lengths) {
     std::vector<b2Vec2> vertices;
 
     std::vector<float> angles;
+    angles.reserve(lengths.size());
     for (int i = 0; i < lengths.size(); i++) {
         angles.push_back(360.0f / lengths.size());
     }
@@ -96,7 +97,7 @@ std::vector<b2Vec2> createVertices(std::vector<float> lengths) {
     float angle = ((180.0f + (angles.back() / 2)) / 180.0f) * Config::PI;
 
     for (int i = 0; i < lengths.size(); i++) {
-        vertices.push_back(b2Vec2(lengths[i] * cos(angle), lengths[i] * sin(angle)));
+        vertices.emplace_back(lengths[i] * cos(angle), lengths[i] * sin(angle));
         angle += (angles[i] / 180.0f) * Config::PI;
     }
     return vertices;

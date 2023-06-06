@@ -28,7 +28,7 @@ void renderPolygonDebug(sf::RenderWindow &w, Polygon *polygon);
 
 void renderCar(sf::RenderWindow &w, Car car);
 
-void render(sf::RenderWindow &w, std::vector<sf::Sprite> BGs, std::vector<Polygon> &ground,
+void render(sf::RenderWindow &w, const std::vector<sf::Sprite> &BGs, std::vector<Polygon> &ground,
             std::vector<Car> &cars);
 
 #endif

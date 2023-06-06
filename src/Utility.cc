@@ -8,6 +8,8 @@
 
 #include "Utility.h"
 
+#include <utility>
+
 void applyAirResistance(Car car) {
     // F = V^2 * k
     // k ≈ 1/2 * ρ * A * C_d ≈ 3.4
@@ -27,7 +29,7 @@ void applyAirResistance(Car car) {
 void generateGround(b2WorldPtr world, std::vector<Polygon>* groundVector, std::vector<Car> cars) {
     Polygon lastGround = groundVector->back();
     if (lastGround.vertices[1].x * Config::PPM <
-        getFurthestCarX(cars) * Config::PPM + MapGenConfig::GENERATE_DISTANCE) {
+        getFurthestCarX(std::move(cars)) * Config::PPM + MapGenConfig::GENERATE_DISTANCE) {
         float degree = getNextGroundPartDegree();
         float angle_in_radians = degree * (M_PI / 180.0f);
 
@@ -40,8 +42,8 @@ void generateGround(b2WorldPtr world, std::vector<Polygon>* groundVector, std::v
             b2Vec2(lastGround.vertices[2].x + delta_x, lastGround.vertices[2].y + delta_y)};
 
         Polygon ground =
-            createGround(world, MapGenConfig::GROUND_STARTING_X, MapGenConfig::GROUND_STARTING_Y,
-                         groundVertices, sf::Color(18, 36, 35));
+            createGround(std::move(world), MapGenConfig::GROUND_STARTING_X,
+                         MapGenConfig::GROUND_STARTING_Y, groundVertices, sf::Color(18, 36, 35));
 
         groundVector->push_back(ground);
     }
@@ -70,15 +72,19 @@ Car generateCar(b2WorldPtr world, Chromosome chromosome) {
     sf::Color bodyColor = sf::Color(rgb_value(gen), rgb_value(gen), rgb_value(gen));
     sf::Color wheelColor = sf::Color(rgb_value(gen), rgb_value(gen), rgb_value(gen));
 
-    return Car(world, MapGenConfig::CAR_STARTING_X, MapGenConfig::CAR_STARTING_Y, chromosome,
-               bodyColor, wheelColor);
+    return {std::move(world),
+            MapGenConfig::CAR_STARTING_X,
+            MapGenConfig::CAR_STARTING_Y,
+            std::move(chromosome),
+            bodyColor,
+            wheelColor};
 }
 
 ImVec4 SFMLColorToImVec4(sf::Color color) {
-    return ImVec4(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f, color.a / 255.0f);
+    return {color.r / 255.0f, color.g / 255.0f, color.b / 255.0f, color.a / 255.0f};
 }
 
-float getFurthestCarX(std::vector<Car> cars) {
+float getFurthestCarX(const std::vector<Car>& cars) {
     float furthestCarX = 0;
     for (auto car : cars) {
         float currentCarX = car.getBody()->body->GetPosition().x;
@@ -100,7 +106,7 @@ int getIndexOfGroundClosestToLocation(std::vector<Polygon> ground, float x) {
     return index;
 }
 
-void removeCars(b2WorldPtr world, std::vector<Car>* cars) {
+void removeCars(const b2WorldPtr& world, std::vector<Car>* cars) {
     for (auto car : *cars) {
         world->DestroyBody(car.getBody()->body);
         world->DestroyBody(car.getBackWheel()->body);
@@ -128,7 +134,7 @@ std::vector<sf::Texture*> loadBGTextures() {
     for (int i = 0; i < MapGenConfig::BG_SPRITES_COUNT; ++i) {
         std::string BGPath =
             (getRootDir() / ("../resources/background_img_" + std::to_string(i) + ".png")).string();
-        sf::Texture* texture = new sf::Texture();
+        auto* texture = new sf::Texture();
         texture->loadFromFile(BGPath);
         texture->setRepeated(true);
         textures.push_back(texture);
@@ -142,13 +148,15 @@ sf::Sprite loadBGSprite(sf::Texture* texture, std::vector<Car> cars) {
                                  Config::WINDOW_HEIGHT / sprite.getLocalBounds().height));
     sprite.setTextureRect(sf::IntRect(0, 0, 256 * Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT));
     sprite.setPosition(
-        sf::Vector2f(getFurthestCarX(cars) * Config::PPM, 0.5 * Config::WINDOW_HEIGHT) -
+        sf::Vector2f(getFurthestCarX(std::move(cars)) * Config::PPM, 0.5 * Config::WINDOW_HEIGHT) -
         sf::Vector2f(Config::WINDOW_WIDTH / 2, Config::WINDOW_HEIGHT / 2));
     return sprite;
 }
 
-std::vector<sf::Sprite> loadBGSprites(std::vector<sf::Texture*> textures, std::vector<Car> cars) {
+std::vector<sf::Sprite> loadBGSprites(std::vector<sf::Texture*> textures,
+                                      const std::vector<Car>& cars) {
     std::vector<sf::Sprite> sprites;
+    sprites.reserve(MapGenConfig::BG_SPRITES_COUNT);
     for (int i = 0; i < MapGenConfig::BG_SPRITES_COUNT; ++i) {
         sprites.push_back(loadBGSprite(textures[i], cars));
     }

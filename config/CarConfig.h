@@ -18,4 +18,5 @@ class CarConfig {
     // Car speed is dependent on the car's torque
     static constexpr float CAR_TORQUE = 2000.0f;
 };
+
 #endif  // CARCONFIG_H
