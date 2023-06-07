@@ -87,39 +87,46 @@ void removeCars(const b2WorldPtr& world, std::vector<Car>* cars);
 /**
  * @brief Get the Root Dir object
  *
- * @return std::filesystem::path to the root directory
+ * @return std::filesystem::path Path to the root directory
  */
 std::filesystem::path getRootDir();
 
 /**
  * @brief Sets the icon of the window.
  *
- * @param window
+ * @param window SFML's RenderWindow.
  */
 void setIcon(sf::RenderWindow& window);
 
 /**
  * @brief Loads the textures for the background and returns them in a vector.
  *
- * @return std::vector<sf::Texture*>
+ * @return std::vector<sf::Texture*> Vector of textures.
  */
 std::vector<sf::Texture*> loadBGTextures();
 
 /**
+ * @brief Frees the memory allocated for the background textures.
+ * 
+ * @param textures Vector of textures.
+ */
+void freeBGTextures(std::vector<sf::Texture*> textures);
+
+/**
  * @brief Loads the sprite for the background.
  *
- * @param texture
- * @param cars
- * @return sf::Sprite
+ * @param texture Texture of the background.
+ * @param cars Vector of cars.
+ * @return sf::Sprite Sprite of the background.
  */
 sf::Sprite loadBGSprite(sf::Texture* texture, const std::vector<Car>& cars);
 
 /**
  * @brief Loads the sprites for the background.
  *
- * @param textures
- * @param cars
- * @return std::vector<sf::Sprite>
+ * @param textures Vector of textures.
+ * @param cars Vector of cars.
+ * @return std::vector<sf::Sprite> Vector of sprites.
  */
 std::vector<sf::Sprite> loadBGSprites(std::vector<sf::Texture*> textures,
                                       const std::vector<Car>& cars);

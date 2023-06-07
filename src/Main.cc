@@ -3,7 +3,7 @@
  *
  * @file Main.cc
  * @authors Jakub Marcowski, Mateusz Krakowski
- * @date 2023-06-06
+ * @date 2023-06-07
  */
 
 #include "box2d/box2d.h"
@@ -154,6 +154,8 @@ int main() {
         handleEvents(w, pauseCheck, nextGCheck, focus);
         handleUserInput(w, paused, pauseCheck, nextGen, nextGCheck, focus);
     }
+
+    freeBGTextures(textures);
 
     ImPlot::DestroyContext();
     ImGui::SFML::Shutdown();

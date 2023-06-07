@@ -144,6 +144,12 @@ std::vector<sf::Texture*> loadBGTextures() {
     return textures;
 }
 
+void freeBGTextures(std::vector<sf::Texture*> textures) {
+    for (auto texture : textures) {
+        delete texture;
+    }
+}
+
 sf::Sprite loadBGSprite(sf::Texture* texture, const std::vector<Car>& cars) {
     sf::Sprite sprite(*texture);
     sprite.setScale(sf::Vector2f(Config::WINDOW_WIDTH / sprite.getLocalBounds().width,
