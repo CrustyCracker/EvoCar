@@ -3,7 +3,7 @@
  *
  * @file EvolutionaryAlgorithmConfig.h
  * @author Mateusz Krakowski
- * @date 2023-06-06
+ * @date 2023-06-07
  */
 
 #ifndef EVOLUTIONARY_ALGORITHM_CONFIG_H
@@ -12,9 +12,11 @@
 class EvolutionaryAlgorithmConfig {
    public:
     // Evolutionary algorithm parameters
-    static constexpr int POPULATION_SIZE = 15;
+
+    static constexpr int POPULATION_SIZE = 16;
 
     // Boundaries for the chromosomes
+
     static constexpr float MIN_BODY_LENGTH = 1.0f;
     static constexpr float MAX_BODY_LENGTH = 5.0f;
 
@@ -28,6 +30,7 @@ class EvolutionaryAlgorithmConfig {
     static constexpr float MAX_WHEEL_DENSITY = 1000.0f;
 
     // Population initialization hyper parameters
+
     static constexpr float INITIAL_BODY_LENGTH_MEAN = 3.0f;
     static constexpr float INITIAL_BODY_LENGTH_VARIANCE = 1.0f;
 
@@ -55,6 +58,7 @@ class EvolutionaryAlgorithmConfig {
     static constexpr float MUTATION_FACTOR_WHEEL_DENSITY = 20.0f;
 
     // Selection hyper parameters
+
     static constexpr int TOURNAMENT_SIZE = 3;  // Has to be equal to or lesser than POPULATION_SIZE
 };
 

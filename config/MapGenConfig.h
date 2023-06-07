@@ -3,7 +3,7 @@
  *
  * @file MapGenConfig.h
  * @author Mateusz Krakowski
- * @date 2023-06-06
+ * @date 2023-06-07
  */
 
 #ifndef MAPGENCONFIG_H
@@ -22,10 +22,9 @@ class MapGenConfig {
     static constexpr float CAR_STARTING_Y = 650.0;
 
     // Change the mapgen behaviour here
+
     static constexpr float GROUND_DEGREE_DEVIATION = 12.0f;
     static constexpr float MAX_GROUND_DEGREE = 50.0f;
-
-
 };
 
 #endif  // MAPGENCONFIG_H

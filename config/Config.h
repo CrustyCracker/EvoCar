@@ -3,7 +3,7 @@
  *
  * @file Config.h
  * @authors Jakub Marcowski, Mateusz Krakowski
- * @date 2023-06-06
+ * @date 2023-06-07
  */
 
 #ifndef CONFIG_H
@@ -16,7 +16,7 @@ class Config {
 
     // 60 for real time, 120 for fast forward - anything else is undefined behaviour
     static constexpr int MAX_FPS = 60;
-    
+
     static constexpr int GROUND_PARTS_RENDERED = 32;
 
     // Exporting to file

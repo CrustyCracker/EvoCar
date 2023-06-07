@@ -3,7 +3,7 @@
  *
  * @file Utility.cc
  * @authors Jakub Marcowski, Mateusz Krakowski
- * @date 2023-06-06
+ * @date 2023-06-07
  */
 
 #include "Utility.h"
@@ -17,9 +17,9 @@ void applyAirResistance(Car car) {
     //
     // F = 3.4 * V^2
     car.getBody()->body->ApplyForceToCenter(
-        b2Vec2(-1.84 * car.getBody()->body->GetLinearVelocity().x *
+        b2Vec2(-sqrt(CarConfig::AIR_RES_FACTOR) * car.getBody()->body->GetLinearVelocity().x *
                    abs(car.getBody()->body->GetLinearVelocity().x),
-               -1.84 * car.getBody()->body->GetLinearVelocity().y *
+               -sqrt(CarConfig::AIR_RES_FACTOR) * car.getBody()->body->GetLinearVelocity().y *
                    abs(car.getBody()->body->GetLinearVelocity().y)),
         true);
 }

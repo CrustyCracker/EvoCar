@@ -4,7 +4,7 @@
  *
  * @file Car.cc
  * @authors Jakub Marcowski, Mateusz Krakowski
- * @date 2023-06-06
+ * @date 2023-06-07
  */
 
 #include "Car.h"
@@ -97,13 +97,13 @@ std::vector<b2Vec2> createVertices(std::vector<float> lengths) {
 
     std::vector<float> angles;
     angles.reserve(lengths.size());
-    for (int i = 0; i < lengths.size(); i++) {
+    for (int i = 0; i < lengths.size(); ++i) {
         angles.push_back(360.0f / lengths.size());
     }
     // so that the wheels are set properly (that is - parallel to the ground)
     float angle = ((180.0f + (angles.back() / 2)) / 180.0f) * Config::PI;
 
-    for (int i = 0; i < lengths.size(); i++) {
+    for (int i = 0; i < lengths.size(); ++i) {
         vertices.emplace_back(lengths[i] * cos(angle), lengths[i] * sin(angle));
         angle += (angles[i] / 180.0f) * Config::PI;
     }

@@ -3,7 +3,7 @@
  *
  * @file GUI.cc
  * @author Jakub Marcowski
- * @date 2023-06-06
+ * @date 2023-06-07
  */
 
 #include "GUI.h"
@@ -14,9 +14,6 @@ void renderVelocityPlot(std::vector<Car>& cars, bool paused) {
     if (ImPlot::BeginPlot("Velocity")) {
         ImPlot::SetupLegend(ImPlotLocation_West, ImPlotLegendFlags_Outside);
         for (int i = 0; i < cars.size(); ++i) {
-            char i_str[11];  // 10 digits + null
-            sprintf(i_str, "%d", i);
-
             if (!paused) {
                 cars[i].getVelX()->push_back(cars[i].getVelX()->back() + 1);
                 cars[i].getVelY()->push_back(cars[i].getVelocity());
@@ -26,7 +23,7 @@ void renderVelocityPlot(std::vector<Car>& cars, bool paused) {
             std::vector<float> v_values_crop = std::vector<float>(
                 cars[i].getVelY()->end() - Config::VELOCITY_ARRAY_SIZE, cars[i].getVelY()->end());
             ImPlot::PushStyleColor(ImPlotCol_Line, SFMLColorToImVec4(cars[i].getBodyColor()));
-            ImPlot::PlotLine(i_str, &(v_axis_crop[0]), &(v_values_crop[0]),
+            ImPlot::PlotLine(std::to_string(i).c_str(), &(v_axis_crop[0]), &(v_values_crop[0]),
                              Config::VELOCITY_ARRAY_SIZE);
             ImPlot::PopStyleColor();
         }
@@ -41,9 +38,6 @@ void renderPositionPlot(std::vector<Car>& cars, bool paused) {
     if (ImPlot::BeginPlot("Position")) {
         ImPlot::SetupLegend(ImPlotLocation_West, ImPlotLegendFlags_Outside);
         for (int i = 0; i < cars.size(); ++i) {
-            char i_str[11];
-            sprintf(i_str, "%d", i);
-
             if (!paused) {
                 cars[i].getPosXVec()->push_back(cars[i].getPosXVec()->back() + 1);
                 cars[i].getPosYVec()->push_back(cars[i].getBody()->body->GetPosition().x);
@@ -55,7 +49,7 @@ void renderPositionPlot(std::vector<Car>& cars, bool paused) {
                 std::vector<float>(cars[i].getPosYVec()->end() - Config::VELOCITY_ARRAY_SIZE,
                                    cars[i].getPosYVec()->end());
             ImPlot::PushStyleColor(ImPlotCol_Line, SFMLColorToImVec4(cars[i].getBodyColor()));
-            ImPlot::PlotLine(i_str, &(v_axis_crop[0]), &(v_values_crop[0]),
+            ImPlot::PlotLine(std::to_string(i).c_str(), &(v_axis_crop[0]), &(v_values_crop[0]),
                              Config::VELOCITY_ARRAY_SIZE);
             ImPlot::PopStyleColor();
         }

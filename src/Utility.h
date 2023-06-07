@@ -3,7 +3,7 @@
  *
  * @file Utility.h
  * @authors Jakub Marcowski, Mateusz Krakowski
- * @date 2023-06-06
+ * @date 2023-06-07
  */
 
 #ifndef UTILITY_H
@@ -19,6 +19,7 @@
 #include "SFML/Graphics.hpp"
 #include "EvolutionaryAlgorithm.h"
 
+#include "../config/CarConfig.h"
 #include "../config/Config.h"
 #include "../config/MapGenConfig.h"
 #include "Car.h"
