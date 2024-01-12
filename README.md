@@ -56,7 +56,7 @@ Następujące klawisze odpowiadają za:
 
 ## Architektura aplikacji
 
-![Diagram_klas](images\Diagram_klas.png)
+![[Diagram_klas](images\Diagram_klas.png)](https://github.com/CrustyCracker/EvoCar/blob/main/images/Diagram_klas.png)
 
 ### EvolutionaryAlgorithm
 `EvolutionaryAlgorithm` to klasa odpowiedzialna za ewolucję chromosomów. Do populacji dostajemy się przez funkcję `getPopulation()`, gdy kończymy iterację symulacji to podajemy fitness każdego z chromosomów przez funkcję `setFitness()`, a następnie wykonujemy `nextStep()`.
