@@ -1,6 +1,4 @@
-# ZPR 23L Projekt
-
-Oprogramowanie przeprowadzające ewolucję sztucznych pojazdów w 2D. Chodzi o wyewoluowanie pojazdu, który dotrze jak najdalej w zadanym czasie. Coś podobnego dostępne jest [online](http://rednuht.org/genetic_cars_2/). Przydatna może być biblioteka do symulacji fizyki, np. Box2D. Przed rozpoczęciem realizacji projektu proszę zapoznać się z zawartością [strony](http://staff.elka.pw.edu.pl/~rbiedrzy/ZPR/index.html).
+# Projekt EvoCar 2023
 
 ## Autorzy
 
@@ -9,7 +7,13 @@ Jakub Mateusz Marcowski
 Mateusz Łukasz Krakowski
 
 
-## TLDR
+## Opis Projektu
+### Funkcjonalności
+
+Głównym celem naszego projektu jest stworzenie programu w którym będzie można obserwować ewolucje sztucznych samochodzików starających się pokonać jak najdłuższy dystans w określonym przez użytkownika czasie.
+
+## Dokumentacja
+### TLDR
 `sh install_packages.sh`
 
 `mkdir build`
@@ -26,12 +30,12 @@ Mateusz Łukasz Krakowski
 
 test coverage: `sh test_coverage.sh` (plik index.html w CodeCoverageReport)
 
-## Możliwości programu
+### Możliwości programu
 Przyciski:
 - 'Q' - wyjście z programu
 - 'P' - pauza
 - 'N' - następna generacja
-## Użyte paczki
+### Użyte paczki
 najlepiej użyć skryptu `sh install_packages.sh` (z tego katalogu)
 
 Aby zainstalować paczki użyj komendy `sudo apt-get install <package_name>`
@@ -52,7 +56,7 @@ Potrzebne będą:
 
 ## Jak zbudować projekt
 wykonaj skrypt `sh fresh_build.sh` (z tego katalogu)
-## Program
+### Program
 - Upwenij się że pobrałeś wszystkie paczki
 - `mkdir build`
 - `cd build`
@@ -60,7 +64,7 @@ wykonaj skrypt `sh fresh_build.sh` (z tego katalogu)
 - `make`
 -  Plik wykonawczy: `./EvoRacer`
 -  Testy: `./Test`
-## Test Coverage
+### Test Coverage
 Ostatni test coverage znajdue się w katalogu CodeCoverageReport, plik index.html
 Aby stowrzyć raport z pokrycia testami należy:
 
@@ -71,9 +75,6 @@ Aby stowrzyć raport z pokrycia testami należy:
 - Otworzyć plik `index.html` w przeglądarce internetowej, znajdujący się w katalogu CodeCoverageReport
 
 
-## Funkcjonalności
-
-Głównym celem naszego projektu jest stworzenie programu w którym będzie można obserwować ewolucje sztucznych samochodzików starających się pokonać jak najdłuższy dystans w określonym przez użytkownika czasie.
 
 
 

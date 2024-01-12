@@ -11,8 +11,8 @@
 
 class Config {
    public:
-    static constexpr int WINDOW_WIDTH = 1280;
-    static constexpr int WINDOW_HEIGHT = 720;
+    static constexpr int WINDOW_WIDTH = 1600;
+    static constexpr int WINDOW_HEIGHT = 800;
 
     // 60 for real time, 120 for fast forward - anything else is undefined behaviour
     static constexpr int MAX_FPS = 60;
