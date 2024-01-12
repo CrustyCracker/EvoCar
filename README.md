@@ -8,7 +8,7 @@ Mateusz Łukasz Krakowski
 
 
 ## Zarys projektu
-![Diagram_klas](images\EvoCar.png)
+![EvoCar](images\EvoCar.png)
 Stworzyliśmy aplikację realizującą ewolucję sztucznych pojazdów. W tym celu skorzystaliśmy z algorytmu ewolucyjnego z selekcją turniejową i mutacją gaussowską. Samochód składa się z dwóch kół oraz szkieletu.
 
 W skład genomu pojazdu wchodzi:
